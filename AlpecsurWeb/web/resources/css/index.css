@@ -1,0 +1,61 @@
+body {
+    background-color: #76c4d6; 
+}
+header {
+    background-color: black; 
+    color: #ffffff; 
+}
+a {
+    text-decoration: none;
+}
+nav a {
+    color: #ffffff; 
+}
+h2 {
+    color: black; 
+}
+.borde{
+    background-color: white
+}
+
+.hidden{ 
+    height: 400px
+}
+
+.borde btn-outline-dark {
+    background-color: black;
+    color: white; 
+    border-color: white;
+}
+.borde btn-outline-dark:hover {
+    background-color: white; 
+    color: black;
+}
+
+.btn-outline-dark {
+    background-color: white;
+    color: black; 
+    border-color: black;
+}
+.btn-outline-dark:hover {
+    background-color: black; 
+    color: white;
+}
+
+footer {
+    background-color: black; 
+    color: white; 
+}
+footer a {
+    color: white;
+}
+footer a:hover {
+    color: #999595;
+}
+
+/* CONTACTO*/
+
+.panelImformacion{ 
+    background-color: white;
+    padding: 2rem;
+}
