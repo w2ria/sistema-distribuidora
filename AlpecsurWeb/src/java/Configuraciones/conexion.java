@@ -13,9 +13,9 @@ import java.sql.DriverManager;
  */
 public class conexion {
     Connection con;
-    String url="jdbc:mysql://localhost:3306/bdalpecsur";
+    String url="jdbc:mysql://localhost:3306/alpecsur_bd?useUnicode=true&characterEncoding=UTF-8";
     String user="root";
-    String pass="12345678";
+    String pass="";
     public Connection Conexion(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
