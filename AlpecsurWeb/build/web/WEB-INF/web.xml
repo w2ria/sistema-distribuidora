@@ -8,6 +8,10 @@
         <servlet-name>controladorImg</servlet-name>
         <servlet-class>Controlador.controladorImg</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorProveedor</servlet-name>
+        <servlet-class>Controlador.ControladorProveedor</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>controlador</servlet-name>
         <url-pattern>/controlador</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>controladorImg</servlet-name>
         <url-pattern>/controladorImg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorProveedor</servlet-name>
+        <url-pattern>/ControladorProveedor</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
