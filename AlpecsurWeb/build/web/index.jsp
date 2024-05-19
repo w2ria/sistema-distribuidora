@@ -1,10 +1,12 @@
-<%-- 
-    Document   : index
-    Created on : 14/05/2024, 02:23:37 PM
-    Author     : piero
---%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%@page import="Modelo.Cliente"%>
+<%@page import="Modelo.Usuario"%>
+<%@ page session="true" %>
+<%
+    Usuario usuario = (Usuario) session.getAttribute("usuario");
+    Cliente cliente = (Cliente) session.getAttribute("cliente");
+%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -16,8 +18,7 @@
         <link rel="stylesheet" href="resources/css/index.css"/>
     </head>
     <body>
-    <body>
-        <!-- Header de Presentaci√≥n -->
+        <!-- Header de PresentaciÛn -->
         <header class="py-3">
             <div class="container d-flex align-items-center justify-content-between">
                 <a href="index.jsp">
@@ -28,29 +29,32 @@
                     <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
                 </form>
                 <div>
-                    <a href="#" class="text-white mx-2">¬øNecesitas Ayuda? <i class="bi bi-caret-down-fill"></i></a>
-                    <!-- Enlace modificado para ir al login.jsp -->
+                    <% if (usuario != null && cliente != null) {%>
+                    <span class="text-white mx-2">Bienvenido, <%= cliente.getNombre()%></span>
+                    <a href="logout.jsp" class="btn btn-outline-light">Cerrar SesiÛn</a>
+                    <% } else { %>
                     <a href="login.jsp" class="text-white mx-2"><i class="bi bi-person"></i></a>
+                        <% }%>
                     <a href="#" class="text-white mx-2"><i class="bi bi-eye"></i></a>
                     <a href="#" class="text-white mx-2"><i class="bi bi-cart"></i></a>
                 </div>
             </div>
         </header>
 
-        <!-- Barra de Navegaci√≥n -->
+        <!-- Barra de NavegaciÛn -->
         <nav class="py-2 borde">
             <div class="container d-flex justify-content-around">
                 <a href="#" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
                 <a href="#" class="btn btn-outline-dark"><i class="bi bi-tags"></i> Promociones</a>
-                <a href="catalogo.jsp" class="btn btn-outline-dark"><i class="bi bi-book"></i> Cat√°logo</a>
+                <a href="catalogo.jsp" class="btn btn-outline-dark"><i class="bi bi-book"></i> Cat·logo</a>
                 <a href="nosotros.jsp" class="btn btn-outline-dark"><i class="bi bi-people"></i> Nosotros</a>
                 <a href="#" class="btn btn-outline-dark"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-geo-alt"></i> Zonas de Env√≠o</a>
+                <a href="#" class="btn btn-outline-dark"><i class="bi bi-geo-alt"></i> Zonas de EnvÌo</a>
                 <a href="contactanos.jsp" class="btn btn-outline-dark"><i class="bi bi-envelope"></i> Contacto</a>
             </div>
         </nav>
 
-        <!-- Carrusel de Im√°genes -->
+        <!-- Carrusel de Im·genes -->
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -78,9 +82,9 @@
             </button>
         </div>
 
-        <!-- Nueva secci√≥n de Productos M√°s Vendidos -->
+        <!-- Nueva secciÛn de Productos M·s Vendidos -->
         <div class="container mt-5">
-            <h2 class="text-center mb-4">PRODUCTOS M√ÅS VENDIDOS</h2>
+            <h2 class="text-center mb-4">PRODUCTOS M¡S VENDIDOS</h2>
             <div class="row justify-content-center">
                 <div class="col-6 col-md-2 text-center mb-4">
                     <img src="https://via.placeholder.com/150" alt="Nombre del Producto" class="img-fluid mb-2">
@@ -131,37 +135,37 @@
         <div class="container mt-5">
             <div class="text-center">
                 <h2 class="mb-4">Tienda Mayorista | AlpecSur Online</h2>
-                <p class="text-justify">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno est√°ndar de las industrias desde el a√±o 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido us√≥ una galer√≠a de textos y los mezcl√≥ de tal manera que logr√≥ hacer un libro de textos especimen. No s√≥lo sobrevivi√≥ 500 a√±os, sino que tambi√©n ingres√≥ como texto de relleno en documentos electr√≥nicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creaci√≥n de las hojas "Letraset", las cuales conten√≠an pasajes de Lorem Ipsum, y m√°s recientemente con software de autoedici√≥n, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</p>
+                <p class="text-justify">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno est·ndar de las industrias desde el aÒo 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usÛ una galerÌa de textos y los mezclÛ de tal manera que logrÛ hacer un libro de textos especimen. No sÛlo sobreviviÛ 500 aÒos, sino que tambiÈn ingresÛ como texto de relleno en documentos electrÛnicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creaciÛn de las hojas "Letraset", las cuales contenÌan pasajes de Lorem Ipsum, y m·s recientemente con software de autoediciÛn, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</p>
                 <div class="mt-5">
                     <img src="#" alt="Imagen Banner" class="img-fluid w-100" style="height: 200px; object-fit: cover;">
                 </div>
             </div>
         </div>
 
-        <!-- Secci√≥n de Env√≠os -->
+        <!-- SecciÛn de EnvÌos -->
         <div class="container mt-5">
-            <h2 class="text-center mb-4">NUESTRA DISTRIBUIDORA REALIZA ENVIOS A GRAN PARTE DEL PER√ö</h2>
+            <h2 class="text-center mb-4">NUESTRA DISTRIBUIDORA REALIZA ENVIOS A GRAN PARTE DEL PER⁄</h2>
             <div class="row justify-content-center">
                 <div class="col-6 col-md-2 text-center mb-4">
-                    <img src="https://via.placeholder.com/150" alt="Imagen de Env√≠o" class="img-fluid mb-2">
+                    <img src="https://via.placeholder.com/150" alt="Imagen de EnvÌo" class="img-fluid mb-2">
                     <p>Distrito</p>
                 </div>
                 <div class="col-6 col-md-2 text-center mb-4">
-                    <img src="https://via.placeholder.com/150" alt="Imagen de Env√≠o" class="img-fluid mb-2">
+                    <img src="https://via.placeholder.com/150" alt="Imagen de EnvÌo" class="img-fluid mb-2">
                     <p>Distrito</p>
                 </div>
                 <div class="col-6 col-md-2 text-center mb-4">
-                    <img src="https://via.placeholder.com/150" alt="Imagen de Env√≠o" class="img-fluid mb-2">
+                    <img src="https://via.placeholder.com/150" alt="Imagen de EnvÌo" class="img-fluid mb-2">
                     <p>Distrito</p>
                 </div>
             </div>
             <div class="row mt-4">
                 <div class="col-md-6">
-                    <p class="text-justify">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno est√°ndar de las industrias desde el a√±o 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido us√≥ una galer√≠a de textos y los mezcl√≥ de tal manera que logr√≥ hacer un libro de textos especimen. No s√≥lo sobrevivi√≥ 500 a√±os, sino que tambi√©n ingres√≥ como texto de relleno en documentos electr√≥nicos, quedando esencialmente igual al original.</p>
-                    <p class="text-justify">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno est√°ndar de las industrias desde el a√±o 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido us√≥ una galer√≠a de textos y los mezcl√≥ de tal manera que logr√≥ hacer un libro de textos especimen. No s√≥lo sobrevivi√≥ 500 a√±os, sino que tambi√©n ingres√≥ como texto de relleno en documentos electr√≥nicos, quedando esencialmente igual al original.</p>
+                    <p class="text-justify">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno est·ndar de las industrias desde el aÒo 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usÛ una galerÌa de textos y los mezclÛ de tal manera que logrÛ hacer un libro de textos especimen. No sÛlo sobreviviÛ 500 aÒos, sino que tambiÈn ingresÛ como texto de relleno en documentos electrÛnicos, quedando esencialmente igual al original.</p>
+                    <p class="text-justify">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno est·ndar de las industrias desde el aÒo 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usÛ una galerÌa de textos y los mezclÛ de tal manera que logrÛ hacer un libro de textos especimen. No sÛlo sobreviviÛ 500 aÒos, sino que tambiÈn ingresÛ como texto de relleno en documentos electrÛnicos, quedando esencialmente igual al original.</p>
                 </div>
                 <div class="col-md-6 text-center">
-                    <img src="https://via.placeholder.com/350x350" alt="Mapa del Per√∫" class="img-fluid mb-2">
+                    <img src="https://via.placeholder.com/350x350" alt="Mapa del Per˙" class="img-fluid mb-2">
                     <div class="mt-2">
                         <button class="btn btn-outline-dark">Ver mapa</button>
                     </div>
@@ -169,24 +173,24 @@
             </div>
         </div>
 
-        <!-- Secci√≥n de Nuestros Art√≠culos -->
+        <!-- SecciÛn de Nuestros ArtÌculos -->
         <div class="container mt-5">
-            <h2 class="text-center mb-4">NUESTROS ART√çCULOS</h2>
+            <h2 class="text-center mb-4">NUESTROS ARTÕCULOS</h2>
             <div class="row justify-content-center">
                 <div class="col-12 col-md-4 text-center mb-4">
-                    <img src="https://via.placeholder.com/300" alt="Art√≠culo 1" class="img-fluid mb-2">
+                    <img src="https://via.placeholder.com/300" alt="ArtÌculo 1" class="img-fluid mb-2">
                     <p class="fw-bold">10 Nov 2023</p>
                     <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.</p>
                     <button class="btn btn-outline-dark">Continuar Leyendo</button>
                 </div>
                 <div class="col-12 col-md-4 text-center mb-4">
-                    <img src="https://via.placeholder.com/300" alt="Art√≠culo 2" class="img-fluid mb-2">
+                    <img src="https://via.placeholder.com/300" alt="ArtÌculo 2" class="img-fluid mb-2">
                     <p class="fw-bold">20 Dic 2023</p>
                     <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.</p>
                     <button class="btn btn-outline-dark">Continuar Leyendo</button>
                 </div>
                 <div class="col-12 col-md-4 text-center mb-4">
-                    <img src="https://via.placeholder.com/300" alt="Art√≠culo 3" class="img-fluid mb-2">
+                    <img src="https://via.placeholder.com/300" alt="ArtÌculo 3" class="img-fluid mb-2">
                     <p class="fw-bold">15 Mar 2024</p>
                     <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.</p>
                     <button class="btn btn-outline-dark">Continuar Leyendo</button>
@@ -210,16 +214,16 @@
                                 <p><a href="#">Mi Cuenta</a></p>
                             </div>
                             <div class="col-6">
-                                <p><a href="#">Atenci√≥n al Cliente</a></p>
-                                <p><a href="#">Pol√≠ticas y Condiciones</a></p>
+                                <p><a href="#">AtenciÛn al Cliente</a></p>
+                                <p><a href="#">PolÌticas y Condiciones</a></p>
                             </div>
                             <div class="col-12">
-                                <p><a href="#">Inf√≥rmate</a></p>
+                                <p><a href="#">InfÛrmate</a></p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 text-center">
-                        <h5>S√≠guenos</h5>
+                        <h5>SÌguenos</h5>
                         <a href="https://www.facebook.com" target="_blank" class="text-warning mx-2">
                             <i class="bi bi-facebook" style="font-size: 1.5rem;"></i>
                         </a>

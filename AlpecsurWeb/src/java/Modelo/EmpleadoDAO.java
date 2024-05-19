@@ -5,189 +5,119 @@
  */
 package Modelo;
 
-/**
- *
- * @author user
- */
 import Configuraciones.conexion;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class EmpleadoDAO {
-
+    conexion cn = new conexion();
     Connection con;
+    PreparedStatement ps;
+    ResultSet rs;
+    int r;
 
-    public EmpleadoDAO() {
-        conexion conn = new conexion();
-        con = conn.Conexion();
-    }
-
-    // Crear un nuevo empleado
-    public boolean addEmpleado(Empleado empleado) {
-        String sql = "INSERT INTO empleado (idUsuario, nombre, tipoDocumento, numDocumento, direccion, telefono, email, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, empleado.getIdUsuario());
-            ps.setString(2, empleado.getNombre());
-            ps.setString(3, empleado.getTipoDocumento());
-            ps.setString(4, empleado.getNumDocumento());
-            ps.setString(5, empleado.getDireccion());
-            ps.setString(6, empleado.getTelefono());
-            ps.setString(7, empleado.getEmail());
-            ps.setString(8, empleado.getEstado());
-            ps.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // Obtener un empleado por su ID
-    public Empleado getEmpleadoById(int idEmpleado) {
-        String sql = "SELECT * FROM empleado WHERE idEmpleado = ?";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idEmpleado);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                Empleado empleado = new Empleado(
-                        rs.getInt("idEmpleado"),
-                        rs.getInt("idUsuario"),
-                        rs.getString("nombre"),
-                        rs.getString("tipoDocumento"),
-                        rs.getString("numDocumento"),
-                        rs.getString("direccion"),
-                        rs.getString("telefono"),
-                        rs.getString("email"),
-                        rs.getString("estado")
-                );
-                return empleado;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    // Obtener todos los empleados
-    public List<Empleado> getAllEmpleados() {
-        List<Empleado> empleados = new ArrayList<>();
+    public List<Empleado> listar() {
         String sql = "SELECT * FROM empleado";
+        List<Empleado> lista = new ArrayList<>();
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
-                Empleado empleado = new Empleado(
-                        rs.getInt("idEmpleado"),
-                        rs.getInt("idUsuario"),
-                        rs.getString("nombre"),
-                        rs.getString("tipoDocumento"),
-                        rs.getString("numDocumento"),
-                        rs.getString("direccion"),
-                        rs.getString("telefono"),
-                        rs.getString("email"),
-                        rs.getString("estado")
-                );
-                empleados.add(empleado);
+                Empleado emp = new Empleado();
+                emp.setIdProveedor(rs.getInt("idProveedor"));
+                emp.setIdUsuario(rs.getInt("idUsuario"));
+                emp.setNombre(rs.getString("nombre"));
+                emp.setTipoDocumento(rs.getString("tipoDocumento"));
+                emp.setNumDocumento(rs.getString("numDocumento"));
+                emp.setDireccion(rs.getString("direccion"));
+                emp.setTelefono(rs.getString("telefono"));
+                emp.setEmail(rs.getString("email"));
+                lista.add(emp);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("ERROR en Listar EmpleadoDAO: " + e.getMessage());
         }
-        return empleados;
+        return lista;
     }
 
-    // Actualizar un empleado
-    public boolean updateEmpleado(Empleado empleado) {
-        String sql = "UPDATE empleado SET idUsuario = ?, nombre = ?, tipoDocumento = ?, numDocumento = ?, direccion = ?, telefono = ?, email = ?, estado = ? WHERE idEmpleado = ?";
+    public Empleado listarPorId(int id) {
+        Empleado emp = new Empleado();
+        String sql = "SELECT * FROM empleado WHERE idProveedor=" + id;
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, empleado.getIdUsuario());
-            ps.setString(2, empleado.getNombre());
-            ps.setString(3, empleado.getTipoDocumento());
-            ps.setString(4, empleado.getNumDocumento());
-            ps.setString(5, empleado.getDireccion());
-            ps.setString(6, empleado.getTelefono());
-            ps.setString(7, empleado.getEmail());
-            ps.setString(8, empleado.getEstado());
-            ps.setInt(9, empleado.getIdEmpleado());
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                emp.setIdProveedor(rs.getInt("idProveedor"));
+                emp.setIdUsuario(rs.getInt("idUsuario"));
+                emp.setNombre(rs.getString("nombre"));
+                emp.setTipoDocumento(rs.getString("tipoDocumento"));
+                emp.setNumDocumento(rs.getString("numDocumento"));
+                emp.setDireccion(rs.getString("direccion"));
+                emp.setTelefono(rs.getString("telefono"));
+                emp.setEmail(rs.getString("email"));
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR en ListarPorId EmpleadoDAO: " + e.getMessage());
+        }
+        return emp;
+    }
+
+    public int agregar(Empleado emp) {
+        String sql = "INSERT INTO empleado (idUsuario, nombre, tipoDocumento, numDocumento, direccion, telefono, email) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, emp.getIdUsuario());
+            ps.setString(2, emp.getNombre());
+            ps.setString(3, emp.getTipoDocumento());
+            ps.setString(4, emp.getNumDocumento());
+            ps.setString(5, emp.getDireccion());
+            ps.setString(6, emp.getTelefono());
+            ps.setString(7, emp.getEmail());
+            r = ps.executeUpdate();
+            System.out.println("Empleado agregado correctamente.");
+        } catch (Exception e) {
+            System.out.println("ERROR en Agregar EmpleadoDAO: " + e.getMessage());
+        }
+        return r;
+    }
+
+    public int actualizar(Empleado emp) {
+        String sql = "UPDATE empleado SET idUsuario=?, nombre=?, tipoDocumento=?, numDocumento=?, direccion=?, telefono=?, email=? WHERE idProveedor=?";
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, emp.getIdUsuario());
+            ps.setString(2, emp.getNombre());
+            ps.setString(3, emp.getTipoDocumento());
+            ps.setString(4, emp.getNumDocumento());
+            ps.setString(5, emp.getDireccion());
+            ps.setString(6, emp.getTelefono());
+            ps.setString(7, emp.getEmail());
+            ps.setInt(8, emp.getIdProveedor());
+            r = ps.executeUpdate();
+            System.out.println("Empleado actualizado correctamente.");
+        } catch (Exception e) {
+            System.out.println("ERROR en Actualizar EmpleadoDAO: " + e.getMessage());
+        }
+        return r;
+    }
+
+    public void eliminar(int id) {
+        String sql = "DELETE FROM empleado WHERE idProveedor=" + id;
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
             ps.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            System.out.println("Empleado eliminado correctamente.");
+        } catch (Exception e) {
+            System.out.println("ERROR en Eliminar EmpleadoDAO: " + e.getMessage());
         }
-    }
-
-    // Eliminar un empleado
-    public boolean deleteEmpleado(int idEmpleado) {
-        String sql = "DELETE FROM empleado WHERE idEmpleado = ?";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idEmpleado);
-            ps.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // Consultas adicionales
-    // Obtener empleados por estado
-    public List<Empleado> getEmpleadosByEstado(String estado) {
-        List<Empleado> empleados = new ArrayList<>();
-        String sql = "SELECT * FROM empleado WHERE estado = ?";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, estado);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Empleado empleado = new Empleado(
-                        rs.getInt("idEmpleado"),
-                        rs.getInt("idUsuario"),
-                        rs.getString("nombre"),
-                        rs.getString("tipoDocumento"),
-                        rs.getString("numDocumento"),
-                        rs.getString("direccion"),
-                        rs.getString("telefono"),
-                        rs.getString("email"),
-                        rs.getString("estado")
-                );
-                empleados.add(empleado);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return empleados;
-    }
-
-    // Obtener empleados por tipo de documento
-    public List<Empleado> getEmpleadosByTipoDocumento(String tipoDocumento) {
-        List<Empleado> empleados = new ArrayList<>();
-        String sql = "SELECT * FROM empleado WHERE tipoDocumento = ?";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, tipoDocumento);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Empleado empleado = new Empleado(
-                        rs.getInt("idEmpleado"),
-                        rs.getInt("idUsuario"),
-                        rs.getString("nombre"),
-                        rs.getString("tipoDocumento"),
-                        rs.getString("numDocumento"),
-                        rs.getString("direccion"),
-                        rs.getString("telefono"),
-                        rs.getString("email"),
-                        rs.getString("estado")
-                );
-                empleados.add(empleado);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return empleados;
     }
 }

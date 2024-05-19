@@ -16,11 +16,18 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String usuario = request.getParameter("usuario");
         String clave = request.getParameter("clave");
+        String nombre = request.getParameter("nombre");
+        String tipoDocumento = request.getParameter("tipoDocumento");
+        String numDocumento = request.getParameter("numDocumento");
+        String direccion = request.getParameter("direccion");
+        String telefono = request.getParameter("telefono");
+        String email = request.getParameter("email");
         String token = "";  // Genera un token si es necesario
         Timestamp expiracion = new Timestamp(new Date().getTime());  // Establece la fecha de expiración si es necesario
 
@@ -30,11 +37,28 @@ public class RegisterServlet extends HttpServlet {
         us.setToken(token);
         us.setExpiracion(expiracion);
 
-        UsuarioDAO dao = new UsuarioDAO();
-        int idUsuario = dao.agregar(us);
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        int idUsuario = usuarioDAO.agregar(us);
 
         if (idUsuario > 0) {
-            response.sendRedirect("login.jsp");
+            Cliente cli = new Cliente();
+            cli.setIdUsuario(idUsuario);
+            cli.setNombre(nombre);
+            cli.setTipoDocumento(tipoDocumento);
+            cli.setNumDocumento(numDocumento);
+            cli.setDireccion(direccion);
+            cli.setTelefono(telefono);
+            cli.setEmail(email);
+
+            ClienteDAO clienteDAO = new ClienteDAO();
+            int resultado = clienteDAO.agregar(cli);
+
+            if (resultado > 0) {
+                response.sendRedirect("login.jsp?success=true");
+            } else {
+                usuarioDAO.eliminar(idUsuario); // Si falla, elimina el usuario creado
+                response.sendRedirect("register.jsp?error=true");
+            }
         } else {
             response.sendRedirect("register.jsp?error=true");
         }

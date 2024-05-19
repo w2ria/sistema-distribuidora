@@ -1,13 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Modelo;
 
-
-public class Empleado {
-    private int idProveedor;
+public class Cliente {
+    private int idCliente;
     private int idUsuario;
     private String nombre;
     private String tipoDocumento;
@@ -17,12 +15,12 @@ public class Empleado {
     private String email;
 
     // Getters y Setters
-    public int getIdProveedor() {
-        return idProveedor;
+    public int getIdCliente() {
+        return idCliente;
     }
 
-    public void setIdProveedor(int idProveedor) {
-        this.idProveedor = idProveedor;
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
     public int getIdUsuario() {
