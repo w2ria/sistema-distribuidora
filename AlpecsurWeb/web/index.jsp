@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="resources/css/index.css"/>
     </head>
     <body>
+    <body>
         <!-- Header de Presentación -->
         <header class="py-3">
             <div class="container d-flex align-items-center justify-content-between">
@@ -28,7 +29,8 @@
                 </form>
                 <div>
                     <a href="#" class="text-white mx-2">¿Necesitas Ayuda? <i class="bi bi-caret-down-fill"></i></a>
-                    <a href="#" class="text-white mx-2"><i class="bi bi-person"></i></a>
+                    <!-- Enlace modificado para ir al login.jsp -->
+                    <a href="jsp/login.jsp" class="text-white mx-2"><i class="bi bi-person"></i></a>
                     <a href="#" class="text-white mx-2"><i class="bi bi-eye"></i></a>
                     <a href="#" class="text-white mx-2"><i class="bi bi-cart"></i></a>
                 </div>
