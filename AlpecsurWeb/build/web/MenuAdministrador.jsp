@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Controlador.ControladorProveedor"%>
+<%@page import="Controlador.ControladorProducto"%>
 <!DOCTYPE html>
 <html lang="en<link rel="stylesheet" href="resource/css/styleDashboard.css">
 
@@ -66,7 +67,7 @@
                             Clientes</h3>
                     </a>
 
-                    <a href="#">
+                    <a href="ControladorProducto?Op=Listar">
                         <span class="material-icons-sharp">
                             inventory_2
                         </span>
