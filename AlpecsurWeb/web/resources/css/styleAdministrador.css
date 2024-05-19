@@ -123,6 +123,9 @@ b{
 
 aside{
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: fit-content;
 }
 
 aside .toggle{
@@ -156,10 +159,12 @@ aside .sidebar{
     background-color: var(--color-white);
     box-shadow: var(--box-shadow);
     border-radius: 15px;
-    height: 88vh;
+    flex-grow: 1;
     position: relative;
     top: 1.5rem;
     transition: all 0.3s ease;
+    overflow-y: auto;
+    min-height: fit-content;
 }
 
 aside .sidebar:hover{
@@ -173,7 +178,7 @@ aside .sidebar a{
     height: 3.7rem;
     gap: 1rem;
     position: relative;
-    margin-left: 2rem;
+    padding: 0 1rem;
     transition: all 0.3s ease;
 }
 
@@ -183,9 +188,10 @@ aside .sidebar a span{
 }
 
 aside .sidebar a:last-child{
-    position: absolute;
-    bottom: 2rem;
+    margin-top: auto;
+    margin-bottom: 2rem;
     width: 100%;
+    padding: 0 1rem;
 }
 
 aside .sidebar a.active{
