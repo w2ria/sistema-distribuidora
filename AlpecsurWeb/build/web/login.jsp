@@ -29,6 +29,8 @@
                     </div>
                 </div>
             </div>
+            
+            <a href="register.jsp">Registrate Aqui</a>
         </div>
     </body>
 </html>

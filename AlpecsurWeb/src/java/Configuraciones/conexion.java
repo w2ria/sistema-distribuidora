@@ -6,6 +6,7 @@ package Configuraciones;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  *
@@ -20,8 +21,11 @@ public class conexion {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             con=DriverManager.getConnection(url,user,pass);
-        } catch (Exception e){         
-        }
+        }catch(SQLException ex){
+             System.out.println("Conexión fallida..."+ex.getMessage());
+        }catch (ClassNotFoundException ex) {
+            System.out.println("Falta Driver "+ex.getMessage());
+        }       
         return con;
     }
 }
