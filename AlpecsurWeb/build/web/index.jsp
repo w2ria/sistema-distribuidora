@@ -36,7 +36,7 @@
                     <a href="login.jsp" class="text-white mx-2"><i class="bi bi-person"></i></a>
                         <% }%>
                     <a href="#" class="text-white mx-2"><i class="bi bi-eye"></i></a>
-                    <a href="#" class="text-white mx-2"><i class="bi bi-cart"></i></a>
+                    <a href="controlador?accion=Carrito" class="text-white mx-2"><i class="bi bi-cart">(<label style="co">${cont}</label>)</i></a>
                 </div>
             </div>
         </header>
@@ -44,7 +44,7 @@
         <!-- Barra de Navegación -->
         <nav class="py-2 borde">
             <div class="container d-flex justify-content-around">
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
+                <a href="controlador?accion=productos" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
                 <a href="#" class="btn btn-outline-dark"><i class="bi bi-tags"></i> Promociones</a>
                 <a href="catalogo.jsp" class="btn btn-outline-dark"><i class="bi bi-book"></i> Catálogo</a>
                 <a href="nosotros.jsp" class="btn btn-outline-dark"><i class="bi bi-people"></i> Nosotros</a>
@@ -242,6 +242,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Bootstrap Icons -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </body>
 </html>
 

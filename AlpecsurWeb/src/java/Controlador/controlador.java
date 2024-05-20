@@ -4,8 +4,18 @@
  */
 package Controlador;
 
+
+import Modelo.Carrito;
+import Modelo.Cliente;
+import Modelo.Empleado;
+import Modelo.Pago;
+import Modelo.Pedido;
+import Modelo.PedidoDAO;
+import Modelo.Producto;
+import Modelo.ProductoCarritoDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,69 +27,134 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class controlador extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    ProductoCarritoDAO pdao=new ProductoCarritoDAO();
+    Producto p=new Producto();
+    List<Producto> productos=new ArrayList<>();
+    
+    List<Carrito> listaCarrito=new ArrayList<>();
+    int item;
+    double totalPagar=0.0;
+    int cantidad=1;
+    
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet controlador</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet controlador at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+        String accion = request.getParameter("accion");
+        productos=pdao.listar();
+            switch(accion){
+              case"AgregarCarrito":
+                  int pos=0;
+                  cantidad=1;
+                  int idp=Integer.parseInt(request.getParameter("idProducto"));
+                  p=pdao.listarId(idp);
+                  if(listaCarrito.size()>0){
+                      for (int i = 0; i < listaCarrito.size(); i++) {
+                          if (idp==listaCarrito.get(i).getIdProducto()){
+                              pos = i;
+                          }
+                        }
+                      if (idp==listaCarrito.get(pos).getIdProducto()) {
+                          cantidad=listaCarrito.get(pos).getCantidad()+cantidad;
+                          double subtotal=listaCarrito.get(pos).getPrecio()*cantidad;
+                          listaCarrito.get(pos).setCantidad(cantidad);
+                          listaCarrito.get(pos).setSubTotal(subtotal);
+                      }else{
+                            item=item+1;
+                            Carrito cart=new Carrito();
+                            cart.setItem(item);
+                            cart.setIdProducto(p.getIdProducto());
+                            cart.setNombre(p.getNombre());
+                            cart.setDescripcion(p.getDescripcion());
+                            cart.setPrecio(p.getPrecio());
+                            cart.setCantidad(cantidad);
+                            cart.setSubTotal(cantidad * p.getPrecio());
+                            listaCarrito.add(cart); 
+                      }
+                      
+                  }else{
+                        item=item+1;
+                        Carrito cart=new Carrito();
+                        cart.setItem(item);
+                        cart.setIdProducto(p.getIdProducto());
+                        cart.setNombre(p.getNombre());
+                        cart.setDescripcion(p.getDescripcion());
+                        cart.setPrecio(p.getPrecio());
+                        cart.setCantidad(cantidad);
+                        cart.setSubTotal(cantidad * p.getPrecio());
+                        listaCarrito.add(cart); 
+                  }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+                  request.setAttribute("cont",listaCarrito.size());
+                  request.getRequestDispatcher("controlador?accion=productos").forward(request,response);
+                  break;
+              case "Delete":
+                  int idproducto=Integer.parseInt(request.getParameter("idp"));
+                  for (int i = 0; i < listaCarrito.size(); i++) {
+                      if (listaCarrito.get(i).getIdProducto()==idproducto){
+                          listaCarrito.remove(i);
+                      }
+                  }
+                  break;
+              case"ActualizarCantidad":
+                    int idpro=Integer.parseInt(request.getParameter("idp"));
+                    int cant=Integer.parseInt(request.getParameter("Cantidad"));
+                    for (int i = 0; i < listaCarrito.size(); i++) {
+                        if (listaCarrito.get(i).getIdProducto()==idpro) {
+                            listaCarrito.get(i).setCantidad(cant);
+                            double st=listaCarrito.get(i).getPrecio()*cant;
+                            listaCarrito.get(i).setSubTotal(st);
+                        }
+                  }
+                    break;
+              case"Carrito":
+                  totalPagar=0.0;
+                  request.setAttribute("carrito",listaCarrito);
+                  for(int i=0; i<listaCarrito.size();i++){
+                      totalPagar=totalPagar+listaCarrito.get(i).getSubTotal();
+                  }
+                  request.setAttribute("totalPagar", totalPagar);
+                  request.getRequestDispatcher("carrito.jsp").forward(request, response);
+                  break;
+                /**
+ *
+ * @author piero
+  
+                case"GenerarPedido":
+                    Cliente cliente=new Cliente();
+                    cliente.setIdCliente(1);
+                    Empleado empleado=new Empleado();
+                    empleado.setIdEmpleado(1);
+                    PedidoDAO dao= new PedidoDAO();
+                    Pago pago = new Pago();
+                    Pedido pedido = new Pedido(1,1);
+                    int res=dao.GenerarPedido(pedido);
+                    if(res!=0&&totalPagar>0){
+                        request.getRequestDispatcher("mensaje.jsp").forward(request,response);
+                    }else{
+                        request.getRequestDispatcher("error.jsp").forward(request,response);
+                    }
+                    break;
+                    * */ 
+              default:
+              request.setAttribute("productos",productos);
+              request.getRequestDispatcher("productosCarrito.jsp").forward(request, response);
+                
+            }
+    }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException{
+        processRequest(request,response);
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException{
+        processRequest(request,response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    
     @Override
-    public String getServletInfo() {
+    public String getServletInfo(){
         return "Short description";
-    }// </editor-fold>
-
+    }
 }
