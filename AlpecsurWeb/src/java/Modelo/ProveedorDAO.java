@@ -44,8 +44,8 @@ public class ProveedorDAO {
         return prov;
     }
 
-    public Proveedor buscarPorNombre(String nombre) {
-        Proveedor prov = new Proveedor();
+    public List<Proveedor> buscarPorNombre(String nombre) {
+        List<Proveedor> lista = new ArrayList<>();
         String sql = "SELECT * FROM proveedor WHERE nombre LIKE ?";
 
         try {
@@ -53,7 +53,8 @@ public class ProveedorDAO {
             ps = con.prepareStatement(sql);
             ps.setString(1, "%" + nombre + "%");
             rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
+                Proveedor prov = new Proveedor();
                 prov.setIdProveedor(rs.getInt(1));
                 prov.setIdUsuario(rs.getInt(2));
                 prov.setNombre(rs.getString(3));
@@ -62,11 +63,26 @@ public class ProveedorDAO {
                 prov.setDireccion(rs.getString(6));
                 prov.setTelefono(rs.getString(7));
                 prov.setEmail(rs.getString(8));
+                lista.add(prov);
             }
         } catch (Exception e) {
             System.out.println("ERROR en buscarPorNombre ProveedorDAO: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                System.out.println("ERROR cerrando conexiones: " + e.getMessage());
+            }
         }
-        return prov;
+        return lista;
     }
 
     //Operaciones CRUD:

@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Modelo;
 
-
 public class Empleado {
-    private int idProveedor;
+    private int idEmpleado;
     private int idUsuario;
     private String nombre;
     private String tipoDocumento;
@@ -17,12 +12,12 @@ public class Empleado {
     private String email;
 
     // Getters y Setters
-    public int getIdProveedor() {
-        return idProveedor;
+    public int getIdEmpleado() {
+        return idEmpleado;
     }
 
-    public void setIdProveedor(int idProveedor) {
-        this.idProveedor = idProveedor;
+    public void setIdEmpleado(int idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     public int getIdUsuario() {

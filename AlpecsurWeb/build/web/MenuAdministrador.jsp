@@ -41,13 +41,13 @@
                         </span>
                         <h3>Dashboard</h3>
                     </a>
-                    <a href="#">
+                    <a href="ControladorAdministrador?Op=Listar">
                         <span class="material-icons-sharp">
                             supervisor_account
                         </span>
                         <h3>Admins</h3>
                     </a>
-                    <a href="#">
+                    <a href="ControladorEmpleado?Op=Listar">
                         <span class="material-icons-sharp">
                             engineering
                         </span>
@@ -58,13 +58,6 @@
                             local_shipping
                         </span>
                         <h3>Proveedores</h3>
-                    </a>
-                    <a href="#">
-                        <span class="material-icons-sharp">
-                            groups
-                        </span>
-                        <h3>
-                            Clientes</h3>
                     </a>
 
                     <a href="ControladorProducto?Op=Listar">
@@ -91,15 +84,8 @@
                         </span>
                         <h3>Categorias</h3>
                     </a>
-                    <a href="#">
-                        <span class="material-icons-sharp">
-                            new_releases
-                        </span>
-                        <h3>Marcas</h3>
-                    </a>
                     
-                    
-                    <a href="#">
+                    <a href="logout.jsp">
                         <span class="material-icons-sharp">
                             logout
                         </span>

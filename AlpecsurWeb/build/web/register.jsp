@@ -19,7 +19,7 @@
                 <h3 class="text-center mb-3">Create Account</h3>
                 <% if (request.getParameter("error") != null) { %>
                 <div class="alert alert-danger" role="alert">
-                    Error registering. Please try again.
+                    Error de registro. Por favor, inténtelo de nuevo.
                 </div>
                 <% }%>
                 <form action="register" method="post">
@@ -49,7 +49,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary btn-block mb-3">Sign Up</button>
                     <div class="text-center">
-                        <a href="login.jsp">Already have an account? Login here</a>
+                        <a href="login.jsp">¿Ya tiene una cuenta? Conéctese aquí</a>
                     </div>
                 </form>
             </div>

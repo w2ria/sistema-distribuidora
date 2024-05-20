@@ -15,12 +15,12 @@
                 <h3 class="text-center mb-3">Welcome Back!</h3>
                 <% if (request.getParameter("error") != null) { %>
                 <div class="alert alert-danger" role="alert">
-                    Invalid username or password. Please try again.
+                    Nombre de usuario o contraseña no válidos. Por favor, inténtelo de nuevo.
                 </div>
                 <% } %>
                 <% if (request.getParameter("success") != null) { %>
                 <div class="alert alert-success" role="alert">
-                    Registration successful! Please login.
+                    ¡Registro realizado con éxito! Por favor, inicie sesión.
                 </div>
                 <% }%>
                 <form action="login" method="post">
@@ -32,7 +32,9 @@
                     </div>
                     <button type="submit" class="btn btn-primary btn-block mb-3">Sign In</button>
                     <div class="text-center">
-                        <a href="register.jsp">Don't have an account? Register here</a>
+                        <a href="register.jsp">¿No tiene una cuenta? Regístrese aquí</a>
+                        <br/>
+                        <a href="index.jsp">Regrese a la pagina</a>
                     </div>
                 </form>
             </div>

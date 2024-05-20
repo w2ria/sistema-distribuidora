@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modelo;
 
 import Configuraciones.conexion;
@@ -12,8 +7,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class EmpleadoDAO {
+
     conexion cn = new conexion();
     Connection con;
     PreparedStatement ps;
@@ -29,7 +24,7 @@ public class EmpleadoDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 Empleado emp = new Empleado();
-                emp.setIdProveedor(rs.getInt("idProveedor"));
+                emp.setIdEmpleado(rs.getInt("idEmpleado"));
                 emp.setIdUsuario(rs.getInt("idUsuario"));
                 emp.setNombre(rs.getString("nombre"));
                 emp.setTipoDocumento(rs.getString("tipoDocumento"));
@@ -45,15 +40,42 @@ public class EmpleadoDAO {
         return lista;
     }
 
-    public Empleado listarPorId(int id) {
-        Empleado emp = new Empleado();
-        String sql = "SELECT * FROM empleado WHERE idProveedor=" + id;
+    public List<Empleado> buscarPorNombre(String nombre) {
+        List<Empleado> lista = new ArrayList<>();
+        String sql = "SELECT * FROM empleado WHERE nombre LIKE ?";
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + nombre + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
-                emp.setIdProveedor(rs.getInt("idProveedor"));
+                Empleado emp = new Empleado();
+                emp.setIdEmpleado(rs.getInt("idEmpleado"));
+                emp.setIdUsuario(rs.getInt("idUsuario"));
+                emp.setNombre(rs.getString("nombre"));
+                emp.setTipoDocumento(rs.getString("tipoDocumento"));
+                emp.setNumDocumento(rs.getString("numDocumento"));
+                emp.setDireccion(rs.getString("direccion"));
+                emp.setTelefono(rs.getString("telefono"));
+                emp.setEmail(rs.getString("email"));
+                lista.add(emp);
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR en buscarPorNombre EmpleadoDAO: " + e.getMessage());
+        }
+        return lista;
+    }
+
+    public Empleado listarPorId(int idUsuario) { // Corregido a idUsuario
+        Empleado emp = new Empleado();
+        String sql = "SELECT * FROM empleado WHERE idUsuario=?";
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idUsuario);
+            rs = ps.executeQuery();
+            if (rs.next()) { // Cambiado a if
+                emp.setIdEmpleado(rs.getInt("idEmpleado"));
                 emp.setIdUsuario(rs.getInt("idUsuario"));
                 emp.setNombre(rs.getString("nombre"));
                 emp.setTipoDocumento(rs.getString("tipoDocumento"));
@@ -64,6 +86,20 @@ public class EmpleadoDAO {
             }
         } catch (Exception e) {
             System.out.println("ERROR en ListarPorId EmpleadoDAO: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                System.out.println("ERROR cerrando conexiones: " + e.getMessage());
+            }
         }
         return emp;
     }
@@ -89,7 +125,7 @@ public class EmpleadoDAO {
     }
 
     public int actualizar(Empleado emp) {
-        String sql = "UPDATE empleado SET idUsuario=?, nombre=?, tipoDocumento=?, numDocumento=?, direccion=?, telefono=?, email=? WHERE idProveedor=?";
+        String sql = "UPDATE empleado SET idUsuario=?, nombre=?, tipoDocumento=?, numDocumento=?, direccion=?, telefono=?, email=? WHERE idEmpleado=?";
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
@@ -100,7 +136,7 @@ public class EmpleadoDAO {
             ps.setString(5, emp.getDireccion());
             ps.setString(6, emp.getTelefono());
             ps.setString(7, emp.getEmail());
-            ps.setInt(8, emp.getIdProveedor());
+            ps.setInt(8, emp.getIdEmpleado());
             r = ps.executeUpdate();
             System.out.println("Empleado actualizado correctamente.");
         } catch (Exception e) {
@@ -109,15 +145,36 @@ public class EmpleadoDAO {
         return r;
     }
 
-    public void eliminar(int id) {
-        String sql = "DELETE FROM empleado WHERE idProveedor=" + id;
+    public boolean eliminar(int idEmpleado) {
+        boolean eliminacionExitosa = false;
+        String sql = "DELETE FROM empleado WHERE idEmpleado=?";
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            ps.executeUpdate();
-            System.out.println("Empleado eliminado correctamente.");
+            ps.setInt(1, idEmpleado);
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas > 0) {
+                eliminacionExitosa = true;
+                System.out.println("Empleado eliminado correctamente");
+            } else {
+                System.out.println("No se encontró ningún empleado con el ID especificado");
+            }
         } catch (Exception e) {
-            System.out.println("ERROR en Eliminar EmpleadoDAO: " + e.getMessage());
+            System.out.println("ERROR al eliminar empleado: " + e.getMessage());
+        } finally {
+            // Cerrar recursos (PreparedStatement, Connection, etc.) si es necesario
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                System.out.println("ERROR cerrando conexiones: " + e.getMessage());
+            }
         }
+        return eliminacionExitosa;
     }
+
 }

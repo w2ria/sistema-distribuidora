@@ -4,6 +4,7 @@
  */
 package Controlador;
 
+
 import Modelo.*;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -25,16 +26,32 @@ public class LoginServlet extends HttpServlet {
         Usuario us = usuarioDAO.validar(usuario, clave);
 
         if (us.getUsuario() != null) {
-            ClienteDAO clienteDAO = new ClienteDAO();
-            Cliente cliente = clienteDAO.listarPorId(us.getIdUsuario());
+            HttpSession session = request.getSession();
+            session.setAttribute("usuario", us);
 
-            if (cliente.getNombre() != null) {  // Asegúrate de que se recuperó el cliente correctamente
-                HttpSession session = request.getSession();
-                session.setAttribute("usuario", us);
-                session.setAttribute("cliente", cliente);
-                response.sendRedirect("index.jsp");
+            // Verificar si el usuario es un administrador, empleado o un cliente
+            AdministradorDAO administradorDAO = new AdministradorDAO();
+            Administrador admin = administradorDAO.listarPorId(us.getIdUsuario());
+
+            if (admin != null && admin.getNombre() != null) {
+                session.setAttribute("admin", admin);
+                response.sendRedirect("MenuAdministrador.jsp");
             } else {
-                response.sendRedirect("login.jsp?error=true");
+                EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+                Empleado empleado = empleadoDAO.listarPorId(us.getIdUsuario());
+                if (empleado != null && empleado.getNombre() != null) {
+                    session.setAttribute("empleado", empleado);
+                    response.sendRedirect("MenuEmpleado.jsp");
+                } else {
+                    ClienteDAO clienteDAO = new ClienteDAO();
+                    Cliente cliente = clienteDAO.listarPorId(us.getIdUsuario());
+                    if (cliente != null && cliente.getNombre() != null) {
+                        session.setAttribute("cliente", cliente);
+                        response.sendRedirect("index.jsp");
+                    } else {
+                        response.sendRedirect("login.jsp?error=true");
+                    }
+                }
             }
         } else {
             response.sendRedirect("login.jsp?error=true");

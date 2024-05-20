@@ -1,17 +1,11 @@
-<%-- 
-    Document   : Proveedor
-    Created on : 14 may. 2024, 18:29:55
-    Author     : maria
---%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@page import="Modelo.*"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
-    List<Proveedor> ListaProveedores = (List<Proveedor>) request.getAttribute("ListaProveedores");
+    List<Empleado> ListaEmpleados = (List<Empleado>) request.getAttribute("ListaEmpleados");
 %>
 
 <!DOCTYPE html>
@@ -25,82 +19,90 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDzwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <title>Proveedor</title>
+        <title>Empleado</title>
     </head>
     <body>
         <div class="container">
-            <h1 class="mt-4">Gestión de Proveedores</h1>
+            <h1 class="mt-4">Gestión de Empleados</h1>
 
             <!-- Formulario de búsqueda -->
-            <form class="form-inline my-3" action="ControladorProveedor" method="GET">
+            <form class="form-inline my-3" action="ControladorEmpleado" method="GET">
                 <input type="hidden" name="Op" value="Buscar">
                 <input type="text" name="nombre" class="form-control mr-sm-2" placeholder="Buscar por nombre" required>
                 <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Buscar</button>
-                <a href="ControladorProveedor?Op=Listar" class="btn btn-outline-primary my-2 my-sm-0 ml-2">Mostrar Todo</a>
+                <a href="ControladorEmpleado?Op=Listar" class="btn btn-outline-primary my-2 my-sm-0 ml-2">Mostrar Todo</a>
             </form>
 
-            <!-- Botones para agregar proveedor y mostrar todo -->
+            <!-- Botones para agregar empleado, mostrar todo y navegar al menú de administrador -->
             <div class="d-flex justify-content-start mb-3">
-                <button type="button" class="btn btn-info mr-2" id="btnAgregar" data-toggle="modal" data-target="#agregarProveedorModal">Agregar Proveedor</button>
-                <a href="MenuAdministrador.jsp" class="btn btn-outline-secondary">Volver al Menu Administrador</a>
+                <button type="button" class="btn btn-info mr-2" id="btnAgregar" data-toggle="modal" data-target="#agregarEmpleadoModal">Agregar Empleado</button>
+                <a href="MenuAdministrador.jsp" class="btn btn-outline-secondary">Volver a Menu Administrador</a>
             </div>
 
-            <!-- Tabla de proveedores -->
+            <!-- Tabla de empleados -->
             <div class="d-flex">
                 <div class="col-sm-12">
                     <table class="table table-hover" border="1" style="border-radius:20px; margin-top:15px;">
                         <thead>
                             <tr style="background-color:#fff; font-weight:bold;">
                                 <td style="color:black;"><center>ID</center></td>
-                        <td style="color:black;"><center>NOMBRES</center></td>
-                        <td style="color:black;"><center>TIPO DOCUMENTO</center></td>
-                        <td style="color:black;"><center>N° DOCUMENTO</center></td>
-                        <td style="color:black;"><center>DIRECCIÓN</center></td>
-                        <td style="color:black;"><center>TELÉFONO</center></td>
-                        <td style="color:black;"><center>EMAIL</center></td>
-                        <td style="color:black;"><center>ACCIONES</center></td>
-                        </tr>
+                                <td style="color:black;"><center>NOMBRES</center></td>
+                                <td style="color:black;"><center>TIPO DOCUMENTO</center></td>
+                                <td style="color:black;"><center>N° DOCUMENTO</center></td>
+                                <td style="color:black;"><center>DIRECCIÓN</center></td>
+                                <td style="color:black;"><center>TELÉFONO</center></td>
+                                <td style="color:black;"><center>EMAIL</center></td>
+                                <td style="color:black;"><center>ACCIONES</center></td>
+                            </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="proveedor" items="${ListaProveedores}">
+                            <c:forEach var="empleado" items="${ListaEmpleados}">
                                 <tr>
-                                    <td><center>${proveedor.getIdProveedor()}</center></td>
-                            <td><center>${proveedor.getNombre()}</center></td>
-                            <td><center>${proveedor.getTipoDocumento()}</center></td>
-                            <td><center>${proveedor.getNumDocumento()}</center></td>
-                            <td><center>${proveedor.getDireccion()}</center></td>
-                            <td><center>${proveedor.getTelefono()}</center></td>
-                            <td><center>${proveedor.getEmail()}</center></td>
-                            <td>
-                                <div style="display: flex;">
-                                    <a class="btn btn-warning editBtn" data-toggle="modal" data-target="#editModal" data-id="${proveedor.getIdProveedor()}"
-                                       data-nombre="${proveedor.getNombre()}" data-tipo-documento="${proveedor.getTipoDocumento()}"
-                                       data-num-documento="${proveedor.getNumDocumento()}" data-direccion="${proveedor.getDireccion()}"
-                                       data-telefono="${proveedor.getTelefono()}" data-email="${proveedor.getEmail()}"><i class="fas fa-edit"></i> Editar</a>
-                                    <a href="ControladorProveedor?Op=Eliminar&idProveedor=${proveedor.getIdProveedor()}" class="btn btn-danger" style="margin-left: 5px;" onclick="return confirm('¿Estás seguro de que deseas eliminar este proveedor?');">
-                                        <i class="fas fa-trash-alt"></i> Eliminar
-                                    </a>
-                                </div>
-                            </td>
-                            </tr>
-                        </c:forEach>
+                                    <td><center>${empleado.getIdEmpleado()}</center></td>
+                                    <td><center>${empleado.getNombre()}</center></td>
+                                    <td><center>${empleado.getTipoDocumento()}</center></td>
+                                    <td><center>${empleado.getNumDocumento()}</center></td>
+                                    <td><center>${empleado.getDireccion()}</center></td>
+                                    <td><center>${empleado.getTelefono()}</center></td>
+                                    <td><center>${empleado.getEmail()}</center></td>
+                                    <td>
+                                        <div style="display: flex;">
+                                            <a class="btn btn-warning editBtn" data-toggle="modal" data-target="#editModal" data-id="${empleado.getIdEmpleado()}"
+                                               data-nombre="${empleado.getNombre()}" data-tipo-documento="${empleado.getTipoDocumento()}"
+                                               data-num-documento="${empleado.getNumDocumento()}" data-direccion="${empleado.getDireccion()}"
+                                               data-telefono="${empleado.getTelefono()}" data-email="${empleado.getEmail()}"><i class="fas fa-edit"></i> Editar</a>
+                                            <a href="ControladorEmpleado?Op=Eliminar&idEmpleado=${empleado.getIdEmpleado()}" class="btn btn-danger" style="margin-left: 5px;" onclick="return confirm('¿Estás seguro de que deseas eliminar este empleado?');">
+                                                <i class="fas fa-trash-alt"></i> Eliminar
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Modal para agregar proveedor -->
-            <div class="modal fade" id="agregarProveedorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <!-- Modal para agregar empleado -->
+            <div class="modal fade" id="agregarEmpleadoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Agregar Proveedor</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Agregar Empleado</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="ControladorProveedor" method="POST">
+                            <form action="ControladorEmpleado" method="POST">
+                                <div class="form-group">
+                                    <label for="txtUsuario">Usuario</label>
+                                    <input type="text" name="usuario" id="txtUsuario" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtClave">Clave</label>
+                                    <input type="password" name="clave" id="txtClave" class="form-control" required>
+                                </div>
                                 <div class="form-group">
                                     <label for="txtNombre">Nombre</label>
                                     <input type="text" name="nombre" id="txtNombre" class="form-control" required>
@@ -134,19 +136,19 @@
                 </div>
             </div>
 
-            <!-- Modal para editar proveedor -->
+            <!-- Modal para editar empleado -->
             <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">Editar Proveedor</h5>
+                            <h5 class="modal-title" id="editModalLabel">Editar Empleado</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form id="editForm" action="ControladorProveedor" method="POST">
-                                <input type="hidden" name="idProveedor" id="editIdProveedor">
+                            <form id="editForm" action="ControladorEmpleado" method="POST">
+                                <input type="hidden" name="idEmpleado" id="editIdEmpleado">
                                 <div class="form-group">
                                     <label for="editNombre">Nombre</label>
                                     <input type="text" name="nombre" id="editNombre" class="form-control" required>
@@ -179,37 +181,36 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <script>
-            $(document).ready(function () {
-                $('.editBtn').on('click', function () {
-                    var id = $(this).data('id');
-                    var nombre = $(this).data('nombre');
-                    var tipoDocumento = $(this).data('tipo-documento');
-                    var numDocumento = $(this).data('num-documento');
-                    var direccion = $(this).data('direccion');
-                    var telefono = $(this).data('telefono');
-                    var email = $(this).data('email');
+            <script>
+                $(document).ready(function () {
+                    $('.editBtn').on('click', function () {
+                        var id = $(this).data('id');
+                        var nombre = $(this).data('nombre');
+                        var tipoDocumento = $(this).data('tipo-documento');
+                        var numDocumento = $(this).data('num-documento');
+                        var direccion = $(this).data('direccion');
+                        var telefono = $(this).data('telefono');
+                        var email = $(this).data('email');
 
-                    $('#editIdProveedor').val(id);
-                    $('#editNombre').val(nombre);
-                    $('#editTipoDocumento').val(tipoDocumento);
-                    $('#editNumDocumento').val(numDocumento);
-                    $('#editDireccion').val(direccion);
-                    $('#editTelefono').val(telefono);
-                    $('#editEmail').val(email);
+                        $('#editIdEmpleado').val(id);
+                        $('#editNombre').val(nombre);
+                        $('#editTipoDocumento').val(tipoDocumento);
+                        $('#editNumDocumento').val(numDocumento);
+                        $('#editDireccion').val(direccion);
+                        $('#editTelefono').val(telefono);
+                        $('#editEmail').val(email);
+                    });
                 });
-            });
-        </script>
+            </script>
 
-        <script>
-            function Editar() {
-                document.getElementById('btnAgregar').style.display = 'none';
-                document.getElementById('btnActualizar').style.display = 'block';
-                document.getElementById('btnCancelarActualizacion').style.display = 'block';
-            }
-        </script>
+            <script>
+                function Editar() {
+                    document.getElementById('btnAgregar').style.display = 'none';
+                    document.getElementById('btnActualizar').style.display = 'block';
+                    document.getElementById('btnCancelarActualizacion').style.display = 'block';
+                }
+            </script>
+        </div>
     </body>
 </html>
-

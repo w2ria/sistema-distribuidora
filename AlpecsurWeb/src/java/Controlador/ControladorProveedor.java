@@ -1,9 +1,6 @@
 package Controlador;
 
-import Modelo.Proveedor;
-import Modelo.ProveedorDAO;
-import Modelo.Usuario;
-import Modelo.UsuarioDAO;
+import Modelo.*;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -53,8 +50,15 @@ public class ControladorProveedor extends HttpServlet {
                 }
                 break;
 
+            case "Buscar":
+                String nombreBuscar = request.getParameter("nombre");
+                List<Proveedor> proveedoresEncontrados = proveedorDAO.buscarPorNombre(nombreBuscar);
+                request.setAttribute("ListaProveedores", proveedoresEncontrados);
+                request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                break;
+
             default:
-                listaProveedores = proveedorDAO.listar();
+                listaProveedores = proveedorDAO.listar(); // Aquí estaba el error, ya no se redeclara la variable
                 request.setAttribute("ListaProveedores", listaProveedores);
                 request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
                 break;
