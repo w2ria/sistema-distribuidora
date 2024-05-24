@@ -1,0 +1,125 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23/05/2024, 02:51:29 PM
+    Author     : piero
+*/
+
+/* Car */
+.car-item{
+    border: var(--border); 
+    -webkit-box-shadow: var(--box-shadow);
+            box-shadow: var(--box-shadow);
+}
+
+/* Car Image Container */ 
+.car-item .image{ 
+    position: relative;  
+}
+
+/* Car Image */
+.car-item .image img{
+    width: 100%;
+    height: 25rem;
+    object-fit: cover;
+}
+
+/* Car Price */
+.car-item .price{
+    position: absolute;
+    bottom: 1rem;
+    left: 1.5rem;
+    color: var(--white);
+    font-size: 5rem;
+    font-weight: 400;
+}
+
+/* Car '/day' text */
+.car-item .price span{
+    font-size: 2rem;
+    font-weight: normal; 
+}
+
+/* Car Content Container */
+.car-item .content{
+    padding: 1.5rem;
+    text-align: left;
+}
+
+/* Car Rating container */
+.car-item .rating {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 1rem;
+}
+  
+/* Car Rating icon */
+.car-item .rating .icon {
+    font-size: 1.6rem;
+    color: var(--main-color);
+}
+  
+/* Car Rating text */
+.car-item .rating h5 {
+    font-size: 1.6rem;
+    color: var(--black);
+}
+
+/* Car Heading */
+.car-item h2{
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--black);
+    padding-top: 0.2rem;
+    padding-bottom: 1rem;
+}
+
+/* Car Heading, On Hover */
+.car-item h2:hover{
+    color: var(--main-color);
+}
+
+/* Car Details */
+.car-item .details{
+    max-width: 40rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Car Details Item */
+.car-item .details h3{
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 10rem;
+        flex: 1 1 10rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Car Details item Icon */
+.car-item .details h3 .icon{
+    font-size: 1.5rem;
+    color: var(--main-color);
+}
+
+/* Car Details item Text */
+.car-item .details h3 span{
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--grey);
+}

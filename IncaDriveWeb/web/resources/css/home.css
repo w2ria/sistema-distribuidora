@@ -1,0 +1,101 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+/* Home Section */
+.home{
+  padding: 0;
+  height: 1px;
+  min-height: 100vh;
+  position: relative;
+}  
+  
+/* Home Slider */ 
+.home-slider{ 
+  position: relative; 
+}  
+
+/* Home Slider Navigation Button */
+.home-slider .swiper-button-next,
+.home-slider .swiper-button-prev{
+  padding: 2rem;
+}
+  
+/* Home Slider Navigation Button Icon */
+.home-slider .swiper-button-next::after,
+.home-slider .swiper-button-prev::after {
+  font-size: 5rem;
+  font-weight: bold;
+  color: var(--white);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center; 
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+/* Home Slider Navigation Button Icon, On Hover */
+.home-slider .swiper-button-next:hover::after,
+.home-slider .swiper-button-prev:hover::after{
+  color: var(--main-color);
+}
+ 
+/* Home Item */
+.home-item{
+  min-height: 100vh;
+}
+
+/* Home Image */
+.home-item img{
+  height: 100vh;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Home Content */
+.home-item .content{
+  padding: 2rem 7%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+  background:         linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+}
+
+/* Home Content Text */
+.home-item .content .text{
+  text-align: center;
+  width: 80rem;
+}
+
+/* Home Heading */
+.home-item .content h3{
+  font-size: 4.5rem;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+  color: var(--white);
+}
+
+/* Home Paragraph */
+.home-item .content p{
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--white);
+  padding-bottom: 2rem;
+  line-height: 1.4;
+}

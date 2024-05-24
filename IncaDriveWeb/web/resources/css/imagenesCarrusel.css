@@ -1,0 +1,139 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23/05/2024, 04:15:11 PM
+    Author     : piero
+*/
+
+/*----- Image Gallery Thumbnails Container -----*/
+.image-gallery-thumbnail {
+    display: inline-block;
+    border: 4px solid transparent;
+    -webkit-transition: border .3s ease-out;
+    -moz-transition: border .3s ease-out;
+    -o-transition: border .3s ease-out; 
+    transition: border .3s ease-out;
+    width: 10rem;
+    object-fit: cover;
+    overflow: hidden; 
+    background: transparent;
+    padding: 0;
+}
+
+.image-gallery {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    position: relative;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+
+.image-gallery-content {
+    line-height: 0;
+    position: relative;
+    top: 0;
+}
+
+.image-gallery-thumbnail:hover,
+.image-gallery-thumbnail.active {
+    border-color: var(--main-color);
+}
+
+.image-gallery-left-nav {
+    left: 0;
+}
+
+.image-gallery-left-nav, .image-gallery-right-nav {
+    padding: 50px 10px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.image-gallery-icon {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: initial;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    -webkit-filter: drop-shadow(0 2px 2px #1a1a1a);
+    filter: drop-shadow(0 2px 2px #1a1a1a);
+    outline: none;
+    position: absolute;
+    transition: all .3s ease-out;
+    z-index: 4;
+}
+
+.image-gallery-right-nav {
+    right: 0;
+}
+
+.image-gallery-slides {
+    line-height: 0;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+}
+
+element.style {
+    display: inherit;
+    transform: translate3d(0%, 0px, 0px);
+    transition: all 450ms ease-out 0s;
+}
+
+element.style {
+    display: inherit;
+    transform: translate3d(100%, 0px, 0px);
+    transition: all 450ms ease-out 0s;
+}
+
+element.style {
+    display: inherit;
+    transform: translate3d(200%, 0px, 0px);
+    transition: all 450ms ease-out 0s;
+}
+
+element.style {
+    display: inherit;
+    transform: translate3d(-100%, 0px, 0px);
+    transition: all 450ms ease-out 0s;
+}
+
+.image-gallery-slide.center {
+    position: relative;
+}
+
+.image-gallery-slide {
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.image-gallery-image {
+    object-fit: contain;
+    width: 100%;
+}
+
+.image-gallery-content .image-gallery-slide .image-gallery-image {
+    max-height: calc(100vh - 80px);
+}
+
+.image-gallery-slide-wrapper {
+    box-shadow: var(--box-shadow);
+    max-height: 40rem;
+    overflow: hidden;
+}
+
+.image-gallery-thumbnails-wrapper.thumbnails-swipe-horizontal {
+    touch-action: pan-y;
+}
+
+.image-gallery-thumbnails-wrapper {
+    position: relative;
+}

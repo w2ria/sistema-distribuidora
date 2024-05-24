@@ -1,0 +1,167 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 24/05/2024, 12:00:38 AM
+    Author     : piero
+*/
+
+/* Checkout Form */
+.checkout form{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    -ms-grid-row-align: flex-start;
+    align-items: flex-start; 
+    gap: 2rem;  
+    -ms-flex-wrap: wrap;  
+        flex-wrap: wrap;
+}   
+
+/* Checkout Heading */
+.checkout .heading h2{
+    font-size: 2rem;
+}
+
+/* Checkout item */
+.checkout-item{
+    background-color: var(--white);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: var(--border);
+    -webkit-box-shadow: var(--box-shadow);
+            box-shadow: var(--box-shadow);
+}
+
+/* Checkout Box-1 container */
+.checkout .box-1{
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 60rem;
+        flex: 1 1 60rem;
+}
+
+/* Checkout Box-2 container */
+.checkout .box-2{
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 30rem;
+        flex: 1 1 30rem;
+}
+
+/*----- 1- Payment Method -----*/
+/* Payment method */
+.payment-methods .item{
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+/* Payment method label */
+.payment-methods .item label{
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--black);
+}
+
+/* Payment method input */
+.payment-methods .item  input{
+    margin-right: 0.5rem;
+}
+
+/* Selected/Highlighted payment method label */
+.payment-methods .item input:checked + label, 
+.payment-methods .item label:hover { 
+    color: var(--main-color);
+}
+
+/* Payment method body */
+.payment-methods .item .payment-body { 
+    display: none;
+}
+
+/* Payment method detail */
+.payment-methods .item .payment-body p{
+    font-size: 1.5rem;
+    line-height: 2;
+    color: var(--grey);
+}
+
+/* Show payment method body when input is checked */
+.payment-methods .item > input:checked ~ .payment-body { 
+    display: block;
+}
+
+/* Active payment method body */
+.payment-body.active{
+    display: block; 
+}
+
+/* Checkout Button */
+.checkout .btn{
+    width: 100%;
+    text-align: center;
+} 
+
+.form {
+    background: #fff;
+    background: var(--white);
+}
+
+.form .input-box {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form .input-box .box {
+    width: 49%;
+}
+
+.form .box {
+    background-color: initial;
+    border: .15rem solid rgba(0, 0, 0, .1);
+    color: #666;
+    color: var(--grey);
+    font-size: 1rem;
+    margin: .5rem 0;
+    padding: 1rem 1.5rem;
+    text-transform: none;
+    width: 100%;
+}
+
+.shop-summary{
+    background-color: var(--white);
+} 
+ 
+/* Summary item */
+.summary-item{
+    display: -webkit-box;
+    display: -ms-flexbox;  
+    display: flex; 
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center; 
+    -ms-flex-align: center; 
+    align-items: center;
+    padding-bottom: 1.5rem;
+} 
+
+/* Summary item boxes */
+.summary-item .box{
+    font-size: 1.3rem;
+    color: var(--black);
+}
+
+/* Each Summary Item Name */
+.summary-item .name{
+    font-weight: 600;
+}
+
+/* Each Summary Item Value */
+.summary-item .value{
+    font-weight: 400;
+    color: var(--grey);
+}

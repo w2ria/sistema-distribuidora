@@ -1,0 +1,110 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23/05/2024, 02:15:01 PM
+    Author     : piero
+*/
+/* Page title Background */
+.link a{
+    text-decoration: none;
+}
+.page-title{
+    position: relative;
+    background: linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, .2)), url(./images/IT001.jpg);
+    min-height: 45rem;
+    background-repeat: no-repeat;  
+    background-size: cover;  
+    background-position: center;
+    display: -webkit-box;
+    display: -ms-flexbox; 
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    -ms-grid-row-align: flex-start;
+    align-items: flex-start;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 0.5rem;
+    padding: 0rem 5%;
+    padding-top: 8rem;
+    position: relative;
+}
+
+/* Title text */
+.page-title .title h2{
+    color: var(--white);
+    font-size: 5rem;
+    font-weight: 600;
+}
+
+/* Page Title link Container */
+.page-title .link{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--main-color);
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+}
+
+/* Homepage link */
+.page-title .link a{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    gap: 0.5rem;
+}
+
+/* Homepage link icon */
+.page-title .link a .page-home{
+    height: 2rem;
+    width: 2rem;
+    font-size: 1.8rem;
+    color: var(--white);
+}
+
+/* Homepage link text */
+.page-title .link a span{
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--white);
+    text-decoration: none;
+}
+
+/* Homepage link text, On Hover */
+.page-title .link a span:hover{
+    color: var(--black);
+} 
+
+/* Navigation Separator Icon  */
+.page-title .link .icon{
+    font-size: 2.2rem;
+    color: var(--white);
+}
+
+/* Page name text */
+.page-title .link span{
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--white);
+}

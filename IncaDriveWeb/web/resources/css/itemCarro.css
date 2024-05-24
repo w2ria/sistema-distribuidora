@@ -1,0 +1,300 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23/05/2024, 02:49:53 PM
+    Author     : piero
+*/
+
+/*----- Car Information -----*/
+
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
+/* Car Description */
+.car-single .car-description{
+    -webkit-box-shadow: var(--box-shadow);
+            box-shadow: var(--box-shadow);
+    border: 0.05rem solid rgba(0, 0, 0, 0.1); 
+    padding: 2rem;
+    margin-bottom: 2rem;
+} 
+ 
+/* Car Container */
+.car-single .car-description .car-container{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center; 
+    -ms-flex-pack: center;
+    justify-content: center; 
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-wrap: wrap; 
+        flex-wrap: wrap;
+    gap: 3rem;
+    background-color: var(--white);
+    margin-bottom: 2rem;
+}
+
+/* Car Content */
+.car-single .car-description .content{
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 40rem;
+        flex: 1 1 40rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center; 
+    align-items: center;
+}
+
+/* Car Intro */
+.car-single .car-description .content .car-intro{
+    padding-bottom: 1rem;
+}
+
+/* Car Title */
+.car-single .car-description .content h2{
+    font-size: 2rem;
+    font-weight: 650;
+    color: var(--black);
+}
+
+/* Car Price */
+.car-single .car-description .content .price{ 
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+/* Car Rating */
+.car-single .car-description .content .rating {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 1rem;
+}
+
+/* Car Rating Icon */
+.car-single .car-description .content .rating .icon {
+    color: var(--main-color);
+    font-size: 1.5rem;
+}
+
+/* Car Rating text */
+.car-single .car-description .content .rating h5 {
+    font-size: 1.5rem;
+    color: var(--black);
+}  
+
+/* Car Description Paragraph */
+.car-single .car-description .content p{
+    font-size: 1.1rem;
+    padding: 1.5rem 0;
+    line-height: 1.7;
+    font-weight: 400;
+    color: var(--grey);
+}
+
+/* Car Box Container */
+.car-single .content .box{
+    border-top: 0.2rem solid rgba(0, 0, 0, 0.1);
+    border-bottom: 0.2rem solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 1.5rem;
+}
+
+/* Car Details */
+.car-single .car-description .details{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Car Detail Item */
+.car-single .car-description .details h3{
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 15rem;
+        flex: 1 1 15rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 1rem;
+}
+
+/* Car Detail Item Icon */
+.car-single .car-description .details h3 .icon{
+    font-size: 1rem;
+    color: var(--main-color);
+}
+
+/* Car Detail Item Text */
+.car-single .car-description .details h3 span{
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--grey);
+}
+
+/*-- Car Addtional Information --*/
+.car-info{
+    margin-top: 4rem;
+}
+
+/* Car Information Tabs */
+.car-info-tabs{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    list-style-type: none;
+    gap: 1rem;
+    border-bottom: 0.2rem solid rgba(0, 0, 0, 0.1);
+}
+
+/* Car Information Tabs Button */
+.car-info-tabs button{
+    padding: 1rem 2.5rem;
+    font-size: 1.2 rem;
+    color: var(--grey);
+    background-color: transparent;
+}
+
+/* Car Information Tabs Button, On Hover & Active */
+.car-info-tabs button:hover,
+.car-info-tabs button.active{
+    color: var(--main-color);
+    border-bottom: 0.2rem solid var(--main-color);
+    cursor: pointer;
+}
+
+/* Car Information Gallery */ 
+.car-info-gallery{
+    display: block;
+    margin-top: 2rem;
+}
+
+/* Car Description */
+.car-info .description p{
+    font-size: 1rem;
+    color: var(--grey);
+    line-height: 1.5;
+}
+
+/* Additional Information Item */
+.car-info .additional-info .item{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 2rem;
+    padding-bottom: 1rem;
+}
+
+/* Additional Information Item Title */
+.car-info .additional-info h3{
+    width: 20rem;
+    font-size: 1.8rem;
+    color: var(--black);
+}
+
+/* Additional Information Item Info */
+.car-info .additional-info span{
+    font-size: 1.6rem;
+    color: var(--grey);
+}
+
+/* Reviews Container */
+.car-info .reviews {
+    margin-bottom: 2rem;
+}
+
+/* Comments Container */
+.car-info .reviews .comments {
+    padding: 0;
+}
+
+/* Car Review Form Container */
+.car-info .car-review {
+    width: 60rem;  
+    margin-top: 2rem;
+}
+
+/* Featured Cars Sidebar Heading */
+.car-single .sidebar-heading{
+    margin-bottom: 1rem;
+}
+
+
+/*--------------- React Image Gallery ---------------*/
+
+/*----- Car Image -----*/
+.car-single .car-description .image{
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 35rem;
+        flex: 1 1 35rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+}
+
+/*----- Main Image -----*/
+.image-gallery-slide-wrapper{
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    max-height: 40rem;
+}
+
+.image-gallery-slide-wrapper:hover .image-gallery-left-nav, 
+.image-gallery-slide-wrapper:hover .image-gallery-right-nav,
+.image-gallery-slide-wrapper:hover .image-gallery-play-button,
+.image-gallery-slide-wrapper:hover .image-gallery-fullscreen-button{
+    display: block;
+}
+
+/*----- Buttons -----*/
+.image-gallery-icon:hover {
+    color: var(--main-color);
+}
+
+.image-gallery-left-nav, 
+.image-gallery-right-nav {
+    padding: 0;
+    display: none;
+}
+
+.image-gallery-left-nav .image-gallery-svg, 
+.image-gallery-right-nav .image-gallery-svg {
+    height: 6rem;
+    width: 6rem; 
+}
+
+/* Car Gallery Play Button */
+.image-gallery-play-button {
+    display: none;
+}
+
+/* Car Gallery Fullscreen Button */
+.image-gallery-fullscreen-button {
+    display: none;
+}
+

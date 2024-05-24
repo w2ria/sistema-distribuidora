@@ -1,0 +1,110 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23/05/2024, 03:08:22 PM
+    Author     : piero
+*/
+
+/* Car header */
+.cars .car-intro{
+    margin-bottom: 1.5rem;
+    display: -webkit-box;
+    display: -ms-flexbox; 
+    display: flex; 
+    -webkit-box-pack: justify; 
+    -ms-flex-pack: justify; 
+    justify-content: space-between;
+    -webkit-box-align: center; 
+    -ms-flex-align: center; 
+    align-items: center;
+    -ms-flex-wrap: wrap; 
+        flex-wrap: wrap; 
+    gap: 1rem;
+}
+
+/* Showing Cars count */
+.cars .car-intro .showing{
+    font-size: 1.6rem;
+    color: var(--grey);
+}
+
+/* Styles Buttons */
+.cars .car-intro .styles{
+    list-style-type: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Styles Button */
+.cars .car-intro .styles a{
+    font-size: 2rem;
+    color: var(--black);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+/* Styles Button, On Hover */
+.cars .car-intro .styles a:hover{
+    cursor: pointer;
+    color: var(--main-color);
+}
+
+/* Sorting Options */
+.custom-select.sorting{
+    width: 20rem;
+}
+
+
+
+/*----- react-select styling -----*/
+
+/* Select wrapper */
+.car-intro .custom-select .custom-select-prefix__control {
+    border: 1px solid rgba(0,0,0,0.2) !important;
+    font-size: 1.5rem;
+    color: var(--grey) !important;
+    border-radius: 0.4rem;
+    min-height: 4rem;
+}
+
+/* Select Value */
+.car-intro .custom-select .custom-select-prefix__single-value {
+    color: var(--grey) !important;
+}
+
+/* Select wrapper, Focused */
+.car-intro .custom-select-prefix__control--is-focused {
+    border-color: var(--main-color) !important;
+    -webkit-box-shadow: 0 0 0 1px var(--main-color) !important;
+            box-shadow: 0 0 0 1px var(--main-color) !important; 
+}
+
+/* Select option */
+.car-intro .custom-select .custom-select-prefix__option {
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+/* select option, On Hover */
+.car-intro .custom-select .custom-select-prefix__option:hover {
+    color: var(--white);
+    background-color: var(--main-color);
+}
+
+/* select option, Selected */
+.car-intro .custom-select .custom-select-prefix__option--is-selected {
+    color: var(--white);
+    background-color: var(--secondary-color);
+}

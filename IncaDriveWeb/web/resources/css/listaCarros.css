@@ -1,0 +1,52 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23/05/2024, 02:48:34 PM
+    Author     : piero
+*/
+/* Car Card, Inside Car Container (List) */
+.cars .car-container.list .car-item{
+    width: 100%;
+    text-align: left;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 1rem;  
+    margin-bottom: 1rem; 
+}
+ 
+/* Car Image Container */
+.cars .car-container.list .car-item .image{
+    max-height: 100%; 
+    min-width: 40rem;
+}
+
+/* Car Image */
+.cars .car-container.list .car-item .image img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* Car Content */
+.cars .car-container.list .car-item .content{
+    padding: 1rem;
+}
+
+/* Car Paragraph */
+.cars .car-container.list .car-item .content > p{
+    font-size: 1.4rem;
+    padding-bottom: 2rem;
+    line-height: 1.5;
+    color: var(--grey);
+}
+
+/* "No Car found" Message */ 
+.no-car-found{
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+}

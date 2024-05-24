@@ -1,0 +1,197 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23/05/2024, 03:10:23 PM
+    Author     : piero
+*/
+
+/* Header Section */
+.header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out; 
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    background: #111111;
+} 
+  
+/* Header 1 */
+.header .header-1{
+    margin-top: 7px;
+    display: -webkit-box; 
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: transparent;
+    padding: 1rem 5%;
+    border-bottom: 0.1rem solid rgba(255, 255, 255, 0.5);
+}
+
+/* Header-1, On Header Active */
+.header.active .header-1{
+    display: none;
+}
+
+/* Header contacts */
+.header .header-contacts{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 3rem;
+    list-style-type: none;
+}
+
+/* Header contact */
+.header .header-contacts li{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; 
+    gap: 1rem;
+}
+
+/* Header contact Icon */
+.header .header-contacts .icon{
+    font-size: 1.6rem;
+    color: var(--main-color);
+}
+
+/* Header contact Text */
+.header .header-contacts span{
+    text-transform: none;
+    font-size: 1.6rem;
+    color: var(--white);
+}
+
+/* Social contacts */
+.header .social-contacts{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 1.5rem;
+    list-style-type: none;
+}
+
+/* Social contact Icon */
+.header .social-contacts li .icon{
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: 0.4rem;
+    font-size: 1.6rem;
+    color: var(--white);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+/* Social contact Icon, On Hover */
+.header .social-contacts li .icon:hover{
+    color: var(--main-color);
+}
+
+/* Header-2 */
+.header .header-2{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 7rem;
+    padding: 0rem 5%;
+    background: transparent;
+}
+
+/* Header-2, On Header Active */
+.header.active .header-2{
+    background: var(--black);
+    -webkit-box-shadow: var(--box-shadow);
+            box-shadow: var(--box-shadow);
+}
+
+/* Header Menu Button */
+.header .menu-btn{
+    font-size: 2rem;
+    color: var(--white);
+    cursor: pointer;
+    display: none;
+}
+
+/* Header Menu Button, On Hover */
+.header .menu-btn:hover{
+    color: var(--main-color);
+}
+
+/* Header Container */
+.header .container{
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Header Navbar */
+.header .navbar{
+    list-style-type: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100%;
+    gap: 1.8rem;
+}
+
+/* Mobile Menu */
+.mobile-menu{
+    display: none;
+}
+
+
+/*---------------- RESPONSIVE ----------------*/
+@media (max-width: 991px){
+
+    /* Header Menu Button (Visible on Mobile) */
+    .header .menu-btn{
+        display: block;
+    } 
+
+    /* Mobile Menu (Visible on Mobile) */
+    .mobile-menu{
+        display: block;
+    }
+
+    /* Header Navbar (Hidden on Mobile) */
+    .header .navbar{
+        display: none;
+    }
+}

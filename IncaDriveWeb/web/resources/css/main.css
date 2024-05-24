@@ -1,0 +1,373 @@
+@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap);@import url(https://fonts.googleapis.com/css2?family=Andika&display=swap);@import url(https://fonts.googleapis.com/css2?family=Sofia&display=swap);.header {
+    position: fixed;
+    top: 0;
+    transition: all .5s ease-in-out;
+    width: 100%;
+    z-index: 1000
+}
+
+:root {
+    --main-color: #3c1ede;
+    --secondary-color: #000b49;
+    --black: #000;
+    --white: #fff;
+    --grey: #666;
+    --border-radius: 1rem;
+    --border: 0.1rem solid rgba(0,0,0,.1);
+    --box-shadow: 0 0.5rem 1rem rgba(0,0,0,.1);
+}
+
+
+* {
+    text-decoration: none;
+    border: none;
+    box-sizing: border-box;
+    font-family: Poppins, sans-serif;
+    margin: 0;
+    outline: none;
+    padding: 0;
+    text-transform: capitalize;
+    transition: all .2s linear;
+}
+
+.header-2 a {
+    text-decoration: none;
+}
+
+section {
+    padding: 3rem 5%;
+}
+
+body {
+    padding-top: 7rem; /* Ajuste para evitar que el contenido se oculte detrás del navbar */
+}
+
+content{
+    display: flex;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: all 0.5s ease-in-out;
+}
+.header .header-1 {
+    align-items: center;
+    background-color: initial;
+    border-bottom: .1rem solid hsla(0, 0%, 100%, .5);
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 5%;
+}
+.header .header-contacts {
+    align-items: center;
+    display: flex;
+    gap: 3rem;
+    list-style-type: none;
+}
+
+.header .header-contacts .icon {
+    color: #3c1ede;
+    font-size: 1.6rem;
+}
+.header .social-contacts {
+    align-items: center;
+    display: flex;
+    gap: 1.5rem;
+    list-style-type: none;
+}
+.header .header-2 {
+    align-items: center;
+    background: transparent;
+    display: flex;
+    height: 7rem;
+    justify-content: space-between;
+    padding: 0 5%;
+}
+
+.header.active .header-2 {
+    background: var(--black);
+}
+
+.header .menu-btn {
+    color: var(--white);
+    cursor: pointer;
+    display: none;
+    font-size: 2rem;
+}
+
+.header .menu-btn:hover {
+    color: #3c1ede;
+}
+
+.header .container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    height: 100%;
+}
+
+.header .navbar {
+    display: flex;
+    gap: 1.8rem;
+    list-style-type: none;
+    height: 100%;
+}
+
+.header .nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header .dropdown-menu {
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    background: none;
+    color: var(--white);
+    cursor: pointer;
+    gap: 0.5rem;
+}
+
+.header .dropdown-menu .nav-btn {
+    font-family: 'Andika', sans-serif;
+    font-size: 1.8rem;
+}
+
+.header .dropdown-menu .icon {
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    color: var(--white);
+}
+
+.header .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 20rem;
+    flex-direction: column;
+    background-color: var(--white);
+    border-bottom: 0.2rem solid #3c1ede;
+    color: var(--black);
+    padding: 0;
+    transform: scale(0);
+    transition: all 0.5s;
+    z-index: 1000;
+}
+
+.header .dropdown-content a {
+    padding: 1rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--black);
+    border-bottom: 0.1rem solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.header .dropdown-content a:hover {
+    background-color: #3c1ede;
+    color: var(--white);
+}
+
+.header .nav-item:hover .icon,
+.header .nav-item:hover .nav-btn {
+    color: #3c1ede;
+}
+
+.header .nav-item:hover .dropdown-content {
+    display: flex;
+    transform: scale(1);
+}
+
+.header .btn {
+    font-size: 1.6rem;
+    padding: 0.7rem 1.5rem;
+}
+
+.header .btn:hover {
+    background-color: #3c1ede;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo h3 {
+    color: #fff;
+    font-size: 3.5rem;
+    line-height: 1;
+}
+
+
+.logo h3 span {
+    color: #3c1ede;
+}
+
+.logo-name p{
+    color: #fff;
+}
+
+/* Estilos generales para el menú de navegación */
+.nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
+.nav-item {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-btn {
+  display: block;
+  color: #fff;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-btn:hover {
+  background-color: #111;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content li {
+  display: block;
+}
+
+.dropdown-content li a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content li a:hover {
+  background-color: #f1f1f1;
+}
+
+.nav-item:hover .dropdown-content {
+  display: block;
+}
+
+
+.home, .home-slider {
+    position: relative;
+}
+
+.home {
+    height: 1px;
+    min-height: 100vh;
+    padding: 0;
+}
+
+.swiper-pointer-events {
+    touch-action: pan-y;
+}
+
+.swiper {
+    list-style: none;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.btn{
+    display: inline-block;
+    color: var(--white); 
+    background: #3c1ede;
+    font-size: 1.8rem; 
+    font-weight: 500; 
+    letter-spacing: 0.1rem;   
+    padding: 1rem 2.5rem;  
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    -webkit-box-shadow: var(--box-shadow);
+            box-shadow: var(--box-shadow);
+}
+
+/* Button style, On hover */
+.btn:hover{
+	background-color: var(--secondary-color);
+	cursor: pointer;
+}
+
+
+.scroll-to-top {
+    align-items: center;
+    background-color: #3c1ede!important;
+    border: .1rem solid var(--white)!important;
+    border-radius: 0!important;
+    bottom: 1rem!important;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    height: 5rem!important;
+    justify-content: center;
+    opacity: .7;
+    right: 1rem!important;
+    text-align: center;
+    transition: all .2s;
+    width: 5rem!important;
+    z-index: 900!important
+}
+
+.scroll-to-top:hover {
+    cursor: pointer;
+    opacity: 1
+}
+
+.scroll-to-top svg {
+    fill: white;
+}
+
+
+.heading {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2rem
+}
+
+.heading span {
+    color: #3c1ede;
+    display: inline-block;
+    font-family: Sofia,cursive;
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: .2rem;
+    text-transform: capitalize
+}
+
+.heading h2 {
+    color: var(--secondary-color);
+    font-size: 4rem;
+    font-weight: 500;
+    position: relative;
+    text-transform: capitalize
+}
+
