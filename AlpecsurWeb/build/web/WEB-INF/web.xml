@@ -13,6 +13,10 @@
         <servlet-class>Controlador.ControladorProveedor</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ControladorEmpleado</servlet-name>
+        <servlet-class>Controlador.ControladorEmpleado</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>Controlador.LoginServlet</servlet-class>
     </servlet>
@@ -35,6 +39,10 @@
     <servlet-mapping>
         <servlet-name>ControladorProveedor</servlet-name>
         <url-pattern>/ControladorProveedor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorEmpleado</servlet-name>
+        <url-pattern>/ControladorEmpleado</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
