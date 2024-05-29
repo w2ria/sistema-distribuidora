@@ -107,8 +107,17 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="txtTipoDocumento">Tipo de Documento</label>
-                                    <input type="text" name="tipoDocumento" id="txtTipoDocumento" class="form-control" required>
+                                    <select name="tipoDocumento" id="txtTipoDocumento" class="form-control" required>
+                                        <option value="">Seleccionar tipo de documento</option>
+                                        <option value="RUC">RUC - Registro Único de Contribuyentes</option>
+                                        <option value="CIT">CIT - Cédula de Identidad Tributaria</option>
+                                        <option value="NIF">NIF - Número de Identificación Fiscal</option>
+                                        <option value="RNC">RNC - Registro Nacional de Contribuyentes</option>
+                                        <option value="RFC">RFC - Registro Federal de Contribuyentes</option>
+                                        <option value="NIT">NIT - Número de Identificación Tributaria</option>
+                                    </select>
                                 </div>
+
                                 <div class="form-group">
                                     <label for="txtNumDocumento">Número de Documento</label>
                                     <input type="text" name="numDocumento" id="txtNumDocumento" class="form-control" required pattern="[0-9]+" title="Por favor, introduce solo números">

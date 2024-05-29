@@ -46,38 +46,38 @@
                         <thead>
                             <tr style="background-color:#fff; font-weight:bold;">
                                 <td style="color:black;"><center>ID</center></td>
-                                <td style="color:black;"><center>NOMBRES</center></td>
-                                <td style="color:black;"><center>TIPO DOCUMENTO</center></td>
-                                <td style="color:black;"><center>N° DOCUMENTO</center></td>
-                                <td style="color:black;"><center>DIRECCIÓN</center></td>
-                                <td style="color:black;"><center>TELÉFONO</center></td>
-                                <td style="color:black;"><center>EMAIL</center></td>
-                                <td style="color:black;"><center>ACCIONES</center></td>
-                            </tr>
+                        <td style="color:black;"><center>NOMBRES</center></td>
+                        <td style="color:black;"><center>TIPO DOCUMENTO</center></td>
+                        <td style="color:black;"><center>N° DOCUMENTO</center></td>
+                        <td style="color:black;"><center>DIRECCIÓN</center></td>
+                        <td style="color:black;"><center>TELÉFONO</center></td>
+                        <td style="color:black;"><center>EMAIL</center></td>
+                        <td style="color:black;"><center>ACCIONES</center></td>
+                        </tr>
                         </thead>
                         <tbody>
                             <c:forEach var="empleado" items="${ListaEmpleados}">
                                 <tr>
                                     <td><center>${empleado.getIdEmpleado()}</center></td>
-                                    <td><center>${empleado.getNombre()}</center></td>
-                                    <td><center>${empleado.getTipoDocumento()}</center></td>
-                                    <td><center>${empleado.getNumDocumento()}</center></td>
-                                    <td><center>${empleado.getDireccion()}</center></td>
-                                    <td><center>${empleado.getTelefono()}</center></td>
-                                    <td><center>${empleado.getEmail()}</center></td>
-                                    <td>
-                                        <div style="display: flex;">
-                                            <a class="btn btn-warning editBtn" data-toggle="modal" data-target="#editModal" data-id="${empleado.getIdEmpleado()}"
-                                               data-nombre="${empleado.getNombre()}" data-tipo-documento="${empleado.getTipoDocumento()}"
-                                               data-num-documento="${empleado.getNumDocumento()}" data-direccion="${empleado.getDireccion()}"
-                                               data-telefono="${empleado.getTelefono()}" data-email="${empleado.getEmail()}"><i class="fas fa-edit"></i> Editar</a>
-                                            <a href="ControladorEmpleado?Op=Eliminar&idEmpleado=${empleado.getIdEmpleado()}" class="btn btn-danger" style="margin-left: 5px;" onclick="return confirm('¿Estás seguro de que deseas eliminar este empleado?');">
-                                                <i class="fas fa-trash-alt"></i> Eliminar
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </c:forEach>
+                            <td><center>${empleado.getNombre()}</center></td>
+                            <td><center>${empleado.getTipoDocumento()}</center></td>
+                            <td><center>${empleado.getNumDocumento()}</center></td>
+                            <td><center>${empleado.getDireccion()}</center></td>
+                            <td><center>${empleado.getTelefono()}</center></td>
+                            <td><center>${empleado.getEmail()}</center></td>
+                            <td>
+                                <div style="display: flex;">
+                                    <a class="btn btn-warning editBtn" data-toggle="modal" data-target="#editModal" data-id="${empleado.getIdEmpleado()}"
+                                       data-nombre="${empleado.getNombre()}" data-tipo-documento="${empleado.getTipoDocumento()}"
+                                       data-num-documento="${empleado.getNumDocumento()}" data-direccion="${empleado.getDireccion()}"
+                                       data-telefono="${empleado.getTelefono()}" data-email="${empleado.getEmail()}"><i class="fas fa-edit"></i> Editar</a>
+                                    <a href="ControladorEmpleado?Op=Eliminar&idEmpleado=${empleado.getIdEmpleado()}" class="btn btn-danger" style="margin-left: 5px;" onclick="return confirm('¿Estás seguro de que deseas eliminar este empleado?');">
+                                        <i class="fas fa-trash-alt"></i> Eliminar
+                                    </a>
+                                </div>
+                            </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -109,7 +109,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="txtTipoDocumento">Tipo de Documento</label>
-                                    <input type="text" name="tipoDocumento" id="txtTipoDocumento" class="form-control" required>
+                                    <select name="tipoDocumento" id="txtTipoDocumento" class="form-control" required>
+                                        <option value="">Seleccionar tipo de documento</option>
+                                        <option value="DNI">DNI - Documento Nacional de Identidad</option>
+                                        <option value="INE">INE - Instituto Nacional Electoral</option>
+                                        <option value="Cedula">Cédula de Identidad</option>
+                                        <option value="NIS">NIS - Número de Identificación Social</option>
+                                        <option value="Pasaporte">Pasaporte</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="txtNumDocumento">Número de Documento</label>

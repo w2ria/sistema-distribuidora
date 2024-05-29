@@ -109,7 +109,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="txtTipoDocumento">Tipo de Documento</label>
-                                    <input type="text" name="tipoDocumento" id="txtTipoDocumento" class="form-control" required>
+                                    <select name="tipoDocumento" id="txtTipoDocumento" class="form-control" required>
+                                        <option value="">Seleccionar tipo de documento</option>
+                                        <option value="DNI">DNI - Documento Nacional de Identidad</option>
+                                        <option value="INE">INE - Instituto Nacional Electoral</option>
+                                        <option value="Cedula">Cédula de Identidad</option>
+                                        <option value="NIS">NIS - Número de Identificación Social</option>
+                                        <option value="Pasaporte">Pasaporte</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="txtNumDocumento">Número de Documento</label>
