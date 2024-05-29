@@ -16,7 +16,7 @@
         <servlet-name>ControladorEmpleado</servlet-name>
         <servlet-class>Controlador.ControladorEmpleado</servlet-class>
     </servlet>
-        <servlet>
+    <servlet>
         <servlet-name>ControladorAdministrador</servlet-name>
         <servlet-class>Controlador.ControladorAdministrador</servlet-class>
     </servlet>
