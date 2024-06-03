@@ -76,7 +76,7 @@ public class PagoDAO {
         String sql = "UPDATE pago SET Monto=? WHERE idPago=?";
 
         try {
-            con = cn.Conexion();
+            con = cn.Conexion();    
             ps = con.prepareStatement(sql);
             ps.setDouble(1, pago.getMonto());
             ps.setInt(2, pago.getIdPago());

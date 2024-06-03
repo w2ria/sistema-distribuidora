@@ -1,10 +1,11 @@
-<%-- 
-    Document   : contactanos
-    Created on : 18 may. 2024, 8:02:33鈥痯.聽m.
-    Author     : ferna
---%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Modelo.Cliente"%>
+<%@page import="Modelo.Usuario"%>
+<%@ page session="true" %>
+<%
+    Usuario usuario = (Usuario) session.getAttribute("usuario");
+    Cliente cliente = (Cliente) session.getAttribute("cliente");
+%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -19,7 +20,7 @@
         <link rel="stylesheet" href="resources/css/index.css"/>
     </head>
     <body>
-        <!-- Header de Presentaci贸n -->
+        <!-- Header de Presentaci髇 -->
         <header class="py-3">
             <div class="container d-flex align-items-center justify-content-between">
                 <a href="index.jsp">
@@ -30,23 +31,25 @@
                     <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
                 </form>
                 <div>
-                    <a href="#" class="text-white mx-2">驴Necesitas Ayuda? <i class="bi bi-caret-down-fill"></i></a>
-                    <a href="#" class="text-white mx-2"><i class="bi bi-person"></i></a>
+                    <% if (usuario != null && cliente != null) {%>
+                    <span class="text-white mx-2">Bienvenido, <%= cliente.getNombre()%></span>
+                    <a href="logout.jsp" class="btn btn-outline-light">Cerrar Sesi髇</a>
+                    <% } else { %>
+                    <a href="login.jsp" class="text-white mx-2"><i class="bi bi-person"></i></a>
+                        <% }%>
                     <a href="#" class="text-white mx-2"><i class="bi bi-eye"></i></a>
-                    <a href="#" class="text-white mx-2"><i class="bi bi-cart"></i></a>
+                    <a href="controlador?accion=Carrito" class="text-white mx-2"><i class="bi bi-cart">(<label style="co">${cont}</label>)</i></a>
                 </div>
             </div>
         </header>
 
-        <!-- Barra de Navegaci贸n -->
-        <nav class="py-2 bg-dark">
+        <!-- Barra de Navegaci髇 -->
+        <nav class="py-2 borde">
             <div class="container d-flex justify-content-around">
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-tags"></i> Promociones</a>
-                <a href="catalogo.jsp" class="btn btn-outline-dark"><i class="bi bi-book"></i> Cat谩logo</a>
+                <a href="controlador?accion=productos" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
+                <a href="catalogo.jsp" class="btn btn-outline-dark"><i class="bi bi-book"></i> Cat醠ogo</a>
                 <a href="nosotros.jsp" class="btn btn-outline-dark"><i class="bi bi-people"></i> Nosotros</a>
                 <a href="#" class="btn btn-outline-dark"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-geo-alt"></i> Zonas de Env铆o</a>
                 <a href="contactanos.jsp" class="btn btn-outline-dark"><i class="bi bi-envelope"></i> Contacto</a>
             </div>
         </nav>
@@ -58,9 +61,9 @@
 
             <div class="row mb-5">
                 <div class="col-md-4 panelImformacion">
-                    <h3>INFORMACI脫N DE CONTACTO</h3>
-                    <p>Ll谩manos al<br><i class="bi bi-telephone"></i> 01 ********</p>
-                    <p>Escr铆benos<br><i class="bi bi-whatsapp"></i> **** *** ***</p>
+                    <h3>INFORMACI覰 DE CONTACTO</h3>
+                    <p>Ll醡anos al<br><i class="bi bi-telephone"></i> 01 ********</p>
+                    <p>Escr韇enos<br><i class="bi bi-whatsapp"></i> **** *** ***</p>
                     <p>Realiza tu consulta<br><i class="bi bi-envelope"></i> asdadadas@nombre.com</p>
                     <div class="mt-3">
                         <a href="https://www.facebook.com" target="_blank" class="text-dark mx-2">
@@ -75,22 +78,22 @@
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <h3>D脡JANOS UN MENSAJE</h3>
+                    <h3>D蒍ANOS UN MENSAJE</h3>
                     <form class="row g-3">
                         <div class="col-md-6">
                             <input type="text" class="form-control" placeholder="Nombre">
                         </div>
                         <div class="col-md-6">
-                            <input type="email" class="form-control" placeholder="Correo electr贸nico">
+                            <input type="email" class="form-control" placeholder="Correo electr髇ico">
                         </div>
                         <div class="col-md-6">
                             <input type="text" class="form-control" placeholder="Asunto">
                         </div>
                         <div class="col-md-6">
-                            <input type="tel" class="form-control" placeholder="N煤mero celular">
+                            <input type="tel" class="form-control" placeholder="N鷐ero celular">
                         </div>
                         <div class="col-12">
-                            <textarea class="form-control" placeholder="Escr铆benos un mensaje..."></textarea>
+                            <textarea class="form-control" placeholder="Escr韇enos un mensaje..."></textarea>
                         </div>
                         <div class="col-12">
                             <button class="btn btn-outline-dark">ENVIAR</button>
@@ -99,9 +102,9 @@
                 </div>
             </div>
 
-            <!-- Secci贸n de Ubicaci贸n -->
+            <!-- Secci髇 de Ubicaci髇 -->
             <div class="text-center mb-5">
-                <h2 class="mb-4">驴D脫NDE NOS UBICAMOS?</h2>
+                <h2 class="mb-4">緿覰DE NOS UBICAMOS?</h2>
                 <div class="mapa-container">
                     <img src="https://via.placeholder.com/1200x400" alt="Mapa de Google Maps" class="img-fluid">
                 </div>
@@ -124,16 +127,16 @@
                                 <p><a href="#">Mi Cuenta</a></p>
                             </div>
                             <div class="col-6">
-                                <p><a href="#">Atenci贸n al Cliente</a></p>
-                                <p><a href="#">Pol铆ticas y Condiciones</a></p>
+                                <p><a href="#">Atenci髇 al Cliente</a></p>
+                                <p><a href="#">Pol韙icas y Condiciones</a></p>
                             </div>
                             <div class="col-12">
-                                <p><a href="#">Inf贸rmate</a></p>
+                                <p><a href="#">Inf髍mate</a></p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 text-center">
-                        <h5>S铆guenos</h5>
+                        <h5>S韌uenos</h5>
                         <a href="https://www.facebook.com" target="_blank" class="text-warning mx-2">
                             <i class="bi bi-facebook" style="font-size: 1.5rem;"></i>
                         </a>

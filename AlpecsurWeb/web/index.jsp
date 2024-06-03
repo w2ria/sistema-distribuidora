@@ -1,5 +1,4 @@
 
-
 <%@page import="Modelo.Cliente"%>
 <%@page import="Modelo.Usuario"%>
 <%@ page session="true" %>
@@ -45,11 +44,9 @@
         <nav class="py-2 borde">
             <div class="container d-flex justify-content-around">
                 <a href="controlador?accion=productos" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-tags"></i> Promociones</a>
                 <a href="catalogo.jsp" class="btn btn-outline-dark"><i class="bi bi-book"></i> Catálogo</a>
                 <a href="nosotros.jsp" class="btn btn-outline-dark"><i class="bi bi-people"></i> Nosotros</a>
                 <a href="#" class="btn btn-outline-dark"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-geo-alt"></i> Zonas de Envío</a>
                 <a href="contactanos.jsp" class="btn btn-outline-dark"><i class="bi bi-envelope"></i> Contacto</a>
             </div>
         </nav>

@@ -1,11 +1,18 @@
-<%-- 
-    Document   : pruebaproducto
-    Created on : 19/05/2024, 06:30:19 PM
-    Author     : piero
---%>
 
+<%@page import="Modelo.*"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page session="true" %>
+
+<%
+    Usuario usuario = (Usuario) session.getAttribute("usuario");
+    Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+    if (usuario == null || cliente == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,7 +27,7 @@
         <link rel="stylesheet" href="resources/css/index.css"/>
     </head>
     <body>
-            <!-- Header de Presentación -->
+        <!-- Header de Presentación -->
         <header class="py-3">
             <div class="container d-flex align-items-center justify-content-between">
                 <a href="index.jsp">
@@ -31,10 +38,14 @@
                     <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
                 </form>
                 <div>
-                    <a href="#" class="text-white mx-2">¿Necesitas Ayuda? <i class="bi bi-caret-down-fill"></i></a>
-                    <a href="#" class="text-white mx-2"><i class="bi bi-person"></i></a>
+                    <% if (usuario != null && cliente != null) {%>
+                    <span class="text-white mx-2">Bienvenido, <%= cliente.getNombre()%></span>
+                    <a href="logout.jsp" class="btn btn-outline-light">Cerrar Sesión</a>
+                    <% } else { %>
+                    <a href="login.jsp" class="text-white mx-2"><i class="bi bi-person"></i></a>
+                        <% }%>
                     <a href="#" class="text-white mx-2"><i class="bi bi-eye"></i></a>
-                    <a href="controlador?accion=Carrito" class="text-white mx-2"><i class="bi bi-cart">(<label style="co">${cont}</label>)</i></a>
+                    <a href="controlador?accion=Carrito" class="text-white mx-2"><i class="bi bi-cart">(<label style="color:white;">${cont}</label>)</i></a>
                 </div>
             </div>
         </header>
@@ -43,14 +54,13 @@
         <nav class="py-2 borde">
             <div class="container d-flex justify-content-around">
                 <a href="controlador?accion=productos" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-tags"></i> Promociones</a>
                 <a href="catalogo.jsp" class="btn btn-outline-dark"><i class="bi bi-book"></i> Catálogo</a>
                 <a href="nosotros.jsp" class="btn btn-outline-dark"><i class="bi bi-people"></i> Nosotros</a>
                 <a href="#" class="btn btn-outline-dark"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-geo-alt"></i> Zonas de Envío</a>
                 <a href="contactanos.jsp" class="btn btn-outline-dark"><i class="bi bi-envelope"></i> Contacto</a>
             </div>
         </nav>
+        
         <div class="container-carrito">
             <div class="cont-carrito-main">
                 <div class="content-wrapper">
@@ -88,34 +98,34 @@
                     <div class="shop-header">
                         <h1 class="shop-title">Tienda</h1>
                     </div>
-                        <div class="products-wrapper">
-                            <c:forEach var="p" items="${productos}">
-                                <div class="product-item">
-                                    <div class="product-image" style="margin-bottom: 0;"></div>
-                                    <div class="product-top">
-                                        <a href="#" class="product-image-link">
-                                            <img src="resources/images/productos/${p.getImagen()}" alt="${p.getDescripcion()}" decoding="async" >
-                                        </a>
-                                    </div>
+                    <div class="products-wrapper">
+                        <c:forEach var="p" items="${productos}">
+                            <div class="product-item">
+                                <div class="product-image" style="margin-bottom: 0;"></div>
+                                <div class="product-top">
+                                    <a href="#" class="product-image-link">
+                                        <img src="resources/images/productos/${p.getImagen()}" alt="${p.getDescripcion()}" decoding="async" >
+                                    </a>
+                                </div>
 
-                                    <div class="product-bottom">
-                                        <h3 class="product-title"><a href="https://campograndeperu.com/producto/aceite-de-ajonjoli/">${p.getNombre()}</a></h3>
-                                        <div class="price-wrapper">
-                                            <span class="price">S/${p.getPrecio()}</span>
+                                <div class="product-bottom">
+                                    <h3 class="product-title"><a href="https://campograndeperu.com/producto/aceite-de-ajonjoli/">${p.getNombre()}</a></h3>
+                                    <div class="price-wrapper">
+                                        <span class="price">S/${p.getPrecio()}</span>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <div class="quantity">
+                                            <input type="button" value="-" class="minus">
+                                            <label class="screen-reader-text" for="quantity_2430"></label>
+                                            <input type="number" id="quantity_2430" class="quantity-input" value="1" min="1" step="1">
+                                            <input type="button" value="+" class="plus">
                                         </div>
-                                        <div class="add-to-cart">
-                                            <div class="quantity">
-                                                <input type="button" value="-" class="minus">
-                                                <label class="screen-reader-text" for="quantity_2430"></label>
-                                                <input type="number" id="quantity_2430" class="quantity-input" value="1" min="1" step="1">
-                                                <input type="button" value="+" class="plus">
-                                            </div>
-                                            <a href="controlador?accion=AgregarCarrito&idProducto=${p.getIdProducto()}" class="button add-to-cart-button"><span>Agregar</span></a>
-                                        </div>
+                                        <a href="controlador?accion=AgregarCarrito&idProducto=${p.getIdProducto()}" class="button add-to-cart-button"><span>Agregar</span></a>
                                     </div>
                                 </div>
-                            </c:forEach>
-                        </div>
+                            </div>
+                        </c:forEach>
+                    </div>
                 </aside>
             </div>
         </div>

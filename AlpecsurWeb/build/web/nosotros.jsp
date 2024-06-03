@@ -1,9 +1,11 @@
-<%-- 
-    Document   : nosotros
-    Created on : 18 may. 2024, 5:35:13 a. m.
-    Author     : ferna
---%>
 
+<%@page import="Modelo.Cliente"%>
+<%@page import="Modelo.Usuario"%>
+<%@ page session="true" %>
+<%
+    Usuario usuario = (Usuario) session.getAttribute("usuario");
+    Cliente cliente = (Cliente) session.getAttribute("cliente");
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -31,10 +33,14 @@
                     <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
                 </form>
                 <div>
-                    <a href="#" class="text-white mx-2">¿Necesitas Ayuda? <i class="bi bi-caret-down-fill"></i></a>
-                    <a href="#" class="text-white mx-2"><i class="bi bi-person"></i></a>
+                    <% if (usuario != null && cliente != null) {%>
+                    <span class="text-white mx-2">Bienvenido, <%= cliente.getNombre()%></span>
+                    <a href="logout.jsp" class="btn btn-outline-light">Cerrar Sesión</a>
+                    <% } else { %>
+                    <a href="login.jsp" class="text-white mx-2"><i class="bi bi-person"></i></a>
+                        <% }%>
                     <a href="#" class="text-white mx-2"><i class="bi bi-eye"></i></a>
-                    <a href="#" class="text-white mx-2"><i class="bi bi-cart"></i></a>
+                    <a href="controlador?accion=Carrito" class="text-white mx-2"><i class="bi bi-cart">(<label style="co">${cont}</label>)</i></a>
                 </div>
             </div>
         </header>
@@ -42,16 +48,13 @@
         <!-- Barra de Navegación -->
         <nav class="py-2 borde">
             <div class="container d-flex justify-content-around">
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-tags"></i> Promociones</a>
+                <a href="controlador?accion=productos" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
                 <a href="catalogo.jsp" class="btn btn-outline-dark"><i class="bi bi-book"></i> Catálogo</a>
                 <a href="nosotros.jsp" class="btn btn-outline-dark"><i class="bi bi-people"></i> Nosotros</a>
                 <a href="#" class="btn btn-outline-dark"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-geo-alt"></i> Zonas de Envío</a>
                 <a href="contactanos.jsp" class="btn btn-outline-dark"><i class="bi bi-envelope"></i> Contacto</a>
             </div>
         </nav>
-
         <!-- Contenido Principal -->
         <div class="container mt-5">
             <!-- Sección de Quiénes Somos -->

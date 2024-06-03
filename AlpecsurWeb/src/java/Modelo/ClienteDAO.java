@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Modelo;
 
 import Configuraciones.conexion;
@@ -65,17 +61,17 @@ public class ClienteDAO {
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, idUsuario);
+            ps.setInt(1, idUsuario); // Asegurarse de que este ID es válido y proviene de la sesión del usuario autenticado
             rs = ps.executeQuery();
             if (rs.next()) {
-                cli.setIdCliente(rs.getInt("idCliente")); // Asegúrate de que el nombre de la columna sea correcto
-                cli.setIdUsuario(rs.getInt("idUsuario"));     // Asegúrate de que el nombre de la columna sea correcto
-                cli.setNombre(rs.getString("nombre"));        // Asegúrate de que el nombre de la columna sea correcto
-                cli.setTipoDocumento(rs.getString("tipoDocumento")); // Asegúrate de que el nombre de la columna sea correcto
-                cli.setNumDocumento(rs.getString("numDocumento"));   // Asegúrate de que el nombre de la columna sea correcto
-                cli.setDireccion(rs.getString("direccion"));  // Asegúrate de que el nombre de la columna sea correcto
-                cli.setTelefono(rs.getString("telefono"));    // Asegúrate de que el nombre de la columna sea correcto
-                cli.setEmail(rs.getString("email"));          // Asegúrate de que el nombre de la columna sea correcto
+                cli.setIdCliente(rs.getInt("idCliente"));
+                cli.setIdUsuario(rs.getInt("idUsuario"));
+                cli.setNombre(rs.getString("nombre"));
+                cli.setTipoDocumento(rs.getString("tipoDocumento"));
+                cli.setNumDocumento(rs.getString("numDocumento"));
+                cli.setDireccion(rs.getString("direccion"));
+                cli.setTelefono(rs.getString("telefono"));
+                cli.setEmail(rs.getString("email"));
             }
         } catch (Exception e) {
             System.out.println("ERROR en ListarPorId ClienteDAO: " + e.getMessage());
