@@ -1,8 +1,4 @@
-<%-- 
-    Document   : carrito
-    Created on : 14/05/2024, 02:23:53 PM
-    Author     : piero
---%>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -30,12 +26,11 @@
                     <a href="#" class="text-white mx-2">¿Necesitas Ayuda? <i class="bi bi-caret-down-fill"></i></a>
                     <a href="#" class="text-white mx-2"><i class="bi bi-person"></i></a>
                     <a href="#" class="text-white mx-2"><i class="bi bi-eye"></i></a>
-                    
                 </div>
             </div>
         </header>
             
-            <!-- Barra de Navegación -->
+        <!-- Barra de Navegación -->
         <nav class="py-2 borde">
             <div class="container d-flex justify-content-around">
                 <a href="controlador?accion=productos" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
@@ -72,8 +67,8 @@
                                         </td>
                                         <td class="product-thumbnail">
                                             <a href="#" class="product-image-link">
-                                            <img src="resources/images/productos/${p.getImagen()}" alt="${p.getDescripcion()}" decoding="async" >
-                                        </a>
+                                                <img src="resources/images/productos/${cart.getImagen()}" alt="${cart.getDescripcion()}" decoding="async">
+                                            </a>
                                         </td>
                                         <td class="product-name" data-title="Producto">
                                             <a href="#">${cart.getNombre()}</a>
@@ -172,7 +167,7 @@
                                                     </tbody>
                                                 </table>
                                                 <div class="proceed-to-checkout">
-                                                    <a href="#" class="checkout-button button alt wc-forward">Finalizar compra</a>
+                                                    <a href="controlador?accion=GenerarPedido" class="checkout-button button alt wc-forward">Finalizar compra</a>
                                                 </div>
                                             </div><!-- .cart-totals-inner -->
                                         </div>
@@ -188,3 +183,4 @@
         <script src="resources/js/funciones.js" type="text/javascript"></script>
     </body>
 </html>
+

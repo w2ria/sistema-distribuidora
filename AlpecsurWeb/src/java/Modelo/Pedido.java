@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  *
- * @author piero
+ * @autor piero
  */
 public class Pedido {
     private int idPedido;
@@ -20,13 +20,13 @@ public class Pedido {
     private String fecha;
     private double total;
     private int idEstadoPedido;
-    
-    
-    private List<Carrito>detallePedido;
+    private List<Carrito> detallePedido;
 
+    // Constructor por defecto
     public Pedido() {
     }
 
+    // Constructor con parámetros
     public Pedido(int idPedido, int idCliente, int idEmpleado, int idPago, String tipoComprobante, String numComprobante, String fecha, double total, int idEstadoPedido, List<Carrito> detallePedido) {
         this.idPedido = idPedido;
         this.idCliente = idCliente;
@@ -40,6 +40,7 @@ public class Pedido {
         this.detallePedido = detallePedido;
     }
 
+    // Getters y Setters
     public int getIdPedido() {
         return idPedido;
     }
@@ -119,8 +120,5 @@ public class Pedido {
     public void setDetallePedido(List<Carrito> detallePedido) {
         this.detallePedido = detallePedido;
     }
-
-
-    
-    
 }
+

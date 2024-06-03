@@ -4,33 +4,17 @@
  */
 package Modelo;
 
-/**
- *
- * @author piero
- */
 public class Carrito {
-    int item;
-    int idProducto;
-    String nombre;
-    String descripcion;
-    double precio;
-    int cantidad;
-    double subTotal;
-    
-    public Carrito(){
+    private int item;
+    private int idProducto;
+    private String nombre;
+    private String descripcion;
+    private double precio;
+    private int cantidad;
+    private double subTotal;
+    private String imagen;
 
-    }
-    
-    public Carrito(int item, int idProducto, String nombre, String descripcion, double precio, int cantidad, double subTotal){
-        this.item = item;
-        this.idProducto = idProducto;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.cantidad = cantidad;
-        this.subTotal = subTotal;
-    }
-
+    // Getters y setters
     public int getItem() {
         return item;
     }
@@ -86,7 +70,12 @@ public class Carrito {
     public void setSubTotal(double subTotal) {
         this.subTotal = subTotal;
     }
-    
-    
-}
 
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+}
