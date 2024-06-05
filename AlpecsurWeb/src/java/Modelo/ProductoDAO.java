@@ -335,4 +335,35 @@ public class ProductoDAO {
         int nuevoNumero = ultimoNumero + 1;
         return String.format("PRO%04d", nuevoNumero);
     }
+
+    public List<Producto> listarPorCategoria(int idCategoria) {
+        List<Producto> productos = new ArrayList<>();
+        String sql = "SELECT * FROM producto WHERE idCategoria=?";
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idCategoria);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Producto p = new Producto();
+                p.setIdProducto(rs.getInt(1));
+                Categoria categoria = new Categoria();
+                categoria.setIdCategoria(rs.getInt(2));
+                p.setCategoria(categoria);
+                Marca marca = new Marca();
+                marca.setIdMarca(rs.getInt(3));
+                p.setMarca(marca);
+                p.setNombre(rs.getString(4));
+                p.setPrecio(rs.getDouble(5));
+                p.setStock(rs.getInt(6));
+                p.setDescripcion(rs.getString(7));
+                p.setImagen(rs.getString(8));
+                p.setEstado(rs.getString(9));
+                productos.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en listarPorCategoria: " + e.getMessage());
+        }
+        return productos;
+    }
 }

@@ -3,8 +3,8 @@ package Modelo;
 public class Producto {
 
     private int idProducto;
-    private Categoria categoria;
-    private Marca marca;
+    private Categoria idCategoria;
+    private Marca idMarca;
     private String nombre;
     private double precio;
     private int stock;
@@ -17,8 +17,8 @@ public class Producto {
 
     public Producto(int idProducto, Categoria categoria, Marca marca, String nombre, double precio, int stock, String descripcion, String imagen, String estado) {
         this.idProducto = idProducto;
-        this.categoria = categoria;
-        this.marca = marca;
+        this.idCategoria = categoria;
+        this.idMarca = marca;
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
@@ -36,19 +36,19 @@ public class Producto {
     }
 
     public Categoria getCategoria() {
-        return categoria;
+        return idCategoria;
     }
 
     public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+        this.idCategoria = categoria;
     }
 
     public Marca getMarca() {
-        return marca;
+        return idMarca;
     }
 
     public void setMarca(Marca marca) {
-        this.marca = marca;
+        this.idMarca = marca;
     }
 
     public String getNombre() {

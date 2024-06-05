@@ -8,10 +8,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@WebServlet(name = "controlador", urlPatterns = {"/controlador"})
 public class controlador extends HttpServlet {
 
     ProductoCarritoDAO pdao = new ProductoCarritoDAO();
@@ -42,6 +44,9 @@ public class controlador extends HttpServlet {
                 break;
             case "GenerarPedido":
                 generarPedido(request, response);
+                break;
+            case "FiltrarCategoria":
+                filtrarCategoria(request, response);
                 break;
             default:
                 request.setAttribute("productos", productos);
@@ -211,6 +216,14 @@ public class controlador extends HttpServlet {
         String[] partes = ultimoComprobante.split("-");
         int numero = Integer.parseInt(partes[1]) + 1;
         return String.format("%s-%08d", partes[0], numero);
+    }
+
+    private void filtrarCategoria(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String categoria = request.getParameter("categoria");
+        productos = pdao.listarPorCategoria(categoria);
+        request.setAttribute("productos", productos);
+        request.getRequestDispatcher("productosCarrito.jsp").forward(request, response);
     }
 
     @Override

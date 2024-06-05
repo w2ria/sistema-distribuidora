@@ -32,6 +32,10 @@
         <servlet-name>ControladorProducto</servlet-name>
         <servlet-class>Controlador.ControladorProducto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FiltradoCarrito</servlet-name>
+        <servlet-class>Controlador.Categoria</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>controlador</servlet-name>
         <url-pattern>/controlador</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>ControladorProducto</servlet-name>
         <url-pattern>/ControladorProducto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FiltradoCarrito</servlet-name>
+        <url-pattern>/FiltradoCarrito</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

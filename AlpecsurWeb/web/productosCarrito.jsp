@@ -1,4 +1,3 @@
-
 <%@page import="Modelo.*"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -60,7 +59,7 @@
                 <a href="contactanos.jsp" class="btn btn-outline-dark"><i class="bi bi-envelope"></i> Contacto</a>
             </div>
         </nav>
-        
+
         <div class="container-carrito">
             <div class="cont-carrito-main">
                 <div class="content-wrapper">
@@ -71,24 +70,31 @@
                             </div>
                             <ul class="product-categories">
                                 <li class="category-item">
-                                    <a href="#">Aceite Vegetal</a>
-                                    <span class="product-count">4</span>
+                                    <a href="controlador?accion=MostrarTodo">Mostrar Todo</a>
                                 </li>
                                 <li class="category-item">
-                                    <a href="#">Aceitunas y Derivados</a>
-                                    <span class="product-count">5</span>
+                                    <a href="controlador?accion=FiltrarCategoria&categoria=Papas fritas">Papas fritas</a>
                                 </li>
                                 <li class="category-item">
-                                    <a href="#">Cacao y Derivados</a>
-                                    <span class="product-count">8</span>
+                                    <a href="controlador?accion=FiltrarCategoria&categoria=Snacks mixtos">Snacks mixtos</a>
                                 </li>
                                 <li class="category-item">
-                                    <a href="#">Cereales y Granos</a>
-                                    <span class="product-count">3</span>
+                                    <a href="controlador?accion=FiltrarCategoria&categoria=Nachos">Nachos</a>
                                 </li>
                                 <li class="category-item">
-                                    <a href="#">Chocolates</a>
-                                    <span class="product-count">10</span>
+                                    <a href="controlador?accion=FiltrarCategoria&categoria=Tostadas">Tostadas</a>
+                                </li>
+                                <li class="category-item">
+                                    <a href="controlador?accion=FiltrarCategoria&categoria=Snacks de maiz">Snacks de maiz</a>
+                                </li>
+                                <li class="category-item">
+                                    <a href="controlador?accion=FiltrarCategoria&categoria=Snacks de vegetales">Snacks de vegetales</a>
+                                </li>
+                                <li class="category-item">
+                                    <a href="controlador?accion=FiltrarCategoria&categoria=Snacks de legumbres">Snacks de legumbres</a>
+                                </li>
+                                <li class="category-item">
+                                    <a href="controlador?accion=FiltrarCategoria&categoria=Snacks de mani">Snacks de mani</a>
                                 </li>
                             </ul>
                         </section>
