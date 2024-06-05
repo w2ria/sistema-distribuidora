@@ -104,7 +104,7 @@ public class controlador extends HttpServlet {
             listaCarrito.add(cart);
         }
 
-        request.setAttribute("cont", listaCarrito.size());
+        request.getSession().setAttribute("contadorCarrito", listaCarrito.size());
         request.getRequestDispatcher("controlador?accion=productos").forward(request, response);
     }
 
@@ -187,7 +187,7 @@ public class controlador extends HttpServlet {
         pedido.setIdCliente(cliente.getIdCliente());
         pedido.setIdEmpleado(empleado.getIdEmpleado());
         pedido.setIdPago(pago.getIdPago());
-        pedido.setTipoComprobante("Factura");
+        pedido.setTipoComprobante("Pago Por Tarjeta");
 
         // Obtener el último número de comprobante y aumentarlo
         String ultimoComprobante = dao.obtenerUltimoNumeroComprobante();

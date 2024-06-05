@@ -44,7 +44,8 @@
                     <a href="login.jsp" class="text-white mx-2"><i class="bi bi-person"></i></a>
                         <% }%>
                     <a href="#" class="text-white mx-2"><i class="bi bi-eye"></i></a>
-                    <a href="controlador?accion=Carrito" class="text-white mx-2"><i class="bi bi-cart">(<label style="color:white;">${cont}</label>)</i></a>
+                        <% Integer contadorCarrito = (Integer) session.getAttribute("contadorCarrito");%>
+                    <a href="controlador?accion=Carrito" class="text-white mx-2"><i class="bi bi-cart">(<label style="color:white;">${contadorCarrito != null ? contadorCarrito : 0}</label>)</i></a>
                 </div>
             </div>
         </header>
@@ -59,6 +60,7 @@
                 <a href="contactanos.jsp" class="btn btn-outline-dark"><i class="bi bi-envelope"></i> Contacto</a>
             </div>
         </nav>
+
 
         <div class="container-carrito">
             <div class="cont-carrito-main">
