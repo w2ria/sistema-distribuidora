@@ -4,6 +4,7 @@ import Configuraciones.conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,8 @@ public class ProveedorDAO {
             }
         } catch (Exception e) {
             System.out.println("ERROR en buscarPorNumDocumento ProveedorDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
         }
         return prov;
     }
@@ -68,19 +71,7 @@ public class ProveedorDAO {
         } catch (Exception e) {
             System.out.println("ERROR en buscarPorNombre ProveedorDAO: " + e.getMessage());
         } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception e) {
-                System.out.println("ERROR cerrando conexiones: " + e.getMessage());
-            }
+            cn.cerrarConexion(con);
         }
         return lista;
     }
@@ -108,6 +99,8 @@ public class ProveedorDAO {
             }
         } catch (Exception e) {
             System.out.println("ERROR en Listar ProveedorDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
         }
 
         return lista;
@@ -132,9 +125,32 @@ public class ProveedorDAO {
             }
         } catch (Exception e) {
             System.out.println("ERROR en ListarPorId ProveedorDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
         }
 
         return prov;
+    }
+
+    public List<Proveedor> listarNombres() {
+        List<Proveedor> proveedores = new ArrayList<>();
+        String sql = "SELECT idProveedor, nombre FROM proveedor ORDER BY nombre";
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Proveedor proveedor = new Proveedor();
+                proveedor.setIdProveedor(rs.getInt("idProveedor"));
+                proveedor.setNombre(rs.getString("nombre"));
+                proveedores.add(proveedor);
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR en listar nombres de proveedores en ProveedorDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+        return proveedores;
     }
 
     public int agregar(Proveedor prov) {
@@ -154,6 +170,8 @@ public class ProveedorDAO {
             System.out.println("Agregado de forma correcta!");
         } catch (Exception e) {
             System.out.println("ERROR en Agregar ProveedorDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
         }
 
         return r;
@@ -176,6 +194,8 @@ public class ProveedorDAO {
             System.out.println("Actualizado de forma correcta!");
         } catch (Exception e) {
             System.out.println("ERROR en Actualizar ProveedorDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
         }
 
         return r;
@@ -199,7 +219,7 @@ public class ProveedorDAO {
         } catch (Exception e) {
             System.out.println("ERROR al eliminar proveedor: " + e.getMessage());
         } finally {
-            // Cerrar recursos (PreparedStatement, Connection, etc.) si es necesario
+            cn.cerrarConexion(con);
         }
 
         return eliminacionExitosa;
@@ -223,16 +243,7 @@ public class ProveedorDAO {
         } catch (Exception e) {
             System.out.println("ERROR en obtenerUltimoNumeroUsuario: " + e.getMessage());
         } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception e) {
-                System.out.println("ERROR cerrando conexiones: " + e.getMessage());
-            }
+            cn.cerrarConexion(con);
         }
 
         return ultimoNumero;

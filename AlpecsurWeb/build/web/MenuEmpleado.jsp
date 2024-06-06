@@ -47,7 +47,7 @@
                         </span>
                         <h3>Productos</h3>
                     </a>
-                    <a href="#">
+                    <a href="ControladorIngreso?Op=Listar">
                         <span class="material-icons-sharp">
                             move_to_inbox
                         </span>
