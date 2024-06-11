@@ -92,7 +92,7 @@ public class Ingreso {
                 throw new IllegalArgumentException("Tipo de comprobante no reconocido: " + tipoComprobante);
         }
 
-        return String.format("%s%04d", abreviatura, nuevoNumero);
+        return String.format("%s%05d", abreviatura, nuevoNumero);
     }
 
 }

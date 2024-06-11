@@ -366,4 +366,46 @@ public class ProductoDAO {
         }
         return productos;
     }
+
+    public int obtenerStock(int idProducto) {
+        int stock = 0;
+        String sql = "SELECT stock FROM producto WHERE idProducto = ?";
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idProducto);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                stock = rs.getInt("stock");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR en Obtener Stock ProductoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+
+        return stock;
+    }
+
+    public int actualizarStock(int idProducto, int nuevoStock) {
+        String sql = "UPDATE producto SET stock = ? WHERE idProducto = ?";
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, nuevoStock);
+            ps.setInt(2, idProducto);
+            r = ps.executeUpdate();
+            System.out.println("Stock actualizado correctamente!");
+        } catch (SQLException e) {
+            System.out.println("ERROR en Actualizar Stock ProductoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+
+        return r;
+    }
+
 }

@@ -18,18 +18,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="resources/css/styleAdministrador.css">
         <link rel="stylesheet" href="resources/css/styleTablaProducto.css">
         <script src="https://kit.fontawesome.com/26a3cc7edf.js" crossorigin="anonymous"></script>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDzwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <title>Ingresos</title>
     </head>
-    <body>
+    <body id="bodyId">
         <div class="container">
             <h1 class="mt-4">Gestión de Ingresos</h1>
 
@@ -49,18 +47,20 @@
 
         </div>
 
-        <% String mensaje = request.getParameter("mensaje");
-            String error = request.getParameter("error"); %>
+        <div id="mensajeSection">
+            <% String mensaje = request.getParameter("mensaje");
+                String error = request.getParameter("error"); %>
 
-        <% if (mensaje != null) {%>
-        <div class="alert alert-success" role="alert">
-            <%= mensaje%>
+            <% if (mensaje != null) {%>
+            <div class="alert alert-success" role="alert">
+                <%= mensaje%>
+            </div>
+            <% } else if (error != null) {%>
+            <div class="alert alert-danger" role="alert">
+                <%= error%>
+            </div>
+            <% }%>
         </div>
-        <% } else if (error != null) {%>
-        <div class="alert alert-danger" role="alert">
-            <%= error%>
-        </div>
-        <% }%>
 
         <!-- Tabla de ingresos -->
         <div class="container-fluid">
@@ -87,11 +87,11 @@
                         <td><center>${ingreso.getNumComprobante()}</center></td>
                         <td><center>${ingreso.getFecha()}</center></td>
                         <td><center>${ingreso.getTotal()}</center></td>
-                        <td><center><a href="#">Detalle Ingreso</a></center></td>
+                        <td><center><a href="ControladorDetalleIngreso?Op=Listar&idIngreso=${ingreso.getIdIngreso()}"><i class="fa-solid fa-eye"></i> Ver</a></center></td>
                         <td>
                             <div style="display: flex;">
                                 <a class="btn btn-warning editBtn" data-toggle="modal" data-target="#editModal" data-id="${ingreso.getIdIngreso()}"><i class="fas fa-edit"></i> Editar</a>
-                                <a href="ControladorIngreso?Op=Eliminar&idIngreso=${ingreso.getIdIngreso()}" class="btn btn-danger" style="margin-left: 5px;" onclick="return confirm('¿Estás seguro de que deseas eliminar este ingreso?');">
+                                <a href="#" class="btn btn-danger" style="margin-left: 5px;" data-toggle="modal" data-target="#confirmDeleteModal" data-id="${ingreso.getIdIngreso()}">
                                     <i class="fas fa-trash-alt"></i> Eliminar
                                 </a>
                             </div>
@@ -140,7 +140,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="txtTotal">Total</label>
-                                <input type="number" name="total" id="txtTotal" class="form-control" required>
+                                <input type="number" name="total" id="txtTotal" class="form-control" value="0">
                             </div>
                             <div style="display: flex; justify-content: center;">
                                 <input type="submit" name="accion" value="Agregar" class="btn btn-info">
@@ -203,6 +203,56 @@
             </div>
         </div>
 
+        <!-- Primer modal de confirmación -->
+        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="deleteForm" action="ControladorIngreso" method="POST">
+                        <input type="hidden" id="idIngresoHiddenField" name="idIngreso">
+                        <input type="hidden" id="detalleIngresoCount" name="detalleIngresoCount" value="0">
+                        <div class="modal-body" id="modalBody">
+                            ¿Está seguro de que desea eliminar este ingreso?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" name="Op" value="ContarDetalles" class="btn btn-danger">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Segundo modal de confirmación -->
+        <div class="modal fade" id="confirmDeleteDetailsModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteDetailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteDetailsModalLabel">Confirmar Eliminación de Detalles</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="deleteDetailsForm" action="ControladorIngreso" method="POST">
+                        <input type="hidden" id="idIngresoHiddenFieldSecond" name="idIngreso">
+                        <input type="hidden" id="detalleIngresoCountModal" name="detalleIngresoCount">
+                        <div class="modal-body">
+                            <p id="mensajeDetalles"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" name="accion" value="Eliminar" class="btn btn-danger">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <script>
             $(document).ready(function () {
                 $('.editBtn').on('click', function () {
@@ -221,6 +271,67 @@
                     $('#editNumComprobante').val(numComprobante);
                     $('#editFecha').val(fecha);
                     $('#editTotal').val(total);
+                });
+            });
+        </script>
+
+        <!-- Scripts para manejar los modals y las solicitudes AJAX -->
+        <script>
+            $(document).ready(function () {
+                $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget);
+                    var idIngreso = button.data('id');
+                    $('#idIngresoHiddenField').val(idIngreso);
+                });
+
+                $('#confirmDeleteDetailsModal').on('show.bs.modal', function (event) {
+                    var idIngreso = $('#idIngresoHiddenField').val();
+                    $('#idIngresoHiddenFieldSecond').val(idIngreso);
+
+                    // Obtener y establecer el valor de detalleIngresoCount
+                    var detalleIngresoCount = $('#detalleIngresoCount').val();
+                    $('#detalleIngresoCountModal').val(detalleIngresoCount);
+                });
+
+                $('#deleteForm').on('submit', function (event) {
+                    event.preventDefault();
+                    var idIngreso = $('#idIngresoHiddenField').val();
+                    $.ajax({
+                        url: 'ControladorIngreso',
+                        method: 'GET',
+                        data: {
+                            Op: 'ContarDetalles',
+                            idIngreso: idIngreso
+                        },
+                        success: function (response) {
+                            var detalleIngresoCount = parseInt(response.detalleIngresoCount);
+                            $('#detalleIngresoCount').val(detalleIngresoCount);
+                            if (detalleIngresoCount > 0) {
+                                $('#mensajeDetalles').text('Este ingreso contiene ' + detalleIngresoCount + ' detalle(s) de ingreso. ¿Está seguro de que desea eliminarlos también?');
+                                $('#confirmDeleteDetailsModal').modal('show');
+                            } else {
+                                // AJAX para eliminar el ingreso
+                                $.ajax({
+                                    url: 'ControladorIngreso',
+                                    method: 'POST',
+                                    data: {
+                                        accion: 'Eliminar',
+                                        idIngreso: idIngreso
+                                    },
+                                    success: function (response) {
+                                        $('#bodyId').empty();
+                                        $('#bodyId').html(response);
+                                    },
+                                    error: function () {
+                                        alert('Hubo un error al realizar otra operación. Por favor, inténtelo nuevamente.');
+                                    }
+                                });
+                            }
+                        },
+                        error: function () {
+                            alert('Hubo un error al contar los detalles de ingreso. Por favor, inténtelo nuevamente.');
+                        }
+                    });
                 });
             });
         </script>

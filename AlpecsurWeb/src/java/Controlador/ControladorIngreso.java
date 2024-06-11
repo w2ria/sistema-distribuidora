@@ -1,10 +1,14 @@
 package Controlador;
 
+import Modelo.DetalleIngreso;
+import Modelo.DetalleIngresoDAO;
 import Modelo.Ingreso;
 import Modelo.IngresoDAO;
+import Modelo.ProductoDAO;
 import Modelo.Proveedor;
 import Modelo.ProveedorDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -26,7 +30,6 @@ public class ControladorIngreso extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
 
         String opcion = request.getParameter("Op");
         Ingreso nuevoIngreso = new Ingreso();
@@ -42,18 +45,20 @@ public class ControladorIngreso extends HttpServlet {
                 request.getRequestDispatcher("Ingreso.jsp").forward(request, response);
                 break;
 
-            case "Eliminar":
-                String idIngresoEliminarStr = request.getParameter("idIngreso");
-                if (idIngresoEliminarStr != null && !idIngresoEliminarStr.isEmpty()) {
-                    int idIngresoAEliminar = Integer.parseInt(idIngresoEliminarStr);
-                    boolean eliminacionExitosa = ingresoDAO.eliminar(idIngresoAEliminar);
-                    if (eliminacionExitosa) {
-                        response.sendRedirect("ControladorIngreso?Op=Listar&mensaje=Ingreso+eliminado+correctamente");
-                    } else {
-                        response.sendRedirect("ControladorIngreso?Op=Listar&error=Hubo+un+error+al+eliminar+el+ingreso");
-                    }
+            case "ContarDetalles":
+                DetalleIngresoDAO detalleIngresoDAO = new DetalleIngresoDAO();
+                String idIngresoParam = request.getParameter("idIngreso");
+                if (idIngresoParam != null && !idIngresoParam.isEmpty()) {
+                    int idIngreso = Integer.parseInt(idIngresoParam);
+                    int detallesRelacionados = detalleIngresoDAO.contarDetallesConIdIngreso(idIngreso);
+
+                    response.setContentType("application/json");
+                    PrintWriter out = response.getWriter();
+                    out.print("{\"detalleIngresoCount\":" + detallesRelacionados + "}");
+                    out.flush();
                 } else {
-                    response.sendRedirect("ControladorIngreso?Op=Listar&error=Hubo+un+error+al+eliminar+el+ingreso");
+                    // Manejo de la situación en la que idIngreso es null o está vacío
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "El parámetro idIngreso es nulo o está vacío");
                 }
                 break;
 
@@ -63,10 +68,13 @@ public class ControladorIngreso extends HttpServlet {
 
             default:
                 listaIngresos = ingresoDAO.listar();
+                listaProveedores = proveedorDAO.listarNombres();
                 request.setAttribute("ListaIngresos", listaIngresos);
+                request.setAttribute("ListaProveedores", listaProveedores);
                 request.getRequestDispatcher("Ingreso.jsp").forward(request, response);
                 break;
         }
+        processRequest(request, response);
     }
 
     @Override
@@ -78,9 +86,9 @@ public class ControladorIngreso extends HttpServlet {
 
         switch (accion) {
             case "Agregar":
-                Ingreso nuevoIngreso = new Ingreso();  
+                Ingreso nuevoIngreso = new Ingreso();
                 Proveedor proveedorAgregar = new Proveedor();
-                
+
                 int idProveedorAgregar = Integer.parseInt(request.getParameter("idProveedor"));
                 String tipoComprobanteAgregar = request.getParameter("tipoComprobante");
                 int ultimoNumeroComprobante = ingresoDAO.obtenerUltimoNumeroComprobante(tipoComprobanteAgregar);
@@ -128,6 +136,60 @@ public class ControladorIngreso extends HttpServlet {
                     response.sendRedirect("ControladorIngreso?Op=Listar&mensaje=Ingreso+actualizado+correctamente");
                 } else {
                     response.sendRedirect("ControladorIngreso?Op=Listar&error=Error+al+actualizar+el+ingreso");
+                }
+                break;
+
+            case "Eliminar":
+                DetalleIngresoDAO detalleIngresoDAO = new DetalleIngresoDAO();
+                String idIngresoEliminarStr = request.getParameter("idIngreso");
+
+                if (idIngresoEliminarStr != null && !idIngresoEliminarStr.isEmpty()) {
+                    try {
+                        int idIngresoAEliminar = Integer.parseInt(idIngresoEliminarStr);
+                        int detallesRelacionados = detalleIngresoDAO.contarDetallesConIdIngreso(idIngresoAEliminar);
+
+                        if (detallesRelacionados > 0) {
+                            ProductoDAO productoDAOEliminar = new ProductoDAO();
+                            List<DetalleIngreso> detallesIngreso = detalleIngresoDAO.listarPorIdIngreso(idIngresoAEliminar);
+                            for (DetalleIngreso detalle : detallesIngreso) {
+                                int idProducto = detalle.getIdProducto().getIdProducto();
+                                int cantidad = detalle.getCantidad();
+                                int stockActual = productoDAOEliminar.obtenerStock(idProducto);
+                                int nuevoStock = stockActual - cantidad;
+                                productoDAOEliminar.actualizarStock(idProducto, nuevoStock);
+                            }
+                            // Eliminar primero los detalles relacionados
+                            boolean eliminacionDetallesExitosa = detalleIngresoDAO.eliminarDetallesPorIdIngreso(idIngresoAEliminar);
+                            if (eliminacionDetallesExitosa) {
+                                // Luego de eliminar los detalles, eliminar el ingreso principal
+                                boolean eliminacionExitosa = ingresoDAO.eliminar(idIngresoAEliminar);
+                                if (eliminacionExitosa) {
+                                    response.sendRedirect("ControladorIngreso?Op=Listar&mensaje=Ingreso+y+detalles+eliminados+correctamente");
+                                } else {
+                                    response.sendRedirect("ControladorIngreso?Op=Listar&error=Hubo+un+error+al+eliminar+el+ingreso");
+                                }
+                            } else {
+                                response.sendRedirect("ControladorIngreso?Op=Listar&error=Hubo+un+error+al+eliminar+los+detalles");
+                            }
+                        } else {
+                            // No hay detalles relacionados, eliminar directamente el ingreso
+                            boolean eliminacionExitosa = ingresoDAO.eliminar(idIngresoAEliminar);
+                            if (eliminacionExitosa) {
+                                response.sendRedirect("ControladorIngreso?Op=Listar&mensaje=Ingreso+eliminado+correctamente");
+                            } else {
+                                response.sendRedirect("ControladorIngreso?Op=Listar&error=Hubo+un+error+al+eliminar+el+ingreso");
+                            }
+                        }
+                    } catch (NumberFormatException e) {
+                        // Captura la excepción si no se puede convertir idIngresoEliminarStr a un entero
+                        response.sendRedirect("ControladorIngreso?Op=Listar&error=El+id+de+ingreso+no+es+válido");
+                    } catch (Exception e) {
+                        // Captura otras excepciones inesperadas
+                        e.printStackTrace();
+                        response.sendRedirect("ControladorIngreso?Op=Listar&error=Hubo+un+error+al+eliminar+el+ingreso");
+                    }
+                } else {
+                    response.sendRedirect("ControladorIngreso?Op=Listar&error=No+se+proporciono+un+id+de+ingreso");
                 }
                 break;
 

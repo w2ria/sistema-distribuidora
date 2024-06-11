@@ -168,6 +168,29 @@ public class IngresoDAO {
         return ultimoNumero;
     }
 
+    public int actualizarTotal(int idIngreso, double total) {
+        String sql = "UPDATE ingreso SET total=? WHERE idIngreso=?";
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setDouble(1, total);
+            ps.setInt(2, idIngreso);
+            r = ps.executeUpdate();
+            if (r > 0) {
+                System.out.println("Total del ingreso actualizado correctamente!");
+            } else {
+                System.out.println("No se pudo actualizar el total del ingreso.");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR en actualizarTotal en IngresoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+
+        return r;
+    }
+
     public List<Ingreso> buscarPorNombreProveedor(String nombreProveedor) {
         List<Ingreso> ingresos = new ArrayList<>();
         String sql = "SELECT i.* FROM ingreso i "
