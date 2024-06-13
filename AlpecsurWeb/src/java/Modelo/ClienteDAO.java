@@ -25,7 +25,7 @@ public class ClienteDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 Cliente cli = new Cliente();
-                cli.setIdCliente(rs.getInt("idProveedor"));
+                cli.setIdCliente(rs.getInt("idCliente"));
                 cli.setIdUsuario(rs.getInt("idUsuario"));
                 cli.setNombre(rs.getString("nombre"));
                 cli.setTipoDocumento(rs.getString("tipoDocumento"));

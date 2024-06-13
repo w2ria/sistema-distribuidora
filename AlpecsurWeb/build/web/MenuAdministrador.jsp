@@ -72,7 +72,7 @@
                         </span>
                         <h3>Ingresos</h3>
                     </a>
-                    <a href="#">
+                    <a href="ControladorPedido?Op=Listar">
                         <span class="material-icons-sharp">
                             receipt_long
                         </span>

@@ -44,6 +44,10 @@
         <servlet-name>ControladorDetalleIngreso</servlet-name>
         <servlet-class>Controlador.ControladorDetalleIngreso</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorPedido</servlet-name>
+        <servlet-class>Controlador.ControladorPedido</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>controlador</servlet-name>
         <url-pattern>/controlador</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>ControladorDetalleIngreso</servlet-name>
         <url-pattern>/ControladorDetalleIngreso</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorPedido</servlet-name>
+        <url-pattern>/ControladorPedido</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
