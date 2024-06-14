@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-05-2024 a las 06:45:52
+-- Tiempo de generación: 12-06-2024 a las 08:24:23
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Versión de PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -72,14 +72,14 @@ CREATE TABLE `categoria` (
 --
 
 INSERT INTO `categoria` (`idCategoria`, `nombre`, `descripcion`) VALUES
-(1, 'Papas fritas', 'Rodajas de papa fritas en aceite, conocidas por su textura crujiente y una variedad de sabores.'),
-(2, 'Snacks mixtos', 'Combinación de diferentes tipos de snacks, que pueden incluir papas fritas, nachos, pretzels, y más, ideales para compartir.'),
-(3, 'Nachos', 'Triángulos de tortilla de maíz frita, generalmente sazonados con sabores como queso, picante o chili, y frecuentemente acompañados de dips.'),
-(4, 'Tostadas', 'Rodajas de tortilla de maíz frita o tostada, perfectas para acompañar con salsas, guacamole o frijoles.'),
-(5, 'Snacks de maíz', 'Variedad de snacks hechos a base de maíz, que pueden incluir bolitas, palitos, o formas onduladas, en sabores como queso y picante.'),
-(6, 'Snacks de vegetales', 'Chips hechos de vegetales como camote, zanahoria o kale, ofreciendo una opción más saludable y natural.'),
-(7, 'Snacks de legumbres', 'Snacks crujientes hechos de legumbres como habas o garbanzos, frecuentemente tostados y sazonados.'),
-(8, 'Snacks de maní', 'Maní tostado, salado, o cubierto con diferentes sabores como picante o dulce, ofreciendo una opción nutritiva y energética.');
+(1, 'Papas Fritas', 'Snack popular elaborado a partir de papas que han sido cortadas en rodajas finas o en tiras, y luego fritas en aceite hasta alcanzar una textura crujiente.'),
+(2, 'Cereales', 'Alimentos derivados de granos como el trigo, maíz, avena, arroz y cebada, que se procesan y suelen consumirse en el desayuno. '),
+(3, 'Pan', 'Elaborado principalmente a partir de harina, agua, y un agente leudante como la levadura. '),
+(4, 'Galletas', 'Se caracteriza por su textura crujiente y sabor dulce.'),
+(5, 'Tostadas', 'Las tostadas son rodajas finas de pan que se han tostado hasta que alcanzan una textura crujiente y un color dorado.'),
+(6, 'Chupetines', 'Conocidos como paletas, son caramelos duros montados en un palo que permiten consumirlos de manera más conveniente.'),
+(7, 'Bizcochos', 'Tipo de pastel o torta pequeño que se caracteriza por su textura suave y esponjosa.'),
+(8, 'Snacks Salados', 'Bocadillos o aperitivos que se caracterizan por su sabor salado y a menudo crujiente.');
 
 -- --------------------------------------------------------
 
@@ -112,7 +112,9 @@ INSERT INTO `cliente` (`idCliente`, `idUsuario`, `nombre`, `tipoDocumento`, `num
 (7, 25, 'Carlos Ramírez', 'DNI', '78901234', 'Av. Los Pinos 123', '987654327', 'carlosramirez@gmail.com'),
 (8, 29, 'Laura Sánchez', 'DNI', '89012345', 'Calle Las Flores 456', '987654328', 'laurasanchez@outlook.com'),
 (9, 33, 'Diego Martínez', 'DNI', '90123456', 'Jr. Los Cedros 789', '987654329', 'diegomartinez@hotmail.com'),
-(10, 37, 'Sofía Pérez', 'DNI', '01234567', 'Av. Las Palmeras 234', '987654330', 'sofiaperez@gmail.com');
+(10, 37, 'Sofía Pérez', 'DNI', '01234567', 'Av. Las Palmeras 234', '987654330', 'sofiaperez@gmail.com'),
+(11, 44, 'Dante', 'DNI', '78451296', 'mi casa', '985874123', 'dantito@gmail.com'),
+(12, 45, 'Fernando', 'DNI', '72689377', 'Mi house ', '987564321', 'fernando@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -203,7 +205,8 @@ INSERT INTO `empleado` (`idEmpleado`, `idUsuario`, `nombre`, `tipoDocumento`, `n
 (7, 26, 'Alejandro Castro', 'DNI', '78901234', 'Av. Los Pinos 123', '987654337', 'alejandrocastro@gmail.com', 'activo'),
 (8, 30, 'Patricia León', 'DNI', '89012345', 'Calle Las Flores 456', '987654338', 'patricialeon@outlook.com', 'activo'),
 (9, 34, 'Roberto Soto', 'DNI', '90123456', 'Jr. Los Cedros 789', '987654339', 'robertosoto@hotmail.com', 'activo'),
-(10, 38, 'Fabiola Ortega', 'DNI', '01234567', 'Av. Las Palmeras 234', '987654340', 'fabiolaortega@gmail.com', 'activo');
+(10, 38, 'Fabiola Ortega', 'DNI', '01234567', 'Av. Las Palmeras 234', '987654340', 'fabiolaortega@gmail.com', 'activo'),
+(12, 48, 'Martin', 'DNI', '78451296', 'Jr gaminedes', '987564321', 'Martin@gmail.com', 'activo');
 
 -- --------------------------------------------------------
 
@@ -261,18 +264,15 @@ CREATE TABLE `marca` (
 --
 
 INSERT INTO `marca` (`idMarca`, `nombre`, `descripcion`) VALUES
-(1, 'Lays', 'Papas fritas en una variedad de sabores y estilos, conocidas por su textura crujiente.'),
-(2, 'Piqueo Snack', 'Mezcla de diferentes snacks salados en un solo paquete, ideal para compartir.'),
-(3, 'Doritos', 'Nachos de maíz en sabores intensos como queso y picante, característicos por su forma triangular.'),
-(4, 'Tostitos', 'Totopos de maíz, ideales para acompañar con salsas y dips.'),
-(5, 'Cheez Tris', 'Snacks de maíz con un fuerte sabor a queso, conocidos por su forma ondulada.'),
-(6, 'Chizitos', 'Snacks de maíz en forma de bolitas, con un sabor distintivo a queso.'),
-(7, 'Tortees', 'Tortillas de maíz con sabores clásicos y picantes, perfectas para picar.'),
-(8, 'NatuChips', 'Chips de vegetales como el camote, ofreciendo una opción más saludable y natural.'),
-(9, 'Cheetos', 'Snacks de maíz en una variedad de sabores como queso y picante, con una textura crujiente o esponjosa.'),
-(10, 'Cuates', 'Mezcla de diferentes snacks salados y picantes, ideales para compartir.'),
-(11, 'Karinto', 'Chips de plátano y otros snacks basados en productos naturales, con opciones saladas y dulces.'),
-(12, 'Habas Saladas', 'Habas tostadas y saladas, una opción crujiente y saludable para picar.');
+(1, 'Lay\'s', 'Papas fritas en una variedad de sabores y estilos, conocidas por su textura crujiente.'),
+(2, 'Inka chips', 'Marca peruana de snacks que se especializa en la producción de papas fritas y otros productos derivados de ingredientes locales'),
+(3, 'Alicorp', 'Una marca local, con su línea de cereales Angel'),
+(4, 'Nestle', 'Marca internacional con una presencia fuerte en Perú, ofreciendo cereales como Fitness, Nesquik, Chocapic, Trix, entre otros.'),
+(5, 'Kellogg\'s', 'Marcas más populares a nivel mundial, con productos como Corn Flakes, Choco Krispis, Zucaritas, Froot Loops, entre otros.'),
+(6, 'Bimbo', 'Ofrece productos como pan de caja, pastelería, snacks y tortillas.'),
+(7, 'Union', 'Los productos de Unión incluyen panes, galletas y otros productos de repostería, conocidos por su calidad y sabor tradicional'),
+(8, 'Costa', 'Conocida por la alta calidad de sus productos y su constante innovación para satisfacer los gustos de los consumidores'),
+(9, 'Field', 'Amplia gama de productos de confitería y snacks');
 
 -- --------------------------------------------------------
 
@@ -284,6 +284,16 @@ CREATE TABLE `pago` (
   `idPago` int(11) UNSIGNED NOT NULL,
   `Monto` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `pago`
+--
+
+INSERT INTO `pago` (`idPago`, `Monto`) VALUES
+(19, 4),
+(20, 4),
+(21, 8.9166),
+(22, 9);
 
 -- --------------------------------------------------------
 
@@ -302,6 +312,16 @@ CREATE TABLE `pedido` (
   `total` decimal(10,5) DEFAULT NULL,
   `idEstadoPedido` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `pedido`
+--
+
+INSERT INTO `pedido` (`idPedido`, `idCliente`, `idEmpleado`, `idPago`, `tipoComprobante`, `numComprobante`, `fecha`, `total`, `idEstadoPedido`) VALUES
+(1, 1, 1, 19, 'Factura', '0001-00000001', '2024-06-03', 4.00000, 1),
+(2, 11, 1, 20, 'Factura', '0001-00000002', '2024-06-03', 4.00000, 1),
+(3, 11, 1, 21, 'Factura', '0001-00000003', '2024-06-03', 8.91660, 1),
+(4, 11, 1, 22, 'Factura', '0001-00000004', '2024-06-04', 9.00000, 1);
 
 -- --------------------------------------------------------
 
@@ -326,56 +346,87 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`idProducto`, `idCategoria`, `idMarca`, `nombre`, `precio`, `stock`, `descripcion`, `imagen`, `estado`) VALUES
-(51, 1, 1, 'LAYS CLASICAS 36G', 1.50000, 60, 'Papas fritas clásicas, tamaño pequeño', 'PRO0001.png', 'activo'),
-(52, 1, 1, 'LAYS CLASICAS 70G', 2.50000, 60, 'Papas fritas clásicas, tamaño mediano', 'PRO0002.png', 'activo'),
-(53, 1, 1, 'LAYS CLASICAS 150G', 6.50000, 60, 'Papas fritas clásicas, tamaño grande', 'PRO0003.png', 'activo'),
-(54, 1, 1, 'LAYS ARTESANA SAL MARINA 135G', 6.50000, 60, 'Papas fritas estilo artesanal con sal marina, tamaño mediano', 'PRO0004.png', 'activo'),
-(55, 1, 1, 'LAYS AL HILO 40G', 1.50000, 60, 'Papas fritas cortadas en hilos, tamaño pequeño', 'PRO0005.jpg', 'activo'),
-(56, 1, 1, 'LAYS AL HILO 155G', 4.50000, 60, 'Papas fritas cortadas en hilos, tamaño grande', 'PRO0006.jpeg', 'activo'),
-(57, 1, 1, 'LAYS POLLO A LA BRASA 34G', 1.50000, 60, 'Papas fritas sabor pollo a la brasa, tamaño pequeño', 'PRO0007.png', 'activo'),
-(58, 2, 2, 'PIQUEO SNACK 55G', 1.66670, 60, 'Mezcla de snacks, tamaño pequeño', 'PRO0008.png', 'activo'),
-(59, 2, 2, 'PIQUEO SNACK 105G', 2.91670, 60, 'Mezcla de snacks, tamaño mediano', 'PRO0009.png', 'activo'),
-(60, 2, 2, 'PIQUEO SNACK 225G', 7.00000, 60, 'Mezcla de snacks, tamaño grande', 'PRO0010.png', 'activo'),
-(61, 3, 3, 'DORITOS QUESO ATREVIDO 45G', 1.66670, 60, 'Nachos sabor queso atrevido, tamaño pequeño', 'PRO0011.png', 'activo'),
-(62, 3, 3, 'DORITOS QUESO ATREVIDO 90G', 2.91670, 60, 'Nachos sabor queso atrevido, tamaño mediano', 'PRO0012.png', 'activo'),
-(63, 3, 3, 'DORITOS FUEGO 45G', 1.66670, 60, 'Nachos sabor picante fuego, tamaño pequeño', 'PRO0013.jpg', 'activo'),
-(64, 3, 3, 'DORITOS FUEGO 90G', 2.91670, 60, 'Nachos sabor picante fuego, tamaño mediano', 'PRO0014.jpg', 'activo'),
-(65, 3, 3, 'DORITOS FLAMIN HOT 43G', 1.66670, 60, 'Nachos sabor Flamin Hot, tamaño pequeño', 'PRO0015.jpeg', 'activo'),
-(66, 3, 3, 'DORITOS  210G', 7.00000, 60, 'Nachos sabor original, tamaño grande', 'PRO0016.jpeg', 'activo'),
-(67, 4, 4, 'TOSTITOS 200 G', 7.00000, 60, 'Totopos de maíz, tamaño grande', 'PRO0017.png', 'activo'),
-(68, 1, 1, 'LAYS ONDAS CLASICA 34G', 1.50000, 60, 'Papas fritas onduladas, tamaño pequeño', 'PRO0018.jpg', 'activo'),
-(69, 1, 1, 'LAYS ONDAS PICANTE 34G', 1.50000, 60, 'Papas fritas onduladas sabor picante, tamaño pequeño', 'PRO0019.png', 'activo'),
-(70, 1, 1, 'LAYS ONDAS PICANTE 140G', 6.50000, 60, 'Papas fritas onduladas sabor picante, tamaño grande', 'PRO0020.png', 'activo'),
-(71, 5, 5, 'CHEESE TRIS QUESO 39G', 1.08330, 60, 'Snacks de maíz sabor queso, tamaño pequeño', 'PRO0021.png', 'activo'),
-(72, 5, 5, 'CHEESE TRIS QUESO 105G', 2.50000, 60, 'Snacks de maíz sabor queso, tamaño mediano', 'PRO0022.jpg', 'activo'),
-(73, 5, 6, 'CHIZITOS QUESO 35G', 0.83330, 60, 'Snacks de maíz sabor queso, tamaño pequeño', 'PRO0023.png', 'activo'),
-(74, 5, 6, 'CHIZITOS QUESO 190G', 5.00000, 60, 'Snacks de maíz sabor queso, tamaño grande', 'PRO0024.png', 'activo'),
-(75, 4, 7, 'TORTEES CLASICO 71G', 1.66670, 60, 'Tortillas de maíz sabor clásico, tamaño mediano', 'PRO0025.png', 'activo'),
-(76, 4, 7, 'TORTEES CLASICO 138G', 2.91670, 60, 'Tortillas de maíz sabor clásico, tamaño grande', 'PRO0026.jpg', 'activo'),
-(77, 4, 7, 'TORTEES PICANTE 71G', 1.66670, 60, 'Tortillas de maíz sabor picante, tamaño mediano', 'PRO0027.png', 'activo'),
-(78, 4, 7, 'TORTEES PICANTE 138G', 2.91670, 60, 'Tortillas de maíz sabor picante, tamaño grande', 'PRO0028.png', 'activo'),
-(79, 6, 8, 'NATUCHIPS CAMOTE 36G', 1.50000, 60, 'Chips de camote, tamaño pequeño', 'PRO0029.jpg', 'activo'),
-(80, 6, 8, 'CHEETOS MEGA QUESO 34G', 1.08330, 60, 'Snacks de maíz sabor mega queso, tamaño pequeño', 'PRO0030.png', 'activo'),
-(81, 5, 9, 'CHEETOS MEGA QUESO 90G', 2.50000, 60, 'Snacks de maíz sabor mega queso, tamaño mediano', 'PRO0032.png', 'activo'),
-(82, 5, 9, 'CHEETOS PICANTE 90G', 2.50000, 60, 'Snacks de maíz sabor picante, tamaño mediano', 'PRO0033.png', 'activo'),
-(83, 5, 9, 'CHEETOS MEGA QUESO 200G', 6.00000, 60, 'Snacks de maíz sabor mega queso, tamaño grande', 'PRO0034.png', 'activo'),
-(84, 5, 9, 'CHEETOS PICANTE 180G', 6.00000, 60, 'Snacks de maíz sabor picante, tamaño grande', 'PRO0035.png', 'activo'),
-(85, 5, 9, 'CHEETOS BOLIQUESO 30G', 1.08330, 60, 'Bolitas de maíz sabor queso, tamaño pequeño', 'PRO0036.png', 'activo'),
-(86, 5, 9, 'CHEETOS HORNEADOS FLAMIN HOT 36G', 1.25000, 60, 'Snacks de maíz horneados sabor Flamin Hot, tamaño pequeño', 'PRO0037.png', 'activo'),
-(87, 5, 10, 'CUATES SALADO 50G', 0.83330, 60, 'Mezcla de snacks salados, tamaño pequeño', 'PRO0038.png', 'activo'),
-(88, 5, 10, 'CUATES PICANTE 50G', 0.83330, 60, 'Mezcla de snacks picantes, tamaño pequeño', 'PRO0039.png', 'activo'),
-(89, 5, 10, 'CUATES RANCHERITOS DE 50G', 0.83330, 60, 'Mezcla de snacks tipo ranchero, tamaño pequeño', 'PRO0040.jpg', 'activo'),
-(90, 5, 10, 'CUATES TWIST 45G', 0.83330, 60, 'Mezcla de snacks en forma de twist, tamaño pequeño', 'PRO0041.png', 'activo'),
-(91, 5, 11, 'KARINTO CHIFLES 34G', 1.08330, 60, 'Chips de plátano, tamaño pequeño', 'PRO0042.png', 'activo'),
-(92, 5, 11, 'KARINTO CHIFLES 150G', 4.50000, 60, 'Chips de plátano, tamaño grande', 'PRO0043.png', 'activo'),
-(93, 7, 12, 'HABAS SALADAS 35G', 1.66670, 60, 'Habas saladas, tamaño pequeño', 'PRO0044.png', 'activo'),
-(94, 8, 11, 'MANI ENGALLETADO PICANTE 35G', 1.25000, 60, 'Maní cubierto sabor picante, tamaño pequeño', 'PRO0045.png', 'activo'),
-(95, 8, 11, 'MANI ENGALLETADO PICANTE 100G', 3.00000, 60, 'Maní cubierto sabor picante, tamaño mediano', 'PRO0046.png', 'activo'),
-(96, 8, 11, 'MANI ENGALLETADO SALADO 35G', 1.25000, 60, 'Maní cubierto sabor salado, tamaño pequeño', 'PRO0047.png', 'activo'),
-(97, 8, 11, 'MANI ENGALLETADO SALADO 100G', 3.00000, 60, 'Maní cubierto sabor salado, tamaño mediano', 'PRO0048.png', 'activo'),
-(98, 8, 11, 'MANI CLASICO 35G', 1.25000, 60, 'Maní clásico, tamaño pequeño', 'PRO0049.jpg', 'activo'),
-(99, 8, 11, 'MANI CLASICO 100G', 3.00000, 60, 'Maní clásico, tamaño mediano', 'PRO0050.png', 'activo'),
-(100, 1, 1, 'LAYS FLAMIN HOT 34G', 1.50000, 60, 'Papas fritas sabor Flamin Hot, tamaño pequeño', 'PRO0051.jpg', 'activo');
+(105, 1, 1, 'Lay\'s Clasicas', 5.50000, 300, 'Clasicas Saladas ', 'PRO0001.jpg', 'activo'),
+(106, 1, 1, 'Lay\'s Dill Pickle', 8.00000, 80, 'Pepinillos al eneldo', 'PRO0002.jpg', 'activo'),
+(107, 1, 1, 'Lay\'s Chile Limon', 4.50000, 60, 'Picor de los chiles y el gusto potente del limon verde', 'PRO0003.jpg', 'activo'),
+(108, 1, 1, 'Lay\'s Flamin Hot Dill Pickle', 9.00000, 84, 'Picor intenso de los chiles y la acidez de los pepinillos al eneldo', 'PRO0004.jpg', 'activo'),
+(109, 1, 1, 'Lay\'s Flamin Hot', 8.50000, 100, 'Picante intenso de los chiles y los condimentos', 'PRO0005.jpg', 'activo'),
+(110, 1, 1, 'Lay\'s  Sweet & Spicy Honey', 9.50000, 95, 'Mezcla dulce y picante para obtener la combinacion de sabores perfecta', 'PRO0006.jpg', 'activo'),
+(111, 1, 1, 'Lay\'s Adobadas', 8.80000, 60, 'Condimento de Adobadas (sal, especias [con chile rojo], azucar, harina de maiz amarillo', 'PRO0007.jpg', 'activo'),
+(112, 1, 1, 'Lay\'s Chesapeake Bay Crab Spice', 9.50000, 86, 'Sabor condimento para cangrejo de la bahia de Chesapeake', 'PRO0008.jpg', 'activo'),
+(113, 1, 1, 'Lay\'s Honey Barbecue', 8.50000, 60, 'Dulzor de la miel y el toque picante de la salsa BBQ ', 'PRO0009.jpg', 'activo'),
+(114, 1, 1, 'Lay\'s Limon', 8.50000, 150, 'Gusto potente del limon verde', 'PRO0010.jpg', 'activo'),
+(115, 1, 1, 'Lay\'s Salt & Vinegar', 9.50000, 68, 'Acidez que aporta el vinagre y la sal', 'PRO0011.jpg', 'activo'),
+(116, 1, 1, 'Lay\'s Cheddar ', 9.50000, 62, 'Combinacion de queso cheddar ', 'PRO0012.jpg', 'activo'),
+(117, 1, 1, 'Lay\'s Sweet & Spicy Honey', 9.50000, 102, 'Mezcla dulce y picante para obtener la combinacion de sabores perfecta', 'PRO0013.jpg', 'activo'),
+(118, 1, 1, 'Lay\'s Cheddar & Sour Cream', 9.50000, 200, 'Punto acido de la crema y del queso cheddar fuerte', 'PRO0014.jpg', 'activo'),
+(119, 1, 1, 'Lay\'s Sour Cream & Onion', 10.00000, 200, 'Punto Acido de la crema y las cebollas ', 'PRO0015.jpg', 'activo'),
+(120, 1, 1, 'Lay\'s Barbecue', 8.50000, 200, 'Dulzor picosito de la salsa BBQ', 'PRO0016.jpg', 'activo'),
+(121, 1, 2, 'Inka Chips Sal de Mar', 7.00000, 100, 'Condimentado con sal de Mares ', 'PRO0017.jpg', 'activo'),
+(122, 1, 2, 'Inka Chips Jalapeno', 8.50000, 125, 'Papas crujientes sabor Jalapeno', 'PRO0018.jpg', 'activo'),
+(123, 1, 2, 'Inka Chips Sabor BBQ & cebolla', 9.50000, 200, 'Crujientes dulces, ahumadas y extra crujientes', 'PRO0019.jpg', 'activo'),
+(124, 1, 2, 'Inka Chips Sabor Queso & Cebolla', 9.50000, 200, 'Sabor del queso parmesano maduro y de cebolla dulce', 'PRO0020.jpg', 'activo'),
+(125, 1, 2, 'Inka Chips Papas Nativas', 8.50000, 150, 'Exquisito sabor, colores y textura que tienen nuestras papas nativas', 'PRO0021.jpg', 'activo'),
+(127, 2, 3, 'Angel Chock', 12.00000, 88, 'Cereal de maiz inflado y recubierto con chocolate', 'PRO0022.jpg', 'activo'),
+(128, 2, 3, 'Angel Copix', 8.50000, 100, 'Caracterizada por su sabor a chocolate', 'PRO0023.jpg', 'activo'),
+(129, 2, 3, 'Angel Fresia Amohada', 12.00000, 125, 'Cereal que ofrece una variante con sabor a fresa. Este cereal esta hecho de granos de maiz y arroz', 'PRO0024.jpg', 'activo'),
+(130, 2, 3, 'Angel Frutt', 13.00000, 120, 'Conocida por su combinacion de granos con trozos de frutas', 'PRO0025.jpg', 'activo'),
+(131, 2, 3, 'Angel Meli', 15.00000, 132, 'Se distingue por su sabor a miel', 'PRO0026.jpg', 'activo'),
+(132, 2, 3, 'Angel Pepe Almohada', 16.00000, 168, 'Hecho principalmente de granos de maiz y arroz', 'PRO0027.jpg', 'activo'),
+(133, 2, 3, 'Angel Tito Almohada', 13.00000, 45, 'Hecho principalmente de granos de maiz y arroz, ademas de Extractos de malta (para sabor y color)', 'PRO0028.jpg', 'activo'),
+(134, 2, 3, 'Angel Zuck', 14.00000, 123, 'Hecho de granos de maiz, que son procesados y recubiertos con una capa de azucar', 'PRO0029.jpg', 'activo'),
+(135, 2, 3, 'Angel Estrellitas', 16.00000, 145, 'Hecho de granos de maiz y trigo, son procesados y moldeados en forma de estrellas', 'PRO0030.jpg', 'activo'),
+(136, 2, 3, 'Angel Flakes', 15.00000, 42, 'Hecho de granos de maiz, que son procesados y laminados en finas hojuelas', 'PRO0031.jpg', 'activo'),
+(137, 2, 4, 'Nestle Cereal Estrellitas', 13.00000, 42, 'Hecho principalmente de granos integrales', 'PRO0032.jpg', 'activo'),
+(138, 2, 4, 'Nestle KitKat', 20.00000, 56, 'Combinando el placer del chocolate con la conveniencia de los cereales', 'PRO0033.jpg', 'activo'),
+(139, 2, 4, 'Nestle Chocapic', 25.00000, 82, 'Conocida por su sabor a chocolate y su textura crujiente', 'PRO0034.jpg', 'activo'),
+(140, 2, 4, 'Nestle Corn Flakes', 21.00000, 87, 'Conocida por sus hojuelas de maiz crujientes y su sabor clasico', 'PRO0035.jpg', 'activo'),
+(141, 2, 4, 'Nestle Nesquik', 25.00000, 60, 'Combinacion de harina de maiz y trigo, junto con el cacao en polvo', 'PRO0036.jpg', 'activo'),
+(142, 2, 4, 'Nestle Original Fitness', 12.00000, 74, 'Hecho principalmente de granos integrales, proporcionando una buena fuente de fibra y nutrientes esenciales', 'PRO0037.jpg', 'activo'),
+(143, 2, 4, 'Nestle Trix', 22.00000, 39, 'Conocida por sus colores vibrantes y su sabor afrutado', 'PRO0038.jpg', 'activo'),
+(144, 2, 5, 'Kellogg\'s Choco Krispis', 35.00000, 100, 'Conocida por su sabor a chocolate y su textura crujiente', 'PRO0039.jpg', 'activo'),
+(145, 2, 5, 'Kellogg\'s Corn Flakes', 23.00000, 54, 'Famoso por sus hojuelas de maiz crujientes y su sabor clasico', 'PRO0040.jpg', 'activo'),
+(146, 2, 5, 'Kellogg\'s Froot Loops', 18.00000, 95, 'Conocido por sus anillos de colores vibrantes y su sabor afrutado', 'PRO0041.jpg', 'activo'),
+(147, 3, 6, 'Bimbo Pan Multigrano Cero Cero', 15.00000, 42, 'Se caracteriza por estar elaborado sin azucar y sin grasa anadida', 'PRO0042.jpg', 'activo'),
+(148, 3, 6, 'Bimbo Pan Cero Cero', 13.00000, 87, 'Eleccion para quienes desean disfrutar de un pan delicioso y nutritivo', 'PRO0043.jpg', 'activo'),
+(149, 3, 6, 'Bimbo Pan Blanco para Hot Dogs', 20.00000, 135, 'Se caracteriza por su suavidad y sabor, ofreciendo la base perfecta para tus hot dogs favoritos', 'PRO0044.jpg', 'activo'),
+(150, 3, 6, 'Bimbo Pan de Molde Blanco', 12.50000, 124, 'Se caracteriza por su textura esponjosa y su sabor clasico, ideal para diversas preparaciones', 'PRO0045.jpg', 'activo'),
+(151, 3, 6, 'Bimbo Pan Multigrano Linaza', 15.60000, 206, 'Se caracteriza por estar enriquecido con linaza, proporcionando beneficios adicionales para la salud', 'PRO0046.jpg', 'activo'),
+(152, 3, 6, 'Bimbo Pan Pita Blanco', 10.00000, 231, 'Se caracteriza por su suavidad y sabor neutro, ideal para combinar con diferentes ingredientes', 'PRO0047.jpg', 'activo'),
+(153, 3, 6, 'Bimbo Pan Pita Cero Cero', 11.30000, 43, 'Opcion de pan versatil, deliciosa y nutritiva', 'PRO0048.jpg', 'activo'),
+(154, 3, 6, 'Bimbo Pan Pita Con Linaza', 12.50000, 89, 'Este pan pita se caracteriza por estar enriquecido con linaza, proporcionando beneficios adicionales para la salud', 'PRO0049.jpg', 'activo'),
+(155, 3, 6, 'Bimbo Pan Pita Integral', 12.00000, 96, 'Se caracteriza por estar elaborado con harina integral', 'PRO0050.jpg', 'activo'),
+(156, 3, 6, 'Bimbo Pan Integral', 10.50000, 98, 'Se caracteriza por estar elaborado con harina integral, proporcionando beneficios adicionales para la salud', 'PRO0051.jpg', 'activo'),
+(157, 4, 8, 'Costa Choco Chips', 2.50000, 140, 'Galleta crujiente y deliciosa con el inconfundible sabor del chocolate', 'PRO0052.jpg', 'activo'),
+(158, 4, 8, 'Costa Galleta Frac Chococlate', 3.50000, 43, 'Galleta crujiente por fuera y cremosa por dentro, con el inconfundible sabor del chocolate', 'PRO0053.jpg', 'activo'),
+(159, 4, 8, 'Costa Galleta Frac Clasica', 4.50000, 67, 'Galletas de vainilla con un relleno cremoso de sabor a chocolate', 'PRO0054.jpg', 'activo'),
+(160, 3, 7, 'Union Pan Americano Sandwich Clasico', 8.50000, 94, 'Eleccion perfecta para quienes desean disfrutar de un pan suave, delicioso y versatil', 'PRO0055.jpg', 'activo'),
+(161, 3, 7, 'Union Pan Blanco Superbom Familiar', 8.50000, 56, 'Viene en un tamano familiar con rebanadas grandes, perfectas para multiples preparaciones', 'PRO0056.jpg', 'activo'),
+(162, 3, 7, 'Union Pan con Granos y Semillas', 9.50000, 63, 'Contiene una mezcla de diferentes granos y semillas, como linaza, sesamo, girasol, y avena', 'PRO0057.jpg', 'activo'),
+(163, 3, 7, 'Union Pan Fibra Integral', 7.50000, 85, 'Hecho con harina integral que aporta mas fibra y nutrientes en comparacion con la harina refinada', 'PRO0058.jpg', 'activo'),
+(164, 3, 7, 'Union Pan Fuente', 10.60000, 76, 'Contiene una mezcla de vitaminas y minerales esenciales', 'PRO0059.jpg', 'activo'),
+(165, 3, 7, 'Union Pan Integral Sandwich Clasico', 6.50000, 79, 'Hecho con harina integral que aporta mas fibra y nutrientes en comparacion con la harina refinada', 'PRO0060.jpg', 'activo'),
+(166, 3, 7, 'Union Pan Multisemillas Con Avena', 8.80000, 93, 'Contiene una mezcla de semillas como linaza, sesamo, girasol, y chia', 'PRO0061.jpg', 'activo'),
+(167, 3, 7, 'Union Pan Multisemillas con Miel de Abeja', 10.60000, 91, 'Se caracteriza por estar enriquecido con una variedad de semillas y miel de abeja', 'PRO0062.jpg', 'activo'),
+(168, 3, 7, 'Union Pan Pita Integral con Granos Andinos', 9.50000, 83, 'Se caracteriza por estar elaborado con harina integral y enriquecido con granos andinos', 'PRO0063.jpg', 'activo'),
+(169, 3, 7, 'Union Pan Pita Semillas Chia y Linaza', 9.80000, 93, 'Se caracteriza por estar enriquecido con semillas de chia y linaza', 'PRO0064.jpg', 'activo'),
+(170, 4, 8, 'Costa Galleta Gretel Chococlate', 3.50000, 121, 'Galleta crujiente por fuera y cremosa por dentro, con el inconfundible sabor del chocolate', 'PRO0065.jpg', 'activo'),
+(171, 4, 8, 'Costa Galletas Choco Donuts', 3.50000, 69, 'Galletas con forma de donut, que las hace atractivas y divertidas de comer', 'PRO0066.jpg', 'activo'),
+(172, 4, 8, 'Costa Galletas Frac Sabor Vainilla', 6.50000, 95, 'Galletas de vainilla con un relleno cremoso de sabor a vainilla', 'PRO0067.jpg', 'activo'),
+(173, 4, 8, 'Costa Galleta Agua Line', 3.50000, 96, 'Galletas delgadas y crujientes, perfectas para un consumo ligero y saludable', 'PRO0068.jpg', 'activo'),
+(174, 4, 8, 'Costa Galleta Caritas', 2.50000, 83, 'Galletas con formas de caritas, rellena en chocolate', 'PRO0069.jpeg', 'activo'),
+(175, 4, 8, 'Costa Galletas Donuts Blanco', 1.50000, 93, 'Combinando la forma de un donut con el delicioso sabor del chocolate blanco', 'PRO0070.jpg', 'activo'),
+(176, 4, 8, 'Costa Galletas Choco Donuts Crunch', 2.50000, 97, 'Combinando la forma de un donut con el sabor intenso del chocolate y una textura crujiente adicional', 'PRO0071.jpg', 'activo'),
+(177, 4, 9, 'Field Chokosoda', 2.50000, 125, 'Deliciosa combinacion de galleta soda y cobertura de chocolate', 'PRO0072.jpg', 'activo'),
+(178, 4, 9, 'Field Galleta Coronita', 3.50000, 56, 'Galletas con forma de corona Y cubierta de chocolate', 'PRO0073.jpg', 'activo'),
+(179, 4, 9, 'Field Galleta Cua Cua', 3.50000, 95, 'La galleta Cua Cua tradicional viene con una cobertura de chocolate con leche', 'PRO0074.jpg', 'activo'),
+(180, 4, 9, 'Field Galleta Vainilla', 2.00000, 95, 'Ofrece un sabor delicioso y una textura crujiente con saborizante de vainilla', 'PRO0075.jpg', 'activo'),
+(181, 4, 9, 'Field Galletas Charada', 3.50000, 92, 'Cada galleta esta cubierta con una capa de chocolate, ofreciendo una combinacion perfecta de galleta y chocolate', 'PRO0076.jpg', 'activo'),
+(182, 4, 9, 'Field Galletas Cream Crakers', 2.50000, 67, 'Conocidas por su textura crujiente y su sabor ligero y salado', 'PRO0077.jpg', 'activo'),
+(183, 4, 9, 'Field Galletas Dona Pepa', 3.50000, 130, 'conocidas por su distintiva capa de cobertura de chocolate y su colorida decoracion de grajeas de colores', 'PRO0078.jpg', 'activo'),
+(184, 4, 9, 'Field Travesuras Animalitos', 2.50000, 68, 'Son conocidas por su variedad de formas de animales, lo que las hace especialmente atractivas', 'PRO0079.jpg', 'activo'),
+(185, 4, 4, 'Nestle Galleta Choco Trio Cookies and Cream', 4.50000, 68, 'Conocidas por su deliciosa combinacion de chocolate y crema', 'PRO0080.jpg', 'activo'),
+(186, 4, 4, 'Nestle Morochas Clasicas', 2.50000, 93, 'Destacan por su doble capa de galleta de chocolate unida por una capa de crema de chocolate', 'PRO0081.jpg', 'activo');
 
 -- --------------------------------------------------------
 
@@ -408,7 +459,8 @@ INSERT INTO `proveedor` (`idProveedor`, `idUsuario`, `nombre`, `tipoDocumento`, 
 (7, 28, 'Ramírez Trading S.A.C.', 'RUC', '78901234567', 'Av. Los Pinos 123', '987654357', 'ramireztrading@outlook.com'),
 (8, 32, 'Sánchez Distribuciones E.I.R.L.', 'RUC', '89012345678', 'Calle Las Flores 456', '987654358', 'sanchezdistribuciones@gmail.com'),
 (9, 36, 'Martínez Comercializadora S.A.C.', 'RUC', '90123456789', 'Jr. Los Cedros 789', '987654359', 'martinezcomercializadora@hotmail.com'),
-(10, 40, 'Pérez Export S.A.C.', 'RUC', '01234567890', 'Av. Las Palmeras 234', '987654360', 'perezexport@gmail.com');
+(10, 40, 'Pérez Export S.A.C.', 'RUC', '01234567890', 'Av. Las Palmeras 234', '987654360', 'perezexport@gmail.com'),
+(11, 46, 'Pedro', 'DNI', '78451236', 'Jr gaminedes', '923457816', 'quesuenocolega@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -431,7 +483,7 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`idUsuario`, `usuario`, `clave`, `token`, `expiracion`) VALUES
 (1, 'CLI0001', 'clave123', NULL, '0000-00-00 00:00:00'),
 (2, 'EMP0001', 'clave456', NULL, '2024-05-09 00:38:34'),
-(3, 'ADM0001', 'clave789', NULL, '2024-05-09 00:38:34'),
+(3, 'admin', 'admin', NULL, '2024-05-20 02:34:57'),
 (4, 'PRO0001', 'claveabc', NULL, '2024-05-09 00:38:34'),
 (5, 'CLI0002', 'clavedef', NULL, '2024-05-09 00:38:34'),
 (6, 'EMP0002', 'claveghi', NULL, '2024-05-09 00:38:34'),
@@ -468,7 +520,12 @@ INSERT INTO `usuario` (`idUsuario`, `usuario`, `clave`, `token`, `expiracion`) V
 (37, 'CLI0010', 'clavejkl', NULL, '2024-05-09 00:38:34'),
 (38, 'EMP0010', 'clavemno', NULL, '2024-05-09 00:38:34'),
 (39, 'ADM0010', 'clavepqr', NULL, '2024-05-09 00:38:34'),
-(40, 'PRO0010', 'clavestu', NULL, '2024-05-09 00:38:34');
+(40, 'PRO0010', 'clavestu', NULL, '2024-05-09 00:38:34'),
+(44, 'Dantito', '123', '', '2024-05-19 09:00:03'),
+(45, 'Fak01', '123', '', '2024-05-20 03:59:36'),
+(46, 'PRO0011', NULL, NULL, '2024-05-20 04:47:54'),
+(47, 'EMP_Martinez', '456', NULL, '2024-05-20 05:35:50'),
+(48, 'EMP_Martinez', '123', NULL, '2024-05-20 06:49:29');
 
 --
 -- Índices para tablas volcadas
@@ -608,7 +665,7 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `detalledevolucion`
@@ -626,7 +683,7 @@ ALTER TABLE `detalleingreso`
 -- AUTO_INCREMENT de la tabla `detallepedido`
 --
 ALTER TABLE `detallepedido`
-  MODIFY `idDetallePedido` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idDetallePedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `devolucion`
@@ -638,7 +695,7 @@ ALTER TABLE `devolucion`
 -- AUTO_INCREMENT de la tabla `empleado`
 --
 ALTER TABLE `empleado`
-  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `estadopedido`
@@ -656,37 +713,37 @@ ALTER TABLE `ingreso`
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `idMarca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idMarca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
 --
 ALTER TABLE `pago`
-  MODIFY `idPago` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idPago` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
-  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- Restricciones para tablas volcadas
