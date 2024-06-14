@@ -124,6 +124,35 @@ public class PedidoDAO {
         return lista;
     }
 
+    public int agregar(Pedido pedido) {
+        String sql = "INSERT INTO pedido (idCliente, idEmpleado, idPago, tipoComprobante, numComprobante, fecha, total, idEstadoPedido) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, pedido.getIdCliente());
+            if (pedido.getIdEmpleado() != 0) {
+                ps.setInt(2, pedido.getIdEmpleado());
+            } else {
+                ps.setNull(2, java.sql.Types.INTEGER);
+            }
+            ps.setInt(3, pedido.getIdPago());
+            ps.setString(4, pedido.getTipoComprobante());
+            ps.setString(5, pedido.getNumComprobante());
+            ps.setString(6, pedido.getFecha());
+            ps.setDouble(7, pedido.getTotal());
+            ps.setInt(8, pedido.getIdEstadoPedido());
+            r = ps.executeUpdate();
+            System.out.println("Pedido agregado correctamente!");
+        } catch (SQLException e) {
+            System.out.println("ERROR en agregar PedidoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+
+        return r;
+    }
+
     public int actualizar(Pedido p) {
         String sql = "UPDATE pedido SET idCliente = ?, idEmpleado = ?, idPago = ?, tipoComprobante = ?, numComprobante = ?, fecha = ?, total = ?, idEstadoPedido = ? WHERE idPedido = ?";
         try {

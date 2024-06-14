@@ -1,16 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Modelo;
 
 import java.util.List;
 
-/**
- *
- * @autor piero
- */
 public class Pedido {
+
     private int idPedido;
     private int idCliente;
     private int idEmpleado;
@@ -22,11 +15,9 @@ public class Pedido {
     private int idEstadoPedido;
     private List<Carrito> detallePedido;
 
-    // Constructor por defecto
     public Pedido() {
     }
 
-    // Constructor con parámetros
     public Pedido(int idPedido, int idCliente, int idEmpleado, int idPago, String tipoComprobante, String numComprobante, String fecha, double total, int idEstadoPedido, List<Carrito> detallePedido) {
         this.idPedido = idPedido;
         this.idCliente = idCliente;
@@ -40,7 +31,6 @@ public class Pedido {
         this.detallePedido = detallePedido;
     }
 
-    // Getters y Setters
     public int getIdPedido() {
         return idPedido;
     }
@@ -120,5 +110,22 @@ public class Pedido {
     public void setDetallePedido(List<Carrito> detallePedido) {
         this.detallePedido = detallePedido;
     }
-}
 
+    public String generarNuevoNumeroComprobante(String ultimoNumeroComprobante) {
+        String[] partes = ultimoNumeroComprobante.split("-");
+        int serie = Integer.parseInt(partes[0]);
+        int numero = Integer.parseInt(partes[1]);
+
+        numero++;
+
+        if (numero > 99999999) {
+            numero = 0;
+            serie++;
+        }
+
+        String nuevoNumeroComprobante = String.format("%04d-%08d", serie, numero);
+
+        return nuevoNumeroComprobante;
+    }
+
+}

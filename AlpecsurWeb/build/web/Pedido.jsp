@@ -46,7 +46,7 @@
 
             <!-- Botones para agregar ingreso y volver al menú -->
             <div class="d-flex justify-content-start mb-3">
-                <button type="button" class="btn btn-info mr-2" id="btnAgregar" data-toggle="modal" data-target="#agregarIngresoModal">Agregar Ingreso</button>
+                <button type="button" class="btn btn-info mr-2" id="btnAgregar" data-toggle="modal" data-target="#agregarPedidoModal">Agregar Pedido</button>
                 <a href="MenuAdministrador.jsp" class="btn btn-outline-secondary">Volver al Menú Administrador</a>
             </div>
 
@@ -66,6 +66,7 @@
             </div>
             <% }%>
         </div>
+
 
         <div class="container-fluid">
             <div class="col-12">
@@ -98,20 +99,90 @@
                                 <td>${pedido.getTotal()}</td>
                                 <td>${mapaEstados[pedido.getIdEstadoPedido()].getNombre()}</td>
                                 <td><center><a href="ControladorDetallePedido?Op=Listar&idPedido=${pedido.getIdPedido()}"><i class="fa-solid fa-eye"></i> Ver</a></center></td>
-                                <td>
-                                    <div style="display: flex;">
-                                        <a class="btn btn-warning editBtn" data-toggle="modal" data-target="#editModal" data-id="${ingreso.getIdIngreso()}"><i class="fas fa-edit"></i> Editar</a>
-                                        <a href="#" class="btn btn-danger" style="margin-left: 5px;" data-toggle="modal" data-target="#confirmDeleteModal" data-id="${ingreso.getIdIngreso()}">
-                                            <i class="fas fa-trash-alt"></i> Eliminar
-                                        </a>
-                                    </div>
-                                </td>
+                        <td>
+                            <div style="display: flex;">
+                                <a class="btn btn-warning editBtn" data-toggle="modal" data-target="#editModal" data-id="${ingreso.getIdIngreso()}"><i class="fas fa-edit"></i> Editar</a>
+                                <a href="#" class="btn btn-danger" style="margin-left: 5px;" data-toggle="modal" data-target="#confirmDeleteModal" data-id="${ingreso.getIdIngreso()}">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </a>
+                            </div>
+                        </td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
             </div>
         </div>
+
+        <!-- Modal para agregar pedido -->
+        <div class="modal fade" id="agregarPedidoModal" tabindex="-1" role="dialog" aria-labelledby="agregarPedidoModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="agregarPedidoModalLabel">Agregar Pedido</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="ControladorPedido" method="POST">
+                            <input type="hidden" name="accion" value="Agregar">
+                            <div class="form-group">
+                                <label for="agregarCliente">Cliente</label>
+                                <select name="cliente" id="agregarCliente" class="form-control" required>
+                                    <option value="">Seleccionar cliente</option>
+                                    <% for (Map.Entry<Integer, Cliente> entry : mapaClientes.entrySet()) {
+                                            Cliente cliente = entry.getValue();
+                                    %>
+                                    <option value="<%= cliente.getIdCliente()%>"><%= cliente.getNombre()%></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="agregarEmpleado">Empleado</label>
+                                <select name="empleado" id="agregarEmpleado" class="form-control">
+                                    <option value="0">Seleccionar empleado</option>
+                                    <% for (Map.Entry<Integer, Empleado> entry : mapaEmpleados.entrySet()) {%>
+                                    <option value="<%= entry.getValue().getIdEmpleado()%>"><%= entry.getValue().getNombre()%></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="agregarTipoComprobante">Tipo de Comprobante</label>
+                                <select name="tipoComprobante" id="agregarTipoComprobante" class="form-control" required>
+                                    <option value="Factura Electronica">Factura Electrónica (FE)</option>
+                                    <option value="Boleta de Venta Electronica">Boleta de Venta Electrónica (BVE)</option>
+                                    <option value="Nota de Credito Electronica">Nota de Crédito Electrónica (NCE)</option>
+                                    <option value="Nota de Debito Electronica">Nota de Débito Electrónica (NDE)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="agregarFecha">Fecha</label>
+                                <input type="date" name="fecha" id="agregarFecha" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="agregarTotal">Total</label>
+                                <input type="number" step="1.0000" name="total" id="agregarTotal" class="form-control" value="0" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="agregarEstado">Estado</label>
+                                <select name="estado" id="agregarEstado" class="form-control" required>
+                                    <% for (Map.Entry<Integer, EstadoPedido> entry : mapaEstados.entrySet()) {
+                                            EstadoPedido estado = entry.getValue();
+                                    %>
+                                    <option value="<%= estado.getIdEstadoPedido()%>"><%= estado.getNombre()%></option>
+                                    <% }%>
+                                </select>
+                            </div>
+                            <div style="display: flex; justify-content: center;">
+                                <input type="submit" name="accion" value="Agregar" class="btn btn-info">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </body>
 </html>

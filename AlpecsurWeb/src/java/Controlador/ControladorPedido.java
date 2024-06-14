@@ -3,7 +3,6 @@ package Controlador;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +13,7 @@ import Modelo.Empleado;
 import Modelo.EmpleadoDAO;
 import Modelo.EstadoPedido;
 import Modelo.EstadoPedidoDAO;
+import Modelo.Pago;
 import Modelo.PedidoDAO;
 import java.util.HashMap;
 import java.util.Map;
@@ -101,6 +101,52 @@ public class ControladorPedido extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        String accion = request.getParameter("accion");
+        PedidoDAO pedidoDAO = new PedidoDAO();
+
+        switch (accion) {
+            case "Agregar":
+                Pedido nuevoPedido = new Pedido();
+                Pago nuevoPago = new Pago();
+
+                int idClienteAgregar = Integer.parseInt(request.getParameter("cliente"));
+                int idEmpleadoAgregar = Integer.parseInt(request.getParameter("empleado"));
+                String tipoComprobanteAgregar = request.getParameter("tipoComprobante");
+                String ultimoNumeroComprobante = pedidoDAO.obtenerUltimoNumeroComprobante();
+                String numComprobanteAgregar = nuevoPedido.generarNuevoNumeroComprobante(ultimoNumeroComprobante);
+                String fechaAgregar = request.getParameter("fecha");
+                double totalAgregar = Double.parseDouble(request.getParameter("total"));
+                int idEstadoAgregar = Integer.parseInt(request.getParameter("estado"));
+
+                // Generar el pago
+                nuevoPago.setMonto(totalAgregar);
+                pedidoDAO.generarPago(nuevoPago);
+
+                // Configurar el nuevo pedido
+                nuevoPedido.setIdCliente(idClienteAgregar);
+                if (idEmpleadoAgregar != 0) { // Verifica si se seleccionó un empleado (0 es el valor por defecto)
+                    nuevoPedido.setIdEmpleado(idEmpleadoAgregar);
+                }
+                nuevoPedido.setIdPago(nuevoPago.getIdPago()); // Usar el ID de pago generado
+                nuevoPedido.setTipoComprobante(tipoComprobanteAgregar);
+                nuevoPedido.setNumComprobante(numComprobanteAgregar);
+                nuevoPedido.setFecha(fechaAgregar);
+                nuevoPedido.setTotal(totalAgregar);
+                nuevoPedido.setIdEstadoPedido(idEstadoAgregar);
+
+                int resultadoAgregar = pedidoDAO.agregar(nuevoPedido);
+
+                if (resultadoAgregar > 0) {
+                    response.sendRedirect("ControladorPedido?Op=Listar&mensaje=Pedido+agregado+correctamente");
+                } else {
+                    response.sendRedirect("ControladorPedido?Op=Listar&error=Error+al+agregar+el+pedido");
+                }
+                break;
+
+            default:
+
+                break;
+        }
     }
 
     @Override
