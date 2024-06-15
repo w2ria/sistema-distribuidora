@@ -1,10 +1,10 @@
-
 package Modelo;
 
 import Configuraciones.conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +59,34 @@ public class DetallesPedidoDAO {
             System.out.println("ERROR en Listar DetallesPedidoDAO: " + e.getMessage());
         }
 
+        return lista;
+    }
+
+    public List<DetallesPedido> listarPorIdPedido(int idPedido) {
+        List<DetallesPedido> lista = new ArrayList<>();
+        String sql = "SELECT * FROM detallepedido WHERE idPedido = ?";
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idPedido);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                DetallesPedido detalle = new DetallesPedido();
+                detalle.setIdDetallePedido(rs.getInt("idDetallePedido"));
+                detalle.setIdPedido(rs.getInt("idPedido"));
+                detalle.setIdProducto(rs.getInt("idProducto"));
+                detalle.setCantidad(rs.getInt("cantidad"));
+                detalle.setPrecio(rs.getDouble("precio"));
+
+                lista.add(detalle);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en listarPorIdPedido en DetallesPedidoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
         return lista;
     }
 
