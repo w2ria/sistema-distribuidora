@@ -55,6 +55,25 @@ public class ControladorDetallePedido extends HttpServlet {
                 request.getRequestDispatcher("DetallePedido.jsp").forward(request, response);
                 break;
 
+            case "Eliminar":
+                int idDetallePedidoEliminar = Integer.parseInt(request.getParameter("idDetallePedido"));
+                int idPedidoEliminar = Integer.parseInt(request.getParameter("idPedido"));
+                
+                DetallesPedido detallePedidoEliminar = detallesPedidoDAO.obtenerPorId(idDetallePedidoEliminar);
+                
+                if (detallePedidoEliminar != null) {
+                    int idProductoEliminar = detallePedidoEliminar.getIdProducto();
+                    int cantidadEliminar = detallePedidoEliminar.getCantidad();
+                    int stockActualEliminar = productoDAO.obtenerStock(idProductoEliminar);
+                    int nuevoStockEliminar = stockActualEliminar + cantidadEliminar;
+                    productoDAO.actualizarStock(idProductoEliminar, nuevoStockEliminar);
+                    detallesPedidoDAO.eliminar(idDetallePedidoEliminar);
+                    response.sendRedirect("ControladorDetallePedido?Op=Listar&idPedido=" + idPedidoEliminar + "&mensaje=Detalle+de+pedido+eliminado+correctamente");
+                } else {
+                    response.sendRedirect("ControladorDetallePedido?Op=Listar&idPedido=" + idPedidoEliminar + "&error=Error+al+eliminar+el+detalle+de+pedido");
+                }
+                break;
+
             default:
                 List<DetallesPedido> defaultListaDetallesPedido = detallesPedidoDAO.listarPorIdPedido(idPedido);
                 List<Producto> defaultListaProductos = productoDAO.listar();

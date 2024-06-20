@@ -141,4 +141,29 @@ public class DetallesPedidoDAO {
             System.out.println("ERROR en Eliminar DetallesPedidoDAO: " + e.getMessage());
         }
     }
+
+    public DetallesPedido obtenerPorId(int idDetallePedido) {
+        DetallesPedido detallePedido = null;
+        String sql = "SELECT * FROM detallepedido WHERE idDetallePedido = ?";
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idDetallePedido);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                detallePedido = new DetallesPedido();
+                detallePedido.setIdDetallePedido(rs.getInt("idDetallePedido"));
+                detallePedido.setIdPedido(rs.getInt("idPedido"));
+                detallePedido.setIdProducto(rs.getInt("idProducto"));
+                detallePedido.setCantidad(rs.getInt("cantidad"));
+                detallePedido.setPrecio(rs.getDouble("precio"));
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR en obtenerPorId DetallesPedidoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+        return detallePedido;
+    }
+
 }
