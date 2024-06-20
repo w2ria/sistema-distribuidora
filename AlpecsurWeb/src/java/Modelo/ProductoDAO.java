@@ -201,6 +201,42 @@ public class ProductoDAO {
         return lista;
     }
 
+    public List<Producto> listarProductosDisponibles() {
+        String sql = "SELECT * FROM producto WHERE stock > 0 ORDER BY idProducto";
+        List<Producto> lista = new ArrayList<>();
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(rs.getInt(1));
+                Categoria categoria = new Categoria();
+                categoria.setIdCategoria(rs.getInt(2));
+                producto.setCategoria(categoria);
+                Marca marca = new Marca();
+                marca.setIdMarca(rs.getInt(3));
+                producto.setMarca(marca);
+                producto.setNombre(rs.getString(4));
+                BigDecimal precio = rs.getBigDecimal(5);
+                precio = precio.setScale(4, RoundingMode.HALF_UP);
+                producto.setPrecio(precio.doubleValue());
+                producto.setStock(rs.getInt(6));
+                producto.setDescripcion(rs.getString(7));
+                producto.setImagen(rs.getString(8));
+                producto.setEstado(rs.getString(9));
+                lista.add(producto);
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR en Listar ProductoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+
+        return lista;
+    }
+
     public List<Producto> listarConMarcaYCategoria() {
         String sql = "SELECT p.*, m.nombre AS nombre_marca, c.nombre AS nombre_categoria "
                 + "FROM producto p "

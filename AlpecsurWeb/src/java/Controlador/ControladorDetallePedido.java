@@ -41,6 +41,7 @@ public class ControladorDetallePedido extends HttpServlet {
             case "Listar":
                 List<DetallesPedido> listaDetallesPedido = detallesPedidoDAO.listarPorIdPedido(idPedido);
                 List<Producto> listaProductos = productoDAO.listar();
+                List<Producto> listaProductosDisponibles = productoDAO.listarProductosDisponibles();
 
                 Map<Integer, String> mapaNombresProductos = new HashMap<>();
                 for (Producto producto : listaProductos) {
@@ -48,6 +49,7 @@ public class ControladorDetallePedido extends HttpServlet {
                 }
 
                 request.setAttribute("listaDetallesPedido", listaDetallesPedido);
+                request.setAttribute("listaProductosDisponibles", listaProductosDisponibles);
                 request.setAttribute("mapaNombresProductos", mapaNombresProductos);
 
                 request.getRequestDispatcher("DetallePedido.jsp").forward(request, response);
@@ -75,6 +77,47 @@ public class ControladorDetallePedido extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
+        String accion = request.getParameter("accion");
+        DetallesPedidoDAO detallePedidoDAO = new DetallesPedidoDAO();
+        ProductoDAO productoDAO = new ProductoDAO();
+        int idPedido = Integer.parseInt(request.getParameter("idPedido"));
+
+        switch (accion) {
+            case "Agregar":
+                int idPedidoAgregar = Integer.parseInt(request.getParameter("idPedido"));
+                int idProductoAgregar = Integer.parseInt(request.getParameter("idProducto"));
+                int cantidadAgregar = Integer.parseInt(request.getParameter("cantidad"));
+                double precioAgregar = Double.parseDouble(request.getParameter("precio"));
+                int stockActual = Integer.parseInt(request.getParameter("stockActual"));
+
+                int nuevoStock = stockActual - cantidadAgregar;
+                int resultadoActualizarStock = productoDAO.actualizarStock(idProductoAgregar, nuevoStock);
+
+                if (resultadoActualizarStock > 0) {
+                    DetallesPedido detallePedidoAgregar = new DetallesPedido();
+                    detallePedidoAgregar.setIdPedido(idPedidoAgregar);
+                    detallePedidoAgregar.setIdProducto(idProductoAgregar);
+                    detallePedidoAgregar.setCantidad(cantidadAgregar);
+                    detallePedidoAgregar.setPrecio(precioAgregar);
+
+                    int resultadoAgregar = detallePedidoDAO.agregar(detallePedidoAgregar);
+
+                    if (resultadoAgregar > 0) {
+                        response.sendRedirect("ControladorDetallePedido?Op=Listar&idPedido=" + idPedidoAgregar + "&mensaje=Detalle+de+pedido+agregado+correctamente");
+                    } else {
+                        response.sendRedirect("ControladorDetallePedido?Op=Listar&idPedido=" + idPedidoAgregar + "&error=Error+al+agregar+el+detalle+de+pedido");
+                    }
+                } else {
+                    response.sendRedirect("ControladorDetallePedido?Op=Listar&idPedido=" + idPedidoAgregar + "&error=Error+al+actualizar+el+stock+del+producto");
+                }
+
+                break;
+
+            default:
+
+                break;
+        }
     }
 
     @Override

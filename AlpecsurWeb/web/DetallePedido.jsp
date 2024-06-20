@@ -13,6 +13,7 @@
 
 <%
     List<DetallesPedido> listaDetallesPedido = (List<DetallesPedido>) request.getAttribute("listaDetallesPedido");
+    List<DetallesPedido> listaProductosDisponibles = (List<DetallesPedido>) request.getAttribute("listaProductosDisponibles");
     Map<Integer, String> mapaNombresProductos = (Map<Integer, String>) request.getAttribute("mapaNombresProductos");
 %>
 
@@ -43,6 +44,7 @@
             </form>
 
             <div class="d-flex justify-content-start mb-3">
+                <button type="button" class="btn btn-info mr-2" id="btnAgregar" data-toggle="modal" data-target="#agregarDetallePedidoModal">Agregar Detalle Pedido</button>
                 <a href="ControladorPedido?Op=Listar" class="btn btn-outline-secondary">Volver a Pedidos</a>
                 <a href="MenuAdministrador.jsp" class="btn btn-outline-secondary">Volver al Menú Administrador</a>
             </div>
@@ -84,9 +86,12 @@
                         <td><center>${mapaNombresProductos.get(detalle.idProducto)}</center></td>
                         <td><center>${detalle.cantidad}</center></td>
                         <td><center>${detalle.precio}</center></td>
-                        <td>
-                            <div style="display: flex;">
-                                <!-- Aquí puedes agregar botones de acciones si es necesario -->
+                        <td style="text-align: center;">
+                            <div class="d-flex justify-content-center">
+                                <a class="btn btn-warning editBtn" data-toggle="modal" data-target="#editModal" data-id="${detalle.idDetallePedido}"><i class="fas fa-edit"></i> Editar</a>
+                                <a href="ControladorDetallePedido?Op=Eliminar&idDetallePedido=${detalle.idDetallePedido}&idPedido=${detalle.idPedido}" class="btn btn-danger ml-2" onclick="return confirm('¿Estás seguro de que deseas eliminar este detalle de pedido? \nEste cambio también afectará al stock del producto');">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </a>
                             </div>
                         </td>
                         </tr>
@@ -96,6 +101,64 @@
                 </table>
             </div>
         </div>
+
+        <!-- Modal para agregar detalle de pedido -->
+        <div class="modal fade" id="agregarDetallePedidoModal" tabindex="-1" role="dialog" aria-labelledby="agregarDetallePedidoModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="agregarDetallePedidoModalLabel">Agregar Detalle de Pedido</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="agregarDetallePedidoForm" action="ControladorDetallePedido" method="POST">
+                            <div class="form-group">
+                                <label for="addIdPedido">ID Pedido</label>
+                                <input type="number" name="idPedido" id="addIdPedido" class="form-control" value="<%= request.getParameter("idPedido")%>" required readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="addIdProducto">Producto</label>
+                                <select name="idProducto" id="addIdProducto" class="form-control" required onchange="actualizarCantidadMaxima()">
+                                    <option value="">Seleccionar producto</option>
+                                    <c:forEach var="producto" items="${listaProductosDisponibles}">
+                                        <option value="${producto.idProducto}" data-stock="${producto.stock}">${producto.nombre}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="addCantidad">Cantidad</label>
+                                <input type="number" name="cantidad" id="addCantidad" class="form-control" required min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="addPrecio">Precio</label>
+                                <input type="text" name="precio" id="addPrecio" class="form-control" required min="0">
+                            </div>
+                            <input type="hidden" name="stockActual" id="stockActual">
+                            <div style="display: flex; justify-content: center;">
+                                <input type="submit" name="accion" value="Agregar" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function actualizarCantidadMaxima() {
+                var selectProducto = document.getElementById('addIdProducto');
+                var cantidadInput = document.getElementById('addCantidad');
+                var stockInput = document.getElementById('stockActual');
+                var stock = selectProducto.options[selectProducto.selectedIndex].getAttribute('data-stock');
+
+                cantidadInput.max = stock;
+                stockInput.value = stock;
+                if (cantidadInput.value > stock) {
+                    cantidadInput.value = stock;
+                }
+            }
+        </script>
 
 
     </body>
