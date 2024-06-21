@@ -166,4 +166,23 @@ public class DetallesPedidoDAO {
         return detallePedido;
     }
 
+    public double calcularNuevoTotal(int idPedido) {
+        double nuevoTotal = 0.0;
+        String sql = "SELECT SUM(precio * cantidad) AS nuevo_total FROM detallepedido WHERE idPedido = ?";
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idPedido);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                nuevoTotal = rs.getDouble("nuevo_total");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR en calcularNuevoTotal en DetallesPedidoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+        return nuevoTotal;
+    }
+
 }

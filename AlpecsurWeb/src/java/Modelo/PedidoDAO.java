@@ -225,4 +225,25 @@ public class PedidoDAO {
         return ped;
     }
 
+    public int actualizarTotal(int idPedido, double total) {
+        String sql = "UPDATE pedido SET total = ? WHERE idPedido = ?";
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setDouble(1, total);
+            ps.setInt(2, idPedido);
+            r = ps.executeUpdate();
+            if (r > 0) {
+                System.out.println("Total del pedido actualizado correctamente!");
+            } else {
+                System.out.println("No se pudo actualizar el total del pedido.");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR en actualizarTotal en DetallesPedidoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+        return r;
+    }
+
 }

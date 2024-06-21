@@ -15,6 +15,7 @@
     List<DetallesPedido> listaDetallesPedido = (List<DetallesPedido>) request.getAttribute("listaDetallesPedido");
     List<DetallesPedido> listaProductosDisponibles = (List<DetallesPedido>) request.getAttribute("listaProductosDisponibles");
     Map<Integer, String> mapaNombresProductos = (Map<Integer, String>) request.getAttribute("mapaNombresProductos");
+    Map<Integer, String> mapaStockProductos = (Map<Integer, String>) request.getAttribute("mapaStockProductos");
 %>
 
 <!DOCTYPE html>
@@ -80,7 +81,7 @@
                     </thead>
                     <tbody>
                         <c:forEach var="detalle" items="${listaDetallesPedido}">
-                            <tr>
+                            <tr data-product-id="${detalle.idProducto}" data-product-stock="${mapaStockProductos[detalle.idProducto]}">
                                 <td><center>${detalle.idDetallePedido}</center></td>
                         <td><center>${detalle.idPedido}</center></td>
                         <td><center>${mapaNombresProductos.get(detalle.idProducto)}</center></td>
@@ -88,7 +89,9 @@
                         <td><center>${detalle.precio}</center></td>
                         <td style="text-align: center;">
                             <div class="d-flex justify-content-center">
-                                <a class="btn btn-warning editBtn" data-toggle="modal" data-target="#editModal" data-id="${detalle.idDetallePedido}"><i class="fas fa-edit"></i> Editar</a>
+                                <a href="#" class="btn btn-warning editBtn" data-toggle="modal" data-target="#editarDetallePedidoModal" data-id="${detalle.idDetallePedido}">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
                                 <a href="ControladorDetallePedido?Op=Eliminar&idDetallePedido=${detalle.idDetallePedido}&idPedido=${detalle.idPedido}" class="btn btn-danger ml-2" onclick="return confirm('¿Estás seguro de que deseas eliminar este detalle de pedido? \nEste cambio también afectará al stock del producto');">
                                     <i class="fas fa-trash-alt"></i> Eliminar
                                 </a>
@@ -97,7 +100,6 @@
                         </tr>
                     </c:forEach>
                     </tbody>
-
                 </table>
             </div>
         </div>
@@ -120,10 +122,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="addIdProducto">Producto</label>
-                                <select name="idProducto" id="addIdProducto" class="form-control" required onchange="actualizarCantidadMaxima()">
+                                <select name="idProducto" id="addIdProducto" class="form-control" required onchange="actualizarDatosProducto()">
                                     <option value="">Seleccionar producto</option>
                                     <c:forEach var="producto" items="${listaProductosDisponibles}">
-                                        <option value="${producto.idProducto}" data-stock="${producto.stock}">${producto.nombre}</option>
+                                        <option value="${producto.idProducto}" data-precio="${producto.precio}" data-stock="${producto.stock}">${producto.nombre}</option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -132,8 +134,8 @@
                                 <input type="number" name="cantidad" id="addCantidad" class="form-control" required min="0">
                             </div>
                             <div class="form-group">
-                                <label for="addPrecio">Precio</label>
-                                <input type="text" name="precio" id="addPrecio" class="form-control" required min="0">
+                                <label for="addPrecio">Precio unitario</label>
+                                <input type="text" name="precio" id="addPrecio" class="form-control" required min="0" readonly>
                             </div>
                             <input type="hidden" name="stockActual" id="stockActual">
                             <div style="display: flex; justify-content: center;">
@@ -145,21 +147,109 @@
             </div>
         </div>
 
+        <!-- Modal para editar detalle de pedido -->
+        <div class="modal fade" id="editarDetallePedidoModal" tabindex="-1" role="dialog" aria-labelledby="editarDetallePedidoModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarDetallePedidoModalLabel">Editar Detalle de Pedido</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editarDetallePedidoForm" action="ControladorDetallePedido" method="POST">
+                            <div class="form-group">
+                                <label for="editIdPedido">ID Pedido</label>
+                                <input type="number" name="idPedido" id="editIdPedido" class="form-control" required readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="editNombreProducto">Producto</label>
+                                <input type="text" id="editNombreProducto" name="nombreProducto" class="form-control" readonly>
+                                <input type="hidden" name="idProducto" id="editIdProducto" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="editCantidad">Cantidad</label>
+                                <input type="number" name="cantidad" id="editCantidad" class="form-control" required min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="editPrecio">Precio unitario</label>
+                                <input type="text" name="precio" id="editPrecio" class="form-control" required min="0" readonly>
+                            </div>
+                            <input type="hidden" name="stockActual" id="editStockActual" class="form-control">
+                            <input type="hidden" name="idDetallePedido" id="editIdDetallePedido" class="form-control">
+                            <div style="display: flex; justify-content: center;">
+                                <input type="submit" name="accion" value="Editar" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
-            function actualizarCantidadMaxima() {
+            function actualizarDatosProducto() {
                 var selectProducto = document.getElementById('addIdProducto');
                 var cantidadInput = document.getElementById('addCantidad');
                 var stockInput = document.getElementById('stockActual');
-                var stock = selectProducto.options[selectProducto.selectedIndex].getAttribute('data-stock');
+                var precioInput = document.getElementById('addPrecio');
+
+                var selectedOption = selectProducto.options[selectProducto.selectedIndex];
+                var stock = selectedOption.getAttribute('data-stock');
+                var precio = selectedOption.getAttribute('data-precio');
 
                 cantidadInput.max = stock;
                 stockInput.value = stock;
+                precioInput.value = precio;
+
                 if (cantidadInput.value > stock) {
                     cantidadInput.value = stock;
                 }
             }
         </script>
 
+        <script>
+            $(document).ready(function () {
+                $('.editBtn').on('click', function () {
+                    var idDetallePedido = $(this).data('id');
+                    var row = $(this).closest('tr');
+                    var idPedido = row.find('td:eq(1)').text().trim();
+                    var nombreProducto = row.find('td:eq(2)').text().trim();
+                    var cantidad = parseInt(row.find('td:eq(3)').text().trim(), 10);
+                    var precio = row.find('td:eq(4)').text().trim() / cantidad;
+                    var idProducto = row.data('product-id');
+                    var stockActual = row.data('product-stock');
+
+                    $('#editIdDetallePedido').val(idDetallePedido);
+                    $('#editIdPedido').val(idPedido);
+                    $('#editIdProducto').val(idProducto);
+                    $('#editNombreProducto').val(nombreProducto);
+                    $('#editCantidad').val(cantidad);
+                    $('#editPrecio').val(precio);
+                    $('#editStockActual').val(stockActual);
+
+                    actualizarCantidadMaxima(cantidad, stockActual);
+
+                    $('#editarDetallePedidoModal').modal('show');
+                });
+
+                function actualizarCantidadMaxima(cantidadOriginal, stockActual) {
+                    var cantidadInput = $('#editCantidad');
+                    var maximoPermitido = cantidadOriginal + stockActual;
+                    cantidadInput.attr('max', maximoPermitido);
+
+                    cantidadInput.on('input', function () {
+                        var cantidadIngresada = parseInt($(this).val(), 10);
+                        if (cantidadIngresada > maximoPermitido) {
+                            $('#cantidadError').show();
+                            $(this).val(maximoPermitido);
+                        } else {
+                            $('#cantidadError').hide();
+                        }
+                    });
+                }
+            });
+        </script>
 
     </body>
 </html>

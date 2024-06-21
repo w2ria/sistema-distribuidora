@@ -2,6 +2,7 @@ package Controlador;
 
 import Modelo.DetallesPedido;
 import Modelo.DetallesPedidoDAO;
+import Modelo.Pedido;
 import Modelo.PedidoDAO;
 import Modelo.Producto;
 import Modelo.ProductoDAO;
@@ -48,19 +49,29 @@ public class ControladorDetallePedido extends HttpServlet {
                     mapaNombresProductos.put(producto.getIdProducto(), producto.getNombre());
                 }
 
+                Map<Integer, Integer> mapaStockProductos = new HashMap<>();
+                for (Producto producto : listaProductos) {
+                    mapaNombresProductos.put(producto.getIdProducto(), producto.getNombre());
+
+                    int stock = productoDAO.obtenerStock(producto.getIdProducto());
+                    mapaStockProductos.put(producto.getIdProducto(), stock);
+                }
+
                 request.setAttribute("listaDetallesPedido", listaDetallesPedido);
                 request.setAttribute("listaProductosDisponibles", listaProductosDisponibles);
                 request.setAttribute("mapaNombresProductos", mapaNombresProductos);
+                request.setAttribute("mapaStockProductos", mapaStockProductos);
 
                 request.getRequestDispatcher("DetallePedido.jsp").forward(request, response);
                 break;
 
             case "Eliminar":
+                DetallesPedidoDAO detallePedidoDAO = new DetallesPedidoDAO();
                 int idDetallePedidoEliminar = Integer.parseInt(request.getParameter("idDetallePedido"));
                 int idPedidoEliminar = Integer.parseInt(request.getParameter("idPedido"));
-                
+
                 DetallesPedido detallePedidoEliminar = detallesPedidoDAO.obtenerPorId(idDetallePedidoEliminar);
-                
+
                 if (detallePedidoEliminar != null) {
                     int idProductoEliminar = detallePedidoEliminar.getIdProducto();
                     int cantidadEliminar = detallePedidoEliminar.getCantidad();
@@ -68,6 +79,9 @@ public class ControladorDetallePedido extends HttpServlet {
                     int nuevoStockEliminar = stockActualEliminar + cantidadEliminar;
                     productoDAO.actualizarStock(idProductoEliminar, nuevoStockEliminar);
                     detallesPedidoDAO.eliminar(idDetallePedidoEliminar);
+                    
+                    double nuevoTotalPedido = detallePedidoDAO.calcularNuevoTotal(idPedidoEliminar);
+                    pedidoDAO.actualizarTotal(idPedidoEliminar, nuevoTotalPedido);
                     response.sendRedirect("ControladorDetallePedido?Op=Listar&idPedido=" + idPedidoEliminar + "&mensaje=Detalle+de+pedido+eliminado+correctamente");
                 } else {
                     response.sendRedirect("ControladorDetallePedido?Op=Listar&idPedido=" + idPedidoEliminar + "&error=Error+al+eliminar+el+detalle+de+pedido");
@@ -77,14 +91,23 @@ public class ControladorDetallePedido extends HttpServlet {
             default:
                 List<DetallesPedido> defaultListaDetallesPedido = detallesPedidoDAO.listarPorIdPedido(idPedido);
                 List<Producto> defaultListaProductos = productoDAO.listar();
+                List<Producto> defaultListaProductosDisponibles = productoDAO.listarProductosDisponibles();
 
                 Map<Integer, String> defaultMapaNombresProductos = new HashMap<>();
                 for (Producto producto : defaultListaProductos) {
                     defaultMapaNombresProductos.put(producto.getIdProducto(), producto.getNombre());
                 }
 
+                Map<Integer, Integer> defaultMapaStockProductos = new HashMap<>();
+                for (Producto producto : defaultListaProductos) {
+                    int stock = productoDAO.obtenerStock(producto.getIdProducto());
+                    defaultMapaStockProductos.put(producto.getIdProducto(), stock);
+                }
+
                 request.setAttribute("listaDetallesPedido", defaultListaDetallesPedido);
+                request.setAttribute("listaProductosDisponibles", defaultListaProductosDisponibles);
                 request.setAttribute("mapaNombresProductos", defaultMapaNombresProductos);
+                request.setAttribute("mapaStockProductos", defaultMapaStockProductos);
 
                 request.getRequestDispatcher("DetallePedido.jsp").forward(request, response);
                 break;
@@ -100,6 +123,8 @@ public class ControladorDetallePedido extends HttpServlet {
         String accion = request.getParameter("accion");
         DetallesPedidoDAO detallePedidoDAO = new DetallesPedidoDAO();
         ProductoDAO productoDAO = new ProductoDAO();
+        Pedido nuevoPedido = new Pedido();
+        PedidoDAO pedidoDAO = new PedidoDAO();
         int idPedido = Integer.parseInt(request.getParameter("idPedido"));
 
         switch (accion) {
@@ -112,17 +137,20 @@ public class ControladorDetallePedido extends HttpServlet {
 
                 int nuevoStock = stockActual - cantidadAgregar;
                 int resultadoActualizarStock = productoDAO.actualizarStock(idProductoAgregar, nuevoStock);
+                double totalAgregar = cantidadAgregar * precioAgregar;
 
                 if (resultadoActualizarStock > 0) {
                     DetallesPedido detallePedidoAgregar = new DetallesPedido();
                     detallePedidoAgregar.setIdPedido(idPedidoAgregar);
                     detallePedidoAgregar.setIdProducto(idProductoAgregar);
                     detallePedidoAgregar.setCantidad(cantidadAgregar);
-                    detallePedidoAgregar.setPrecio(precioAgregar);
+                    detallePedidoAgregar.setPrecio(totalAgregar);
 
                     int resultadoAgregar = detallePedidoDAO.agregar(detallePedidoAgregar);
 
                     if (resultadoAgregar > 0) {
+                        double nuevoTotalPedido = detallePedidoDAO.calcularNuevoTotal(idPedidoAgregar);
+                        pedidoDAO.actualizarTotal(idPedidoAgregar, nuevoTotalPedido);
                         response.sendRedirect("ControladorDetallePedido?Op=Listar&idPedido=" + idPedidoAgregar + "&mensaje=Detalle+de+pedido+agregado+correctamente");
                     } else {
                         response.sendRedirect("ControladorDetallePedido?Op=Listar&idPedido=" + idPedidoAgregar + "&error=Error+al+agregar+el+detalle+de+pedido");
@@ -131,6 +159,47 @@ public class ControladorDetallePedido extends HttpServlet {
                     response.sendRedirect("ControladorDetallePedido?Op=Listar&idPedido=" + idPedidoAgregar + "&error=Error+al+actualizar+el+stock+del+producto");
                 }
 
+                break;
+
+            case "Editar":
+                int idDetallePedidoEditar = Integer.parseInt(request.getParameter("idDetallePedido"));
+                int idProductoEditar = Integer.parseInt(request.getParameter("idProducto"));
+                int cantidadEditar = Integer.parseInt(request.getParameter("cantidad"));
+                double precioEditar = Double.parseDouble(request.getParameter("precio"));
+                int idPedidoEditar = Integer.parseInt(request.getParameter("idPedido"));
+                int stockActualEditar = Integer.parseInt(request.getParameter("stockActual"));
+
+                DetallesPedido detallePedidoActualEditar = detallePedidoDAO.obtenerPorId(idDetallePedidoEditar);
+
+                if (detallePedidoActualEditar != null) {
+                    int cantidadActualEditar = detallePedidoActualEditar.getCantidad();
+
+                    int nuevoStockEditar = stockActualEditar + cantidadActualEditar - cantidadEditar;
+
+                    productoDAO.actualizarStock(idProductoEditar, nuevoStockEditar);
+
+                    double totalEditar = precioEditar * cantidadEditar;
+
+                    DetallesPedido detallePedidoEditar = new DetallesPedido();
+                    detallePedidoEditar.setIdDetallePedido(idDetallePedidoEditar);
+                    detallePedidoEditar.setIdPedido(idPedidoEditar);
+                    detallePedidoEditar.setIdProducto(idProductoEditar);
+                    detallePedidoEditar.setCantidad(cantidadEditar);
+                    detallePedidoEditar.setPrecio(totalEditar);
+
+                    detallePedidoDAO.actualizar(detallePedidoEditar);
+
+                    double nuevoTotalPedidoEditar = detallePedidoDAO.calcularNuevoTotal(idPedidoEditar);
+                    int resultadoActualizarTotal = pedidoDAO.actualizarTotal(idPedidoEditar, nuevoTotalPedidoEditar);
+
+                    if (resultadoActualizarTotal > 0) {
+                        response.sendRedirect("ControladorDetallePedido?Op=Listar&idPedido=" + idPedidoEditar + "&mensaje=Detalle+de+pedido+editado+correctamente");
+                    } else {
+                        response.sendRedirect("ControladorDetallePedido?Op=Listar&idPedido=" + idPedidoEditar + "&error=Error+al+editar+el+detalle+de+pedido");
+                    }
+                } else {
+                    response.sendRedirect("ControladorDetallePedido?Op=Listar&idPedido=" + idPedidoEditar + "&error=Detalle+de+pedido+no+encontrado");
+                }
                 break;
 
             default:
