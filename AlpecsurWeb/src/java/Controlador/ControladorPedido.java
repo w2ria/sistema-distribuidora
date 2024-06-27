@@ -14,6 +14,7 @@ import Modelo.EmpleadoDAO;
 import Modelo.EstadoPedido;
 import Modelo.EstadoPedidoDAO;
 import Modelo.Pago;
+import Modelo.PagoDAO;
 import Modelo.PedidoDAO;
 import java.util.HashMap;
 import java.util.Map;
@@ -140,6 +141,50 @@ public class ControladorPedido extends HttpServlet {
                     response.sendRedirect("ControladorPedido?Op=Listar&mensaje=Pedido+agregado+correctamente");
                 } else {
                     response.sendRedirect("ControladorPedido?Op=Listar&error=Error+al+agregar+el+pedido");
+                }
+                break;
+
+            case "Editar":
+                int idPedidoEditar = Integer.parseInt(request.getParameter("idPedido"));
+                int idClienteEditar = Integer.parseInt(request.getParameter("cliente"));
+                int idEmpleadoEditar = Integer.parseInt(request.getParameter("empleado"));
+                String tipoComprobanteEditar = request.getParameter("tipoComprobante");
+                String numComprobanteEditar = request.getParameter("numComprobante");
+                String fechaEditar = request.getParameter("fecha");
+                double totalEditar = Double.parseDouble(request.getParameter("total"));
+                int idEstadoEditar = Integer.parseInt(request.getParameter("estado"));
+
+                PagoDAO pagoDAO = new PagoDAO();
+                int idPagoEditar = pagoDAO.obtenerIdPagoPorIdPedido(idPedidoEditar);
+
+                Pedido pedidoEditar = new Pedido();
+                pedidoEditar.setIdPedido(idPedidoEditar);
+                pedidoEditar.setIdCliente(idClienteEditar);
+                if (idEmpleadoEditar != 0) {
+                    pedidoEditar.setIdEmpleado(idEmpleadoEditar);
+                }
+                pedidoEditar.setIdPago(idPagoEditar);
+                pedidoEditar.setTipoComprobante(tipoComprobanteEditar);
+                pedidoEditar.setNumComprobante(numComprobanteEditar);
+                pedidoEditar.setFecha(fechaEditar);
+                pedidoEditar.setTotal(totalEditar);
+                pedidoEditar.setIdEstadoPedido(idEstadoEditar);
+
+                PedidoDAO pedidoDAOEditar = new PedidoDAO();
+                int resultadoEditar = pedidoDAOEditar.actualizar(pedidoEditar);
+
+                if (resultadoEditar > 0) {
+                    Pago pagoEditar = pagoDAO.buscarPorId(idPagoEditar);
+                    pagoEditar.setMonto(totalEditar);
+                    int pagoActualizado = pagoDAO.actualizar(pagoEditar);
+
+                    if (pagoActualizado > 0) {
+                        response.sendRedirect("ControladorPedido?Op=Listar&mensaje=Pedido+actualizado+correctamente");
+                    } else {
+                        response.sendRedirect("ControladorPedido?Op=Listar&error=Error+al+actualizar+el+pago");
+                    }
+                } else {
+                    response.sendRedirect("ControladorPedido?Op=Listar&error=Error+al+actualizar+el+pedido");
                 }
                 break;
 

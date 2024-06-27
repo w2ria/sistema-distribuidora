@@ -168,7 +168,7 @@ public class DetallesPedidoDAO {
 
     public double calcularNuevoTotal(int idPedido) {
         double nuevoTotal = 0.0;
-        String sql = "SELECT SUM(precio * cantidad) AS nuevo_total FROM detallepedido WHERE idPedido = ?";
+        String sql = "SELECT SUM(precio) AS nuevo_total FROM detallepedido WHERE idPedido = ?";
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);

@@ -90,19 +90,19 @@
                         <c:forEach var="pedido" items="${listaPedidos}">
                             <tr>
                                 <td>${pedido.getIdPedido()}</td>
-                                <td>${mapaClientes[pedido.getIdCliente()].getNombre()}</td>
+                                <td data-id="${pedido.getIdCliente()}">${mapaClientes[pedido.getIdCliente()].getNombre()}</td>
                                 <td>${mapaClientes[pedido.getIdCliente()].getDireccion()}</td>
-                                <td>${mapaEmpleados[pedido.getIdEmpleado()].getNombre()}</td>
+                                <td data-id="${pedido.getIdEmpleado()}">${mapaEmpleados[pedido.getIdEmpleado()].getNombre()}</td>
                                 <td>${pedido.getTipoComprobante()}</td>
                                 <td>${pedido.getNumComprobante()}</td>
                                 <td>${pedido.getFecha()}</td>
                                 <td>${pedido.getTotal()}</td>
-                                <td>${mapaEstados[pedido.getIdEstadoPedido()].getNombre()}</td>
+                                <td data-id="${pedido.getIdEstadoPedido()}">${mapaEstados[pedido.getIdEstadoPedido()].getNombre()}</td>
                                 <td><center><a href="ControladorDetallePedido?Op=Listar&idPedido=${pedido.getIdPedido()}"><i class="fa-solid fa-eye"></i> Ver</a></center></td>
                         <td>
                             <div style="display: flex;">
-                                <a class="btn btn-warning editBtn" data-toggle="modal" data-target="#editModal" data-id="${ingreso.getIdIngreso()}"><i class="fas fa-edit"></i> Editar</a>
-                                <a href="#" class="btn btn-danger" style="margin-left: 5px;" data-toggle="modal" data-target="#confirmDeleteModal" data-id="${ingreso.getIdIngreso()}">
+                                <a class="btn btn-warning editBtn" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i> Editar</a>
+                                <a href="#" class="btn btn-danger" style="margin-left: 5px;" data-toggle="modal" data-target="#confirmDeleteModal" data-id="${pedido.getIdPedido()}">
                                     <i class="fas fa-trash-alt"></i> Eliminar
                                 </a>
                             </div>
@@ -183,6 +183,122 @@
             </div>
         </div>
 
+        <!-- Modal para editar pedido -->
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Editar Pedido</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="ControladorPedido" method="POST">
+                            <input type="hidden" name="accion" value="Editar">
+                            <input type="hidden" name="idPedido" id="editIdPedido">
+                            <div class="form-group">
+                                <label for="editCliente">Cliente</label>
+                                <select name="cliente" id="editCliente" class="form-control" required>
+                                    <option value="">Seleccionar cliente</option>
+                                    <% for (Map.Entry<Integer, Cliente> entry : mapaClientes.entrySet()) {
+                                            Cliente cliente = entry.getValue();
+                                    %>
+                                    <option value="<%= cliente.getIdCliente()%>"><%= cliente.getNombre()%></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="editEmpleado">Empleado</label>
+                                <select name="empleado" id="editEmpleado" class="form-control">
+                                    <option value="0">Seleccionar empleado</option>
+                                    <% for (Map.Entry<Integer, Empleado> entry : mapaEmpleados.entrySet()) {%>
+                                    <option value="<%= entry.getValue().getIdEmpleado()%>"><%= entry.getValue().getNombre()%></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="editTipoComprobante">Tipo de Comprobante</label>
+                                <select name="tipoComprobante" id="editTipoComprobante" class="form-control" required>
+                                    <option value="Factura Electronica">Factura Electrónica (FE)</option>
+                                    <option value="Boleta de Venta Electronica">Boleta de Venta Electrónica (BVE)</option>
+                                    <option value="Nota de Credito Electronica">Nota de Crédito Electrónica (NCE)</option>
+                                    <option value="Nota de Debito Electronica">Nota de Débito Electrónica (NDE)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="editNumComprobante">Número de Comprobante</label>
+                                <input type="text" name="numComprobante" id="editNumComprobante" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editFecha">Fecha</label>
+                                <input type="date" name="fecha" id="editFecha" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editTotal">Total</label>
+                                <input type="number" step="1.0000" name="total" id="editTotal" class="form-control" value="0" min="0" required readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="editEstado">Estado</label>
+                                <select name="estado" id="editEstado" class="form-control" required>
+                                    <% for (Map.Entry<Integer, EstadoPedido> entry : mapaEstados.entrySet()) {
+                                            EstadoPedido estado = entry.getValue();
+                                    %>
+                                    <option value="<%= estado.getIdEstadoPedido()%>"><%= estado.getNombre()%></option>
+                                    <% }%>
+                                </select>
+                            </div>
+                            <div style="display: flex; justify-content: center;">
+                                <input type="submit" name="accion" value="Editar" class="btn btn-info">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                $('.editBtn').on('click', function () {
+                    var row = $(this).closest('tr');
+                    var idPedido = row.find('td:eq(0)').text().trim();
+                    var clienteNombre = row.find('td:eq(1)').text().trim();
+                    var empleadoNombre = row.find('td:eq(3)').text().trim();
+                    var tipoComprobante = row.find('td:eq(4)').text().trim();
+                    var numComprobante = row.find('td:eq(5)').text().trim();
+                    var fecha = row.find('td:eq(6)').text().trim();
+                    var total = row.find('td:eq(7)').text().trim();
+                    var estadoNombre = row.find('td:eq(8)').text().trim();
+
+                    $('#editIdPedido').val(idPedido);
+
+                    $('#editCliente option').each(function () {
+                        if ($(this).text().trim() == clienteNombre) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+
+                    $('#editEmpleado option').each(function () {
+                        if ($(this).text().trim() == empleadoNombre) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+
+                    $('#editTipoComprobante').val(tipoComprobante);
+                    $('#editNumComprobante').val(numComprobante);
+                    $('#editFecha').val(fecha);
+                    $('#editTotal').val(total);
+
+                    $('#editEstado option').each(function () {
+                        if ($(this).text().trim() == estadoNombre) {
+                            $(this).prop('selected', true);
+                        }
+                    });
+
+                    $('#editModal').modal('show');
+                });
+            });
+        </script>
 
     </body>
 </html>

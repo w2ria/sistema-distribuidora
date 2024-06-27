@@ -159,7 +159,11 @@ public class PedidoDAO {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             ps.setInt(1, p.getIdCliente());
-            ps.setInt(2, p.getIdEmpleado());
+            if (p.getIdEmpleado() != 0) {
+                ps.setInt(2, p.getIdEmpleado());
+            } else {
+                ps.setNull(2, java.sql.Types.INTEGER);
+            }
             ps.setInt(3, p.getIdPago());
             ps.setString(4, p.getTipoComprobante());
             ps.setString(5, p.getNumComprobante());

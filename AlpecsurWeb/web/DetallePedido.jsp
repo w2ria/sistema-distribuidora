@@ -216,7 +216,7 @@
                     var idPedido = row.find('td:eq(1)').text().trim();
                     var nombreProducto = row.find('td:eq(2)').text().trim();
                     var cantidad = parseInt(row.find('td:eq(3)').text().trim(), 10);
-                    var precio = row.find('td:eq(4)').text().trim() / cantidad;
+                    var precio = (row.find('td:eq(4)').text().trim() / cantidad).toFixed(4);
                     var idProducto = row.data('product-id');
                     var stockActual = row.data('product-stock');
 

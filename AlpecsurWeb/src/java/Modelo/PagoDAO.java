@@ -5,6 +5,7 @@ import Configuraciones.conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,5 +101,28 @@ public class PagoDAO {
         } catch (Exception e) {
             System.out.println("ERROR en Eliminar PagoDAO: " + e.getMessage());
         }
+    }
+    
+     public int obtenerIdPagoPorIdPedido(int idPedido) {
+        int idPago = -1;
+
+        String sql = "SELECT idPago FROM pedido WHERE idPedido = ?";
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idPedido);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                idPago = rs.getInt("idPago");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en obtenerIdPagoPorIdPedido: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+
+        return idPago;
     }
 }
