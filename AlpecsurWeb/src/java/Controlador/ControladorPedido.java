@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import Modelo.Pedido;
 import Modelo.Cliente;
 import Modelo.ClienteDAO;
+import Modelo.DetallesPedido;
+import Modelo.DetallesPedidoDAO;
 import Modelo.Empleado;
 import Modelo.EmpleadoDAO;
 import Modelo.EstadoPedido;
@@ -16,6 +18,8 @@ import Modelo.EstadoPedidoDAO;
 import Modelo.Pago;
 import Modelo.PagoDAO;
 import Modelo.PedidoDAO;
+import Modelo.ProductoDAO;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,6 +68,23 @@ public class ControladorPedido extends HttpServlet {
 
                 request.getRequestDispatcher("Pedido.jsp").forward(request, response);
 
+                break;
+
+            case "ContarDetalles":
+                DetallesPedidoDAO detallePedidoDAOcontar = new DetallesPedidoDAO();
+                String idPedidoParam = request.getParameter("idPedido");
+                if (idPedidoParam != null && !idPedidoParam.isEmpty()) {
+                    int idPedido = Integer.parseInt(idPedidoParam);
+                    int detallesRelacionados = detallePedidoDAOcontar.contarDetallesConIdPedido(idPedido);
+
+                    response.setContentType("application/json");
+                    PrintWriter out = response.getWriter();
+                    out.print("{\"detallePedidoCount\":" + detallesRelacionados + "}");
+                    out.flush();
+                } else {
+                    // Manejo de la situación en la que idPedido es null o está vacío
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "El parámetro idPedido es nulo o está vacío");
+                }
                 break;
 
             default:
@@ -185,6 +206,60 @@ public class ControladorPedido extends HttpServlet {
                     }
                 } else {
                     response.sendRedirect("ControladorPedido?Op=Listar&error=Error+al+actualizar+el+pedido");
+                }
+                break;
+
+            case "Eliminar":
+                DetallesPedidoDAO detallePedidoDAO = new DetallesPedidoDAO();
+                String idPedidoEliminarStr = request.getParameter("idPedido");
+
+                if (idPedidoEliminarStr != null && !idPedidoEliminarStr.isEmpty()) {
+                    try {
+                        int idPedidoAEliminar = Integer.parseInt(idPedidoEliminarStr);
+                        int detallesRelacionados = detallePedidoDAO.contarDetallesConIdPedido(idPedidoAEliminar);
+
+                        if (detallesRelacionados > 0) {
+                            ProductoDAO productoDAOEliminar = new ProductoDAO();
+                            List<DetallesPedido> detallesPedido = detallePedidoDAO.listarTodoPorIdPedido(idPedidoAEliminar);
+                            for (DetallesPedido detalle : detallesPedido) {
+                                int idProducto = detalle.getIdProducto();
+                                int cantidad = detalle.getCantidad();
+                                int stockActual = productoDAOEliminar.obtenerStock(idProducto);
+                                int nuevoStock = stockActual + cantidad;
+                                productoDAOEliminar.actualizarStock(idProducto, nuevoStock);
+                            }
+                            // Eliminar primero los detalles relacionados
+                            boolean eliminacionDetallesExitosa = detallePedidoDAO.eliminarDetallesPorIdPedido(idPedidoAEliminar);
+                            if (eliminacionDetallesExitosa) {
+                                // Luego de eliminar los detalles, eliminar el pedido principal
+                                boolean eliminacionExitosa = pedidoDAO.eliminar(idPedidoAEliminar);
+                                if (eliminacionExitosa) {
+                                    response.sendRedirect("ControladorPedido?Op=Listar&mensaje=Pedido+y+detalles+eliminados+correctamente");
+                                } else {
+                                    response.sendRedirect("ControladorPedido?Op=Listar&error=Hubo+un+error+al+eliminar+el+pedido");
+                                }
+                            } else {
+                                response.sendRedirect("ControladorPedido?Op=Listar&error=Hubo+un+error+al+eliminar+los+detalles");
+                            }
+                        } else {
+                            // No hay detalles relacionados, eliminar directamente el pedido
+                            boolean eliminacionExitosa = pedidoDAO.eliminar(idPedidoAEliminar);
+                            if (eliminacionExitosa) {
+                                response.sendRedirect("ControladorPedido?Op=Listar&mensaje=Pedido+eliminado+correctamente");
+                            } else {
+                                response.sendRedirect("ControladorPedido?Op=Listar&error=Hubo+un+error+al+eliminar+el+pedido");
+                            }
+                        }
+                    } catch (NumberFormatException e) {
+                        // Captura la excepción si no se puede convertir idPedidoEliminarStr a un entero
+                        response.sendRedirect("ControladorPedido?Op=Listar&error=El+id+de+pedido+no+es+válido");
+                    } catch (Exception e) {
+                        // Captura otras excepciones inesperadas
+                        e.printStackTrace();
+                        response.sendRedirect("ControladorPedido?Op=Listar&error=Hubo+un+error+al+eliminar+el+pedido");
+                    }
+                } else {
+                    response.sendRedirect("ControladorPedido?Op=Listar&error=No+se+proporciono+un+id+de+pedido");
                 }
                 break;
 

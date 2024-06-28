@@ -185,4 +185,75 @@ public class DetallesPedidoDAO {
         return nuevoTotal;
     }
 
+    public int contarDetallesConIdPedido(int idPedido) {
+        String sql = "SELECT COUNT(*) AS count FROM detallepedido WHERE idPedido = ?";
+        int count = 0;
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idPedido);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("count");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR en contarDetallesConIdPedido PedidoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+
+        return count;
+    }
+
+    public boolean eliminarDetallesPorIdPedido(int idPedido) {
+        String sql = "DELETE FROM detallepedido WHERE idPedido = ?";
+        boolean eliminado = false;
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idPedido);
+            int rowsAffected = ps.executeUpdate();
+            eliminado = rowsAffected > 0;
+        } catch (SQLException e) {
+            System.out.println("ERROR en eliminarDetallesPorIdPedido PedidoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+
+        return eliminado;
+    }
+
+    public List<DetallesPedido> listarTodoPorIdPedido(int idPedido) {
+        String sql = "SELECT dp.*, p.nombre AS nombreProducto "
+                + "FROM detallepedido dp "
+                + "INNER JOIN producto p ON dp.idProducto = p.idProducto "
+                + "WHERE dp.idPedido = ?";
+        List<DetallesPedido> lista = new ArrayList<>();
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idPedido);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                DetallesPedido detallePedido = new DetallesPedido();
+                detallePedido.setIdDetallePedido(rs.getInt("idDetallePedido"));
+                detallePedido.setIdPedido(rs.getInt("idPedido"));
+                detallePedido.setIdProducto(rs.getInt("idProducto"));
+                detallePedido.setCantidad(rs.getInt("cantidad"));
+                detallePedido.setPrecio(rs.getDouble("precio"));
+
+                lista.add(detallePedido);
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR en listarPorIdPedido DetallePedidoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+
+        return lista;
+    }
+
 }

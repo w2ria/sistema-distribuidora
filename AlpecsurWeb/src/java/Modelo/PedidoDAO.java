@@ -250,4 +250,24 @@ public class PedidoDAO {
         return r;
     }
 
+    public boolean eliminar(int idPedido) {
+        String sql = "DELETE FROM pedido WHERE idPedido=?";
+        boolean eliminado = false;
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idPedido);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                eliminado = true;
+                System.out.println("Pedido eliminado correctamente!");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR en eliminar PedidoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+        return eliminado;
+    }
+
 }

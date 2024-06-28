@@ -31,20 +31,20 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <title>Pedidos</title>
     </head>
-    <body>
+    <body id="bodyId">
 
         <div class="container">
-            <h1 class="mt-4">Gestión de Ingresos</h1>
+            <h1 class="mt-4">Gestión de Pedidos</h1>
 
             <!-- Formulario de búsqueda -->
-            <form class="form-inline my-3" action="ControladorIngreso" method="GET">
+            <form class="form-inline my-3" action="ControladorPedido" method="GET">
                 <input type="hidden" name="Op" value="Buscar">
                 <input type="text" name="nombreProveedor" class="form-control mr-sm-2" placeholder="Buscar por nombre de proveedor" required>
                 <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Buscar</button>
-                <a href="ControladorIngreso?Op=Listar" class="btn btn-outline-primary my-2 my-sm-0 ml-2">Mostrar Todo</a>
+                <a href="ControladorPedido?Op=Listar" class="btn btn-outline-primary my-2 my-sm-0 ml-2">Mostrar Todo</a>
             </form>
 
-            <!-- Botones para agregar ingreso y volver al menú -->
+            <!-- Botones para agregar Pedido y volver al menú -->
             <div class="d-flex justify-content-start mb-3">
                 <button type="button" class="btn btn-info mr-2" id="btnAgregar" data-toggle="modal" data-target="#agregarPedidoModal">Agregar Pedido</button>
                 <a href="MenuAdministrador.jsp" class="btn btn-outline-secondary">Volver al Menú Administrador</a>
@@ -257,6 +257,56 @@
             </div>
         </div>
 
+        <!-- Primer modal de confirmación -->
+        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="deleteForm" action="ControladorPedido" method="POST">
+                        <input type="hidden" id="idPedidoHiddenField" name="idPedido">
+                        <input type="hidden" id="detallePedidoCount" name="detallePedidoCount" value="0">
+                        <div class="modal-body" id="modalBody">
+                            ¿Está seguro de que desea eliminar este pedido?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" name="Op" value="ContarDetalles" class="btn btn-danger">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Segundo modal de confirmación -->
+        <div class="modal fade" id="confirmDeleteDetailsModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteDetailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteDetailsModalLabel">Confirmar Eliminación de Detalles</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="deleteDetailsForm" action="ControladorPedido" method="POST">
+                        <input type="hidden" id="idPedidoHiddenFieldSecond" name="idPedido">
+                        <input type="hidden" id="detallePedidooCountModal" name="detallePedidoCount">
+                        <div class="modal-body">
+                            <p id="mensajeDetalles"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" name="accion" value="Eliminar" class="btn btn-danger">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <script>
             $(document).ready(function () {
                 $('.editBtn').on('click', function () {
@@ -296,6 +346,67 @@
                     });
 
                     $('#editModal').modal('show');
+                });
+            });
+        </script>
+
+        <!-- Scripts para manejar los modals y las solicitudes AJAX -->
+        <script>
+            $(document).ready(function () {
+                $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget);
+                    var idPedido = button.data('id');
+                    $('#idPedidoHiddenField').val(idPedido);
+                });
+
+                $('#confirmDeleteDetailsModal').on('show.bs.modal', function (event) {
+                    var idPedido = $('#idPedidoHiddenField').val();
+                    $('#idPedidoHiddenFieldSecond').val(idPedido);
+
+                    // Obtener y establecer el valor de detallePedidoCount
+                    var detallePedidoCount = $('#detallePedidoCount').val();
+                    $('#detallePedidoCountModal').val(detallePedidoCount);
+                });
+
+                $('#deleteForm').on('submit', function (event) {
+                    event.preventDefault();
+                    var idPedido = $('#idPedidoHiddenField').val();
+                    $.ajax({
+                        url: 'ControladorPedido',
+                        method: 'GET',
+                        data: {
+                            Op: 'ContarDetalles',
+                            idPedido: idPedido
+                        },
+                        success: function (response) {
+                            var detallePedidoCount = parseInt(response.detallePedidoCount);
+                            $('#detallePedidoCount').val(detallePedidoCount);
+                            if (detallePedidoCount > 0) {
+                                $('#mensajeDetalles').text('Este pedido contiene ' + detallePedidoCount + ' detalle(s) de pedido. ¿Está seguro de que desea eliminarlos también?');
+                                $('#confirmDeleteDetailsModal').modal('show');
+                            } else {
+                                // AJAX para eliminar el pedido
+                                $.ajax({
+                                    url: 'ControladorPedido',
+                                    method: 'POST',
+                                    data: {
+                                        accion: 'Eliminar',
+                                        idPedido: idPedido
+                                    },
+                                    success: function (response) {
+                                        $('#bodyId').empty();
+                                        $('#bodyId').html(response);
+                                    },
+                                    error: function () {
+                                        alert('Hubo un error al realizar otra operación. Por favor, inténtelo nuevamente.');
+                                    }
+                                });
+                            }
+                        },
+                        error: function () {
+                            alert('Hubo un error al contar los detalles del pedido. Por favor, inténtelo nuevamente.');
+                        }
+                    });
                 });
             });
         </script>
