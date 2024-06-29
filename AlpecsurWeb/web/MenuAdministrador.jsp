@@ -84,7 +84,12 @@
                         </span>
                         <h3>Categorias</h3>
                     </a>
-                    
+                    <a href="ControladorMarca?Op=Listar">
+                        <span class="material-icons-sharp">
+                            sell
+                        </span>
+                        <h3>Marcas</h3>
+                    </a>
                     <a href="logout.jsp">
                         <span class="material-icons-sharp">
                             logout

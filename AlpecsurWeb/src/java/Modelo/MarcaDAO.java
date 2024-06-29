@@ -82,6 +82,7 @@ public class MarcaDAO {
             ps = con.prepareStatement(sql);
             ps.setString(1, marca.getNombre());
             ps.setString(2, marca.getDescripcion());
+            ps.setInt(3, marca.getIdMarca());
             ps.executeUpdate();
             System.out.println("Actualizado de forma correcta!");
         } catch (Exception e) {
@@ -103,4 +104,29 @@ public class MarcaDAO {
             System.out.println("ERROR en Eliminar MarcaDAO: " + e.getMessage());
         }
     }
+
+    public List<Marca> buscarPorNombre(String nombre) {
+        List<Marca> lista = new ArrayList<>();
+        String sql = "SELECT * FROM marca WHERE nombre LIKE ?";
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + nombre + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Marca marca = new Marca();
+                marca.setIdMarca(rs.getInt("idMarca"));
+                marca.setNombre(rs.getString("nombre"));
+                marca.setDescripcion(rs.getString("descripcion"));
+                lista.add(marca);
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR en buscarPorNombre MarcaDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+        return lista;
+    }
+
 }

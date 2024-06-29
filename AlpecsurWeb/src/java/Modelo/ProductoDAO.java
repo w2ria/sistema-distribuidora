@@ -444,4 +444,27 @@ public class ProductoDAO {
         return r;
     }
 
+    public int contarProductosPorMarca(int idMarca) {
+        int productosCount = 0;
+
+        String sql = "SELECT COUNT(*) FROM producto WHERE idMarca = ?";
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idMarca);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                productosCount = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error en contarProductosPorMarca ProductoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+
+        return productosCount;
+    }
+
 }
