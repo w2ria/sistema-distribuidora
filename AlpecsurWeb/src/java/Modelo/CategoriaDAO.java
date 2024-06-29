@@ -82,6 +82,7 @@ public class CategoriaDAO {
             ps = con.prepareStatement(sql);
             ps.setString(1, categoria.getNombre());
             ps.setString(2, categoria.getDescripcion());
+            ps.setInt(3, categoria.getIdCategoria());
             ps.executeUpdate();
             System.out.println("Actualizado de forma correcta!");
         } catch (Exception e) {
@@ -103,4 +104,29 @@ public class CategoriaDAO {
             System.out.println("ERROR en Eliminar CategoriaDAO: " + e.getMessage());
         }
     }
+
+    public List<Categoria> buscarPorNombre(String nombre) {
+        List<Categoria> lista = new ArrayList<>();
+        String sql = "SELECT * FROM categoria WHERE nombre LIKE ?";
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + nombre + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Categoria categoria = new Categoria();
+                categoria.setIdCategoria(rs.getInt("idCategoria"));
+                categoria.setNombre(rs.getString("nombre"));
+                categoria.setDescripcion(rs.getString("descripcion"));
+                lista.add(categoria);
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR en buscarPorNombre CategoriaDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+        return lista;
+    }
+    
 }

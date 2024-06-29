@@ -78,7 +78,7 @@
                         </span>
                         <h3>Pedidos</h3>
                     </a>
-                    <a href="#">
+                    <a href="ControladorCategoria?Op=Listar">
                         <span class="material-icons-sharp">
                             category
                         </span>
