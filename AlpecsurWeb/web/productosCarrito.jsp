@@ -75,28 +75,28 @@
                                     <a href="controlador?accion=MostrarTodo">Mostrar Todo</a>
                                 </li>
                                 <li class="category-item">
-                                    <a href="controlador?accion=FiltrarCategoria&categoria=Papas fritas">Papas fritas</a>
+                                    <a href="controlador?accion=FiltrarCategoria&categoria=Papas Fritas">Papas Fritas</a>
                                 </li>
                                 <li class="category-item">
-                                    <a href="controlador?accion=FiltrarCategoria&categoria=Snacks mixtos">Snacks mixtos</a>
+                                    <a href="controlador?accion=FiltrarCategoria&categoria=Cereales">Cereales</a>
                                 </li>
                                 <li class="category-item">
-                                    <a href="controlador?accion=FiltrarCategoria&categoria=Nachos">Nachos</a>
+                                    <a href="controlador?accion=FiltrarCategoria&categoria=Pan">Pan</a>
+                                </li>
+                                <li class="category-item">
+                                    <a href="controlador?accion=FiltrarCategoria&categoria=Galletas">Galletas</a>
                                 </li>
                                 <li class="category-item">
                                     <a href="controlador?accion=FiltrarCategoria&categoria=Tostadas">Tostadas</a>
                                 </li>
                                 <li class="category-item">
-                                    <a href="controlador?accion=FiltrarCategoria&categoria=Snacks de maiz">Snacks de maiz</a>
+                                    <a href="controlador?accion=FiltrarCategoria&categoria=Chupetines">Chupetines</a>
                                 </li>
                                 <li class="category-item">
-                                    <a href="controlador?accion=FiltrarCategoria&categoria=Snacks de vegetales">Snacks de vegetales</a>
+                                    <a href="controlador?accion=FiltrarCategoria&categoria=Bizcochos">Bizcochos</a>
                                 </li>
                                 <li class="category-item">
-                                    <a href="controlador?accion=FiltrarCategoria&categoria=Snacks de legumbres">Snacks de legumbres</a>
-                                </li>
-                                <li class="category-item">
-                                    <a href="controlador?accion=FiltrarCategoria&categoria=Snacks de mani">Snacks de mani</a>
+                                    <a href="controlador?accion=FiltrarCategoria&categoria=Snacks Salados">Snacks Salados</a>
                                 </li>
                             </ul>
                         </section>
