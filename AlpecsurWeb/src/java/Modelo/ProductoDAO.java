@@ -51,8 +51,8 @@ public class ProductoDAO {
         return producto;
     }
 
-    public Producto buscarPorNombre(String nombre) {
-        Producto producto = new Producto();
+    public List<Producto> buscarPorNombre(String nombre) {
+        List<Producto> lista = new ArrayList<>();
         String sql = "SELECT p.*, m.nombre AS nombre_marca, c.nombre AS nombre_categoria "
                 + "FROM producto p "
                 + "INNER JOIN marca m ON p.idMarca = m.idMarca "
@@ -64,7 +64,8 @@ public class ProductoDAO {
             ps = con.prepareStatement(sql);
             ps.setString(1, "%" + nombre + "%");
             rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
+                Producto producto = new Producto();
                 producto.setIdProducto(rs.getInt("idProducto"));
                 producto.setNombre(rs.getString("nombre"));
                 producto.setPrecio(rs.getDouble("precio"));
@@ -80,13 +81,14 @@ public class ProductoDAO {
                 categoria.setIdCategoria(rs.getInt("idCategoria"));
                 categoria.setNombre(rs.getString("nombre_categoria"));
                 producto.setCategoria(categoria);
+                lista.add(producto);
             }
         } catch (Exception e) {
             System.out.println("ERROR en buscarPorNombre ProductoDAO: " + e.getMessage());
         } finally {
             cn.cerrarConexion(con);
         }
-        return producto;
+        return lista;
     }
 
     public Producto buscarPorMarca(String marca) {

@@ -72,6 +72,15 @@ public class ControladorProducto extends HttpServlet {
                 }
                 break;
 
+            case "Buscar":
+                String nombreBuscar = request.getParameter("nombre");
+                List<Producto> productosEncontrados = productoDAO.buscarPorNombre(nombreBuscar);
+                request.setAttribute("ListaProductos", productosEncontrados);
+                request.setAttribute("listaCategorias", listaCategorias);
+                request.setAttribute("listaMarcas", listaMarcas);
+                request.getRequestDispatcher("Producto.jsp").forward(request, response);
+                break;
+
             default:
                 listaProductos = productoDAO.listar();
                 request.setAttribute("ListaProductos", listaProductos);
