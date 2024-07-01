@@ -112,7 +112,7 @@
                                 <div class="product-image" style="margin-bottom: 0;"></div>
                                 <div class="product-top">
                                     <a href="#" class="product-image-link">
-                                        <img src="resources/images/productos/${p.getImagen()}" alt="${p.getDescripcion()}" decoding="async" >
+                                        <img src="resources/images/productos/${p.getImagen()}" alt="${p.getDescripcion()}" decoding="async" style="width:200px; height:220px;" >
                                     </a>
                                 </div>
 
