@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class controlador extends HttpServlet {
 
     ProductoCarritoDAO pdao = new ProductoCarritoDAO();
+    ProductoDAO productoDAO = new ProductoDAO();
     Producto p = new Producto();
     List<Producto> productos = new ArrayList<>();
 
@@ -64,9 +65,17 @@ public class controlador extends HttpServlet {
             response.sendRedirect("login.jsp");
             return;
         }
+
         int pos = 0;
-        cantidad = 1;
         int idp = Integer.parseInt(request.getParameter("idProducto"));
+        int cantidad = Integer.parseInt(request.getParameter("cantidad")); // Obtener la cantidad del request
+
+        // Verificar stock disponible
+        int stockDisponible = productoDAO.obtenerStock(idp);
+        if (cantidad > stockDisponible) {
+            cantidad = stockDisponible;
+        }
+
         p = pdao.listarId(idp);
         if (listaCarrito.size() > 0) {
             for (int i = 0; i < listaCarrito.size(); i++) {
@@ -76,6 +85,9 @@ public class controlador extends HttpServlet {
             }
             if (idp == listaCarrito.get(pos).getIdProducto()) {
                 cantidad = listaCarrito.get(pos).getCantidad() + cantidad;
+                if (cantidad > stockDisponible) {
+                    cantidad = stockDisponible;
+                }
                 double subtotal = listaCarrito.get(pos).getPrecio() * cantidad;
                 listaCarrito.get(pos).setCantidad(cantidad);
                 listaCarrito.get(pos).setSubTotal(subtotal);
@@ -137,6 +149,13 @@ public class controlador extends HttpServlet {
         }
         int idpro = Integer.parseInt(request.getParameter("idp"));
         int cant = Integer.parseInt(request.getParameter("Cantidad"));
+
+        // Verificar stock disponible
+        int stockDisponible = productoDAO.obtenerStock(idpro);
+        if (cant > stockDisponible) {
+            cant = stockDisponible;
+        }
+
         for (int i = 0; i < listaCarrito.size(); i++) {
             if (listaCarrito.get(i).getIdProducto() == idpro) {
                 listaCarrito.get(i).setCantidad(cant);
@@ -177,11 +196,11 @@ public class controlador extends HttpServlet {
 
         PedidoDAO dao = new PedidoDAO();
         Empleado empleado = new Empleado();
-        empleado.setIdEmpleado(1); // ID de empleado ficticio
+        empleado.setIdEmpleado(1);
         Pago pago = new Pago();
         pago.setMonto(totalPagar);
 
-        dao.generarPago(pago); // Asegúrate de que esto esté implementado correctamente en PedidoDAO
+        dao.generarPago(pago);
 
         Pedido pedido = new Pedido();
         pedido.setIdCliente(cliente.getIdCliente());
@@ -194,18 +213,25 @@ public class controlador extends HttpServlet {
         String nuevoComprobante = incrementarNumeroComprobante(ultimoComprobante);
         pedido.setNumComprobante(nuevoComprobante);
 
-        pedido.setFecha(Date.valueOf(LocalDate.now()).toString()); // Fecha actual
+        pedido.setFecha(Date.valueOf(LocalDate.now()).toString());
         pedido.setTotal(totalPagar);
-        pedido.setIdEstadoPedido(1); // Estado inicial del pedido
-        pedido.setDetallePedido(listaCarrito); // Agregar los detalles del pedido
+        pedido.setIdEstadoPedido(1);
+        pedido.setDetallePedido(listaCarrito);
 
         int res = dao.generarPedido(pedido);
 
         if (res != 0 && totalPagar > 0) {
+            // Actualizar el stock de cada producto
+            for (Carrito item : listaCarrito) {
+                int idProducto = item.getIdProducto();
+                int cantidadComprada = item.getCantidad();
+                int stockActual = productoDAO.obtenerStock(idProducto);
+                int nuevoStock = stockActual - cantidadComprada;
+                productoDAO.actualizarStock(idProducto, nuevoStock);
+            }
             listaCarrito.clear();
             totalPagar = 0.0;
-            request.setAttribute("mensaje", "Compra finalizada!");
-            request.getRequestDispatcher("carrito.jsp").forward(request, response);
+            response.sendRedirect("index.jsp?mensaje=compraExitosa");
         } else {
             request.setAttribute("mensaje", "Error en la compra!");
             request.getRequestDispatcher("error.jsp").forward(request, response);

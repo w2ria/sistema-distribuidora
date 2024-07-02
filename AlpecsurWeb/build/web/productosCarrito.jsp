@@ -61,7 +61,6 @@
             </div>
         </nav>
 
-
         <div class="container-carrito">
             <div class="cont-carrito-main">
                 <div class="content-wrapper">
@@ -124,12 +123,13 @@
                                     <div class="add-to-cart">
                                         <div class="quantity">
                                             <input type="button" value="-" class="minus">
-                                            <label class="screen-reader-text" for="quantity_2430"></label>
-                                            <input type="number" id="quantity_2430" class="quantity-input" value="1" min="1" step="1">
+                                            <label class="screen-reader-text" for="quantity_${p.getIdProducto()}"></label>
+                                            <input type="number" id="quantity_${p.getIdProducto()}" class="quantity-input" value="1" min="1" step="1" data-stock="${p.getStock()}">
                                             <input type="button" value="+" class="plus">
                                         </div>
-                                        <a href="controlador?accion=AgregarCarrito&idProducto=${p.getIdProducto()}" class="button add-to-cart-button"><span>Agregar</span></a>
+                                        <a href="#" class="button add-to-cart-button" onclick="agregarCarrito(${p.getIdProducto()}, ${p.getStock()})"><span>Agregar</span></a>
                                     </div>
+                                    <div id="error_${p.getIdProducto()}" class="text-danger" style="display:none;">Máxima cantidad: ${p.getStock()}</div>
                                 </div>
                             </div>
                         </c:forEach>
@@ -139,5 +139,51 @@
         </div>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.minus').click(function () {
+                    var input = $(this).siblings('.quantity-input');
+                    var stock = input.data('stock');
+                    var currentValue = parseInt(input.val());
+                    if (currentValue > 1) {
+                        input.val(currentValue - 1);
+                        $('#error_' + input.attr('id').split('_')[1]).hide();
+                    }
+                });
+
+                $('.plus').click(function () {
+                    var input = $(this).siblings('.quantity-input');
+                    var stock = input.data('stock');
+                    var currentValue = parseInt(input.val());
+                    if (currentValue < stock) {
+                        input.val(currentValue + 1);
+                        $('#error_' + input.attr('id').split('_')[1]).hide();
+                    } else {
+                        $('#error_' + input.attr('id').split('_')[1]).show();
+                    }
+                });
+
+                $('.quantity-input').on('input', function () {
+                    var stock = $(this).data('stock');
+                    var currentValue = parseInt($(this).val());
+                    if (currentValue > stock) {
+                        $(this).val(stock);
+                        $('#error_' + $(this).attr('id').split('_')[1]).show();
+                    } else {
+                        $('#error_' + $(this).attr('id').split('_')[1]).hide();
+                    }
+                });
+            });
+
+            function agregarCarrito(idProducto, stock) {
+                var cantidad = $('#quantity_' + idProducto).val();
+                if (parseInt(cantidad) > stock) {
+                    $('#error_' + idProducto).show();
+                    return;
+                }
+
+                window.location.href = 'controlador?accion=AgregarCarrito&idProducto=' + idProducto + '&cantidad=' + cantidad;
+            }
+        </script>
     </body>
 </html>

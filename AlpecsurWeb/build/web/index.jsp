@@ -195,6 +195,24 @@
             </div>
         </div>
 
+        <!-- Modal de Compra Exitosa -->
+        <div class="modal fade" id="compraExitosaModal" tabindex="-1" aria-labelledby="compraExitosaModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="compraExitosaModalLabel">Compra Exitosa</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ¡Tu compra ha sido realizada con éxito!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Footer -->
         <footer class="text-light py-5 mt-5">
             <div class="container">
@@ -241,6 +259,16 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const mensaje = urlParams.get('mensaje');
+            if (mensaje === 'compraExitosa') {
+                var myModal = new bootstrap.Modal(document.getElementById('compraExitosaModal'), {
+                    keyboard: false
+                });
+                myModal.show();
+            }
+        </script>
     </body>
 </html>
 
