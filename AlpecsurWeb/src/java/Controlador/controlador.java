@@ -29,7 +29,7 @@ public class controlador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String accion = request.getParameter("accion");
-        productos = pdao.listar();
+        productos = productoDAO.listarConStock(); 
         switch (accion) {
             case "AgregarCarrito":
                 agregarCarrito(request, response);

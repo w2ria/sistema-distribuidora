@@ -107,31 +107,33 @@
                     </div>
                     <div class="products-wrapper">
                         <c:forEach var="p" items="${productos}">
-                            <div class="product-item">
-                                <div class="product-image" style="margin-bottom: 0;"></div>
-                                <div class="product-top">
-                                    <a href="#" class="product-image-link">
-                                        <img src="resources/images/productos/${p.getImagen()}" alt="${p.getDescripcion()}" decoding="async" style="width:200px; height:220px;" >
-                                    </a>
-                                </div>
+                            <c:if test="${p.stock > 0}"> <!-- Excluye productos con stock cero -->
+                                <div class="product-item">
+                                    <div class="product-image" style="margin-bottom: 0;"></div>
+                                    <div class="product-top">
+                                        <a href="#" class="product-image-link">
+                                            <img src="resources/images/productos/${p.getImagen()}" alt="${p.getDescripcion()}" decoding="async" style="width:200px; height:220px;" >
+                                        </a>
+                                    </div>
 
-                                <div class="product-bottom">
-                                    <h3 class="product-title"><a href="https://campograndeperu.com/producto/aceite-de-ajonjoli/">${p.getNombre()}</a></h3>
-                                    <div class="price-wrapper">
-                                        <span class="price">S/${p.getPrecio()}</span>
-                                    </div>
-                                    <div class="add-to-cart">
-                                        <div class="quantity">
-                                            <input type="button" value="-" class="minus">
-                                            <label class="screen-reader-text" for="quantity_${p.getIdProducto()}"></label>
-                                            <input type="number" id="quantity_${p.getIdProducto()}" class="quantity-input" value="1" min="1" step="1" data-stock="${p.getStock()}">
-                                            <input type="button" value="+" class="plus">
+                                    <div class="product-bottom">
+                                        <h3 class="product-title"><a href="https://campograndeperu.com/producto/aceite-de-ajonjoli/">${p.getNombre()}</a></h3>
+                                        <div class="price-wrapper">
+                                            <span class="price">S/${p.getPrecio()}</span>
                                         </div>
-                                        <a href="#" class="button add-to-cart-button" onclick="agregarCarrito(${p.getIdProducto()}, ${p.getStock()})"><span>Agregar</span></a>
+                                        <div class="add-to-cart">
+                                            <div class="quantity">
+                                                <input type="button" value="-" class="minus">
+                                                <label class="screen-reader-text" for="quantity_${p.getIdProducto()}"></label>
+                                                <input type="number" id="quantity_${p.getIdProducto()}" class="quantity-input" value="1" min="1" step="1" data-stock="${p.getStock()}">
+                                                <input type="button" value="+" class="plus">
+                                            </div>
+                                            <a href="#" class="button add-to-cart-button" onclick="agregarCarrito(${p.getIdProducto()}, ${p.getStock()})"><span>Agregar</span></a>
+                                        </div>
+                                        <div id="error_${p.getIdProducto()}" class="text-danger" style="display:none;">Máxima cantidad: ${p.getStock()}</div>
                                     </div>
-                                    <div id="error_${p.getIdProducto()}" class="text-danger" style="display:none;">Máxima cantidad: ${p.getStock()}</div>
                                 </div>
-                            </div>
+                            </c:if>
                         </c:forEach>
                     </div>
                 </aside>
