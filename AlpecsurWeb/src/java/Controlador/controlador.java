@@ -33,10 +33,10 @@ public class controlador extends HttpServlet {
         productos = productoDAO.listarConStock();
         List<Categoria> listaCategorias = categoriaDAO.listar();
         List<Marca> listaMarcas = marcaDAO.listar();
-        
+
         request.setAttribute("listaCategorias", listaCategorias);
         request.setAttribute("listaMarcas", listaMarcas);
-        
+
         switch (accion) {
             case "AgregarCarrito":
                 agregarCarrito(request, response);
@@ -78,7 +78,7 @@ public class controlador extends HttpServlet {
 
         int pos = 0;
         int idp = Integer.parseInt(request.getParameter("idProducto"));
-        int cantidad = Integer.parseInt(request.getParameter("cantidad")); // Obtener la cantidad del request
+        int cantidad = Integer.parseInt(request.getParameter("cantidad"));
 
         // Verificar stock disponible
         int stockDisponible = productoDAO.obtenerStock(idp);
@@ -86,7 +86,7 @@ public class controlador extends HttpServlet {
             cantidad = stockDisponible;
         }
 
-        p = pdao.listarId(idp);
+        p = productoDAO.listarId(idp); // Se cambió de pdao a productoDAO
         if (listaCarrito.size() > 0) {
             for (int i = 0; i < listaCarrito.size(); i++) {
                 if (idp == listaCarrito.get(i).getIdProducto()) {
@@ -108,6 +108,7 @@ public class controlador extends HttpServlet {
                 cart.setIdProducto(p.getIdProducto());
                 cart.setNombre(p.getNombre());
                 cart.setDescripcion(p.getDescripcion());
+                cart.setImagen(p.getImagen()); // Asegurarse de que la imagen se establece en el carrito
                 cart.setPrecio(p.getPrecio());
                 cart.setCantidad(cantidad);
                 cart.setSubTotal(cantidad * p.getPrecio());
@@ -120,6 +121,7 @@ public class controlador extends HttpServlet {
             cart.setIdProducto(p.getIdProducto());
             cart.setNombre(p.getNombre());
             cart.setDescripcion(p.getDescripcion());
+            cart.setImagen(p.getImagen()); // Asegurarse de que la imagen se establece en el carrito
             cart.setPrecio(p.getPrecio());
             cart.setCantidad(cantidad);
             cart.setSubTotal(cantidad * p.getPrecio());

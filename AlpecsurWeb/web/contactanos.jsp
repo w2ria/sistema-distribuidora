@@ -18,6 +18,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
         <!-- Estilos Personalizados -->
         <link rel="stylesheet" href="resources/css/index.css"/>
+        <link rel="stylesheet" href="resources/css/busqueda.css"/>        
     </head>
     <body>
         <!-- Header de Presentación -->
@@ -26,10 +27,10 @@
                 <a href="index.jsp">
                     <img src="https://via.placeholder.com/150" alt="Logo" class="img-fluid" style="max-height: 60px;">
                 </a>
-                <form class="d-flex flex-grow-1 mx-3">
-                    <input class="form-control me-2" type="search" placeholder="Buscar Productos" aria-label="Buscar Productos">
-                    <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
-                </form>
+                <div class="position-relative flex-grow-1 mx-3">
+                    <input class="form-control me-2" type="search" id="searchInput" placeholder="Buscar Productos" aria-label="Buscar Productos">
+                    <div id="searchResults" class="search-results"></div>
+                </div>
                 <div>
                     <% if (usuario != null && cliente != null) {%>
                     <span class="text-white mx-2">Bienvenido, <%= cliente.getNombre()%></span>
@@ -153,8 +154,10 @@
             </div>
         </footer>
 
-        <!-- Bootstrap JS -->
+        <!-- jQuery para manejo de AJAX y Bootstrap para estilos -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="resources/js/busqueda.js?<%= System.currentTimeMillis()%>"></script>
     </body>
 </html>
 

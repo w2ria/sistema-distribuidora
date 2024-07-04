@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="resources/css/index.css"/>
         <link rel="stylesheet" href="resources/css/stylePago.css" />
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/css/busqueda.css" />
         <link href="https://fonts.googleapis.com/css?family=Raleway|Rock+Salt|Source+Code+Pro:300,400,600" rel="stylesheet">
     </head>
     <body class="fondo">
@@ -32,10 +33,10 @@
                 <a href="index.jsp">
                     <img src="https://via.placeholder.com/150" alt="Logo" class="img-fluid" style="max-height: 60px;">
                 </a>
-                <form class="d-flex flex-grow-1 mx-3">
-                    <input class="form-control me-2" type="search" placeholder="Buscar Productos" aria-label="Buscar Productos">
-                    <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
-                </form>
+                <div class="position-relative flex-grow-1 mx-3">
+                    <input class="form-control me-2" type="search" id="searchInput" placeholder="Buscar Productos" aria-label="Buscar Productos">
+                    <div id="searchResults" class="search-results"></div>
+                </div>
                 <div>
                     <% if (usuario != null && cliente != null) {%>
                     <span class="text-white mx-2">Bienvenido, <%= cliente.getNombre()%></span>
@@ -84,9 +85,10 @@
                                         <td class="product-thumbnail">${cart.getItem()}</td>
                                         <td class="product-thumbnail">
                                             <a href="#" class="product-image-link">
-                                                <img src="resources/images/productos/${cart.getImagen()}" alt="${cart.getDescripcion()}" decoding="async">
+                                                <img src="resources/images/productos/${cart.getImagen()}" alt="${cart.getDescripcion()}" decoding="async" style="width: 80px; height: 80px">
                                             </a>
                                         </td>
+
                                         <td class="product-name" data-title="Producto">
                                             <a href="#">${cart.getNombre()}</a>
                                         </td>
@@ -112,11 +114,6 @@
                                 <tr class="cart-action-row">
                                     <td colspan="6" class="actions">
                                         <div class="cart-actions">
-                                            <div class="coupon-form">
-                                                <label for="coupon_code">Cupón:</label>
-                                                <input type="text" name="coupon_code" class="coupon-input" id="coupon_code" value="" placeholder="Código de cupón">
-                                                <button type="submit" class="button apply-coupon" name="apply_coupon" value="Aplicar cupón">Aplicar cupón</button>
-                                            </div>
                                             <input type="hidden" id="woocommerce-cart-nonce" name="woocommerce-cart-nonce" value="999af14140">
                                             <input type="hidden" name="_wp_http_referer" value="/carrito/?removed_item=1">
                                         </div>
@@ -362,5 +359,6 @@
                     </script>
                     <script src='https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js'></script>
                     <script src="resources/js/tarjeta.js"></script>
+                    <script src="resources/js/busqueda.js?<%= System.currentTimeMillis()%>"></script>
                     </body>
                     </html>

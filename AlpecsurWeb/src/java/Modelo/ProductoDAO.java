@@ -634,5 +634,49 @@ public class ProductoDAO {
 
         return lista;
     }
+    
+    public Producto listarId(int id) {
+        String sql = "SELECT * FROM producto WHERE idProducto = ?";
+        Producto producto = new Producto();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                producto.setIdProducto(rs.getInt(1));
+                Categoria categoria = new Categoria();
+                categoria.setIdCategoria(rs.getInt(2));
+                producto.setCategoria(categoria);
+                Marca marca = new Marca();
+                marca.setIdMarca(rs.getInt(3));
+                producto.setMarca(marca);
+                producto.setNombre(rs.getString(4));
+                BigDecimal precio = rs.getBigDecimal(5);
+                precio = precio.setScale(4, RoundingMode.HALF_UP);
+                producto.setPrecio(precio.doubleValue());
+                producto.setStock(rs.getInt(6));
+                producto.setDescripcion(rs.getString(7));
+                producto.setImagen(rs.getString(8));
+                producto.setEstado(rs.getString(9));
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR en listarId ProductoDAO: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.out.println("ERROR al cerrar conexiones: " + e.getMessage());
+            }
+        }
+
+        return producto;
+    }
 
 }
