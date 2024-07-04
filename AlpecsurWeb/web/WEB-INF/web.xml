@@ -60,6 +60,10 @@
         <servlet-name>ControladorCategoria</servlet-name>
         <servlet-class>Controlador.ControladorCategoria</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorBusqueda</servlet-name>
+        <servlet-class>Controlador.ControladorBusqueda</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>controlador</servlet-name>
         <url-pattern>/controlador</url-pattern>
@@ -119,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>ControladorCategoria</servlet-name>
         <url-pattern>/ControladorCategoria</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorBusqueda</servlet-name>
+        <url-pattern>/ControladorBusqueda</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

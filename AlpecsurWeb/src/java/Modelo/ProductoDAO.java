@@ -527,7 +527,7 @@ public class ProductoDAO {
 
         return productosCount;
     }
-    
+
     public List<Producto> listarPocoStock() {
         String sql = "SELECT * FROM producto WHERE stock <= 10 AND stock > 0 ORDER BY idProducto";
         List<Producto> lista = new ArrayList<>();
@@ -593,6 +593,41 @@ public class ProductoDAO {
             }
         } catch (SQLException e) {
             System.out.println("ERROR en listarSinStock ProductoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+
+        return lista;
+    }
+
+    public List<Producto> BusquedaBarra(String nombre) {
+        List<Producto> lista = new ArrayList<>();
+        String sql = "SELECT * FROM producto WHERE nombre LIKE ? AND stock > 0 ORDER BY idProducto";
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + nombre + "%"); // Buscar productos que contengan 'nombre'
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(rs.getInt("idProducto"));
+                Categoria categoria = new Categoria();
+                categoria.setIdCategoria(rs.getInt("idCategoria"));
+                producto.setCategoria(categoria);
+                Marca marca = new Marca();
+                marca.setIdMarca(rs.getInt("idMarca"));
+                producto.setMarca(marca);
+                producto.setNombre(rs.getString("nombre"));
+                producto.setPrecio(rs.getDouble("precio"));
+                producto.setStock(rs.getInt("stock"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setImagen(rs.getString("imagen"));
+                producto.setEstado(rs.getString("estado"));
+                lista.add(producto);
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR en BusquedaBarra ProductoDAO: " + e.getMessage());
         } finally {
             cn.cerrarConexion(con);
         }
