@@ -30,6 +30,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="resources/css/styleAdministrador.css">
         <link rel="stylesheet" href="resources/css/alerta.css">
+        <link rel="stylesheet" href="resources/css/Interfaz.css">
         <title>Productos</title>
     </head>
 
@@ -37,12 +38,20 @@
         <div class="container">
             <h1 class="mt-4">Gestión de Productos</h1>
 
-            <!-- Formulario de búsqueda -->
-            <form class="form-inline my-3" action="ControladorProducto" method="GET">
+            <!-- Formulario de búsqueda y botones -->
+            <form class="form-inline my-3" action="ControladorProducto" method="GET" style="width: 100%; display: flex; flex-wrap: wrap;">
                 <input type="hidden" name="Op" value="Buscar">
-                <input type="text" name="nombre" class="form-control mr-sm-2" placeholder="Buscar por nombre" required>
-                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Buscar</button>
-                <a href="ControladorProducto?Op=Listar" class="btn btn-outline-primary my-2 my-sm-0 ml-2">Mostrar Todo</a>
+                <div class="input-group mb-3" style="flex: 1;">
+                    <input type="text" name="nombre" class="form-control" placeholder="Buscar por nombre" required>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-success" style="margin-right: 10px;">Buscar</button>
+                    </div>
+                </div>
+                <div class="btn-group mb-3" role="group" aria-label="Basic example" style="flex: 1; justify-content: flex-end;">
+                    <a href="ControladorProducto?Op=Listar" class="btn btn-outline-primary">Mostrar Todo</a>
+                    <a href="ControladorProducto?Op=ListarPocoStock" class="btn btn-outline-warning">Mostrar Poco Stock</a>
+                    <a href="ControladorProducto?Op=ListarSinStock" class="btn btn-outline-danger">Mostrar Sin Stock</a>
+                </div>
             </form>
 
             <!-- Botones para agregar producto y volver al menú -->
@@ -50,6 +59,7 @@
                 <button type="button" class="btn btn-info mr-2" id="btnAgregar" data-toggle="modal" data-target="#agregarProductoModal">Agregar Producto</button>
                 <a href="MenuAdministrador.jsp" class="btn btn-outline-secondary">Volver al Menú Administrador</a>
             </div>
+
 
             <!-- Tabla de productos -->
             <div class="d-flex">
@@ -243,6 +253,50 @@
             </div>
         </div>
 
+        <!-- Múltiples modales para advertencias -->
+        <c:forEach var="mensaje" items="${mensajesAdvertencia}" varStatus="status">
+            <div class="modal fade" id="modalAdvertencia${status.index}" tabindex="-1" role="dialog" aria-labelledby="modalAdvertenciaLabel${status.index}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalAdvertenciaLabel${status.index}">
+                                <c:choose>
+                                    <c:when test="${tiposMensaje[status.index] == 'warning'}">
+                                        <i class="fas fa-exclamation-triangle text-warning"></i> Aviso de Stock Bajo
+                                    </c:when>
+                                    <c:when test="${tiposMensaje[status.index] == 'danger'}">
+                                        <i class="fas fa-exclamation-circle text-danger"></i> Aviso de Sin Stock
+                                    </c:when>
+                                </c:choose>
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ${mensaje}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+
+
+        <script>
+            // Mostrar todos los modales de advertencia en secuencia
+            <c:forEach var="mensaje" items="${mensajesAdvertencia}" varStatus="status">
+            $('#modalAdvertencia${status.index}').modal('show');
+            $('#modalAdvertencia${status.index}').on('hidden.bs.modal', function () {
+                if (status.index < ${mensajesAdvertencia.size() - 1}) {
+                    $('#modalAdvertencia' + (status.index + 1)).modal('show');
+                }
+            });
+            </c:forEach>
+        </script>
+
         <script>
             $(document).ready(function () {
                 $('.editBtn').on('click', function () {
@@ -276,6 +330,5 @@
                 }, 5000); // La alerta desaparecerá después de 5 segundos
             });
         </script>
-
     </body>
 </html>

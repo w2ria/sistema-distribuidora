@@ -42,9 +42,9 @@ public class ProductoCarritoDAO {
         return p;
     }
 
-    public List listar() {
-        List<Producto> productos = new ArrayList();
-        String sql = "select * from producto";
+    public List<Producto> listar() {
+        List<Producto> productos = new ArrayList<>();
+        String sql = "SELECT * FROM producto";
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
@@ -72,48 +72,76 @@ public class ProductoCarritoDAO {
     }
 
     public List<Producto> listarPorCategoria(String categoria) {
-        List<Producto> productos = new ArrayList<>();
-        String sql = "SELECT * FROM producto WHERE idCategoria = (SELECT idCategoria FROM categoria WHERE nombre = ?)";
+        List<Producto> lista = new ArrayList<>();
+        String sql = "SELECT p.* FROM producto p INNER JOIN categoria c ON p.idCategoria = c.idCategoria WHERE c.nombre = ? AND p.stock > 0 ORDER BY p.idProducto";
+
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             ps.setString(1, categoria);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Producto p = new Producto();
-                Categoria c = new Categoria();
-                Marca m = new Marca();
-                p.setIdProducto(rs.getInt("idProducto"));
-                c.setIdCategoria(rs.getInt("idCategoria"));
-                m.setIdMarca(rs.getInt("idMarca"));
-                p.setCategoria(c);
-                p.setMarca(m);
-                p.setNombre(rs.getString("nombre"));
-                p.setPrecio(rs.getDouble("precio"));
-                p.setStock(rs.getInt("stock"));
-                p.setDescripcion(rs.getString("descripcion"));
-                p.setImagen(rs.getString("imagen"));
-                p.setEstado(rs.getString("estado"));
-                productos.add(p);
+                Producto producto = new Producto();
+                producto.setIdProducto(rs.getInt("idProducto"));
+                Categoria cat = new Categoria();
+                cat.setIdCategoria(rs.getInt("idCategoria"));
+                cat.setNombre(categoria);
+                producto.setCategoria(cat);
+                Marca marca = new Marca();
+                marca.setIdMarca(rs.getInt("idMarca"));
+                producto.setMarca(marca);
+                producto.setNombre(rs.getString("nombre"));
+                producto.setPrecio(rs.getDouble("precio"));
+                producto.setStock(rs.getInt("stock"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setImagen(rs.getString("imagen"));
+                producto.setEstado(rs.getString("estado"));
+                lista.add(producto);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("ERROR en listarPorCategoria ProductoDAO: " + e.getMessage());
         } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            cn.cerrarConexion(con);
         }
-        return productos;
+
+        return lista;
+    }
+
+// Método para listar productos por marca
+    public List<Producto> listarPorMarca(String marca) {
+        List<Producto> lista = new ArrayList<>();
+        String sql = "SELECT p.* FROM producto p INNER JOIN marca m ON p.idMarca = m.idMarca WHERE m.nombre = ? AND p.stock > 0 ORDER BY p.idProducto";
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, marca);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(rs.getInt("idProducto"));
+                Categoria categoria = new Categoria();
+                categoria.setIdCategoria(rs.getInt("idCategoria"));
+                producto.setCategoria(categoria);
+                Marca mar = new Marca();
+                mar.setIdMarca(rs.getInt("idMarca"));
+                mar.setNombre(marca);
+                producto.setMarca(mar);
+                producto.setNombre(rs.getString("nombre"));
+                producto.setPrecio(rs.getDouble("precio"));
+                producto.setStock(rs.getInt("stock"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setImagen(rs.getString("imagen"));
+                producto.setEstado(rs.getString("estado"));
+                lista.add(producto);
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR en listarPorMarca ProductoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+
+        return lista;
     }
 
 }

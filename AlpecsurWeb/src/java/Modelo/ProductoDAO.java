@@ -527,5 +527,77 @@ public class ProductoDAO {
 
         return productosCount;
     }
+    
+    public List<Producto> listarPocoStock() {
+        String sql = "SELECT * FROM producto WHERE stock <= 10 AND stock > 0 ORDER BY idProducto";
+        List<Producto> lista = new ArrayList<>();
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(rs.getInt(1));
+                Categoria categoria = new Categoria();
+                categoria.setIdCategoria(rs.getInt(2));
+                producto.setCategoria(categoria);
+                Marca marca = new Marca();
+                marca.setIdMarca(rs.getInt(3));
+                producto.setMarca(marca);
+                producto.setNombre(rs.getString(4));
+                BigDecimal precio = rs.getBigDecimal(5);
+                precio = precio.setScale(4, RoundingMode.HALF_UP);
+                producto.setPrecio(precio.doubleValue());
+                producto.setStock(rs.getInt(6));
+                producto.setDescripcion(rs.getString(7));
+                producto.setImagen(rs.getString(8));
+                producto.setEstado(rs.getString(9));
+                lista.add(producto);
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR en listarPocoStock ProductoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+
+        return lista;
+    }
+
+    public List<Producto> listarSinStock() {
+        String sql = "SELECT * FROM producto WHERE stock <= 0 ORDER BY idProducto";
+        List<Producto> lista = new ArrayList<>();
+
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Producto producto = new Producto();
+                producto.setIdProducto(rs.getInt(1));
+                Categoria categoria = new Categoria();
+                categoria.setIdCategoria(rs.getInt(2));
+                producto.setCategoria(categoria);
+                Marca marca = new Marca();
+                marca.setIdMarca(rs.getInt(3));
+                producto.setMarca(marca);
+                producto.setNombre(rs.getString(4));
+                BigDecimal precio = rs.getBigDecimal(5);
+                precio = precio.setScale(4, RoundingMode.HALF_UP);
+                producto.setPrecio(precio.doubleValue());
+                producto.setStock(rs.getInt(6));
+                producto.setDescripcion(rs.getString(7));
+                producto.setImagen(rs.getString(8));
+                producto.setEstado(rs.getString(9));
+                lista.add(producto);
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR en listarSinStock ProductoDAO: " + e.getMessage());
+        } finally {
+            cn.cerrarConexion(con);
+        }
+
+        return lista;
+    }
 
 }

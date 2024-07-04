@@ -1,7 +1,6 @@
 package Controlador;
 
 import Modelo.*;
-import Modelo.ProductoCarritoDAO;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -18,8 +17,10 @@ public class controlador extends HttpServlet {
 
     ProductoCarritoDAO pdao = new ProductoCarritoDAO();
     ProductoDAO productoDAO = new ProductoDAO();
+    CategoriaDAO categoriaDAO = new CategoriaDAO();
+    MarcaDAO marcaDAO = new MarcaDAO();
     Producto p = new Producto();
-    List<Producto> productos = new ArrayList<>();
+    List<Producto> productos;
 
     List<Carrito> listaCarrito = new ArrayList<>();
     int item;
@@ -29,7 +30,13 @@ public class controlador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String accion = request.getParameter("accion");
-        productos = productoDAO.listarConStock(); 
+        productos = productoDAO.listarConStock();
+        List<Categoria> listaCategorias = categoriaDAO.listar();
+        List<Marca> listaMarcas = marcaDAO.listar();
+        
+        request.setAttribute("listaCategorias", listaCategorias);
+        request.setAttribute("listaMarcas", listaMarcas);
+        
         switch (accion) {
             case "AgregarCarrito":
                 agregarCarrito(request, response);
@@ -48,6 +55,9 @@ public class controlador extends HttpServlet {
                 break;
             case "FiltrarCategoria":
                 filtrarCategoria(request, response);
+                break;
+            case "FiltrarMarca":
+                filtrarMarca(request, response);
                 break;
             default:
                 request.setAttribute("productos", productos);
@@ -248,6 +258,14 @@ public class controlador extends HttpServlet {
             throws ServletException, IOException {
         String categoria = request.getParameter("categoria");
         productos = pdao.listarPorCategoria(categoria);
+        request.setAttribute("productos", productos);
+        request.getRequestDispatcher("productosCarrito.jsp").forward(request, response);
+    }
+
+    private void filtrarMarca(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String marca = request.getParameter("marca");
+        productos = pdao.listarPorMarca(marca);
         request.setAttribute("productos", productos);
         request.getRequestDispatcher("productosCarrito.jsp").forward(request, response);
     }

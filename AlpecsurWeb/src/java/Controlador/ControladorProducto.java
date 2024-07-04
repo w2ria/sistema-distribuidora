@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,9 +49,40 @@ public class ControladorProducto extends HttpServlet {
         List<Categoria> listaCategorias = categoriaDAO.listar();
         List<Marca> listaMarcas = marcaDAO.listar();
 
+        List<String> mensajesAdvertencia = new ArrayList<>();
+        List<String> tiposMensaje = new ArrayList<>();
+
+        List<Producto> listaProductos;
         switch (opcion) {
             case "Listar":
-                List<Producto> listaProductos = productoDAO.listarConMarcaYCategoria();
+                listaProductos = productoDAO.listarConMarcaYCategoria();
+                for (Producto producto : listaProductos) {
+                    if (producto.getStock() <= 0) {
+                        mensajesAdvertencia.add("El producto " + producto.getNombre() + " se quedó sin stock. 😢");
+                        tiposMensaje.add("danger");
+                    } else if (producto.getStock() < 10) {
+                        mensajesAdvertencia.add("El producto " + producto.getNombre() + " le queda la cantidad de " + producto.getStock() + ". Por favor, tomar precaución.");
+                        tiposMensaje.add("warning");
+                    }
+                }
+                request.setAttribute("ListaProductos", listaProductos);
+                request.setAttribute("listaCategorias", listaCategorias);
+                request.setAttribute("listaMarcas", listaMarcas);
+                request.setAttribute("mensajesAdvertencia", mensajesAdvertencia);
+                request.setAttribute("tiposMensaje", tiposMensaje);
+                request.getRequestDispatcher("Producto.jsp").forward(request, response);
+                break;
+
+            case "ListarPocoStock":
+                listaProductos = productoDAO.listarPocoStock();
+                request.setAttribute("ListaProductos", listaProductos);
+                request.setAttribute("listaCategorias", listaCategorias);
+                request.setAttribute("listaMarcas", listaMarcas);
+                request.getRequestDispatcher("Producto.jsp").forward(request, response);
+                break;
+
+            case "ListarSinStock":
+                listaProductos = productoDAO.listarSinStock();
                 request.setAttribute("ListaProductos", listaProductos);
                 request.setAttribute("listaCategorias", listaCategorias);
                 request.setAttribute("listaMarcas", listaMarcas);
@@ -217,6 +249,23 @@ public class ControladorProducto extends HttpServlet {
                 // Manejo para otras acciones desconocidas o no implementadas
                 break;
         }
+
+        // Check stock and add messages
+        List<Producto> listaProductos = productoDAO.listarConMarcaYCategoria();
+        List<String> mensajesAdvertencia = new ArrayList<>();
+        List<String> tiposMensaje = new ArrayList<>();
+
+        for (Producto producto : listaProductos) {
+            if (producto.getStock() <= 0) {
+                mensajesAdvertencia.add("El producto " + producto.getNombre() + " se quedó sin stock. 😢");
+                tiposMensaje.add("danger");
+            } else if (producto.getStock() < 10) {
+                mensajesAdvertencia.add("El producto " + producto.getNombre() + " le queda la cantidad de " + producto.getStock() + ". Por favor, tomar precaución.");
+                tiposMensaje.add("warning");
+            }
+        }
+        request.setAttribute("mensajesAdvertencia", mensajesAdvertencia);
+        request.setAttribute("tiposMensaje", tiposMensaje);
     }
 
     @Override
