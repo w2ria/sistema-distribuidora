@@ -4,6 +4,9 @@
     Author     : maria
 --%>
 
+<%@page import="Modelo.Administrador"%>
+<%@page import="Modelo.Empleado"%>
+<%@page import="Modelo.Usuario"%>
 <%@page import="Modelo.Proveedor"%>
 <%@page import="Modelo.Ingreso"%>
 <%@page import="java.util.List"%>
@@ -13,6 +16,12 @@
 <%
     List<Ingreso> ListaIngresos = (List<Ingreso>) request.getAttribute("ListaIngresos");
     List<Proveedor> ListaProveedores = (List<Proveedor>) request.getAttribute("ListaProveedores");
+    Usuario us = (Usuario) session.getAttribute("usuario");
+    Empleado em = (Empleado) session.getAttribute("empleado");
+    Administrador ad = (Administrador) session.getAttribute("admin");
+    boolean esAdmin = us != null && (us.getUsuario().startsWith("A") || us.getUsuario().startsWith("a"));
+    boolean esEmpleado = us != null && (us.getUsuario().startsWith("E") || us.getUsuario().startsWith("e"));
+    String urlMenu = esAdmin ? "MenuAdministrador.jsp" : (esEmpleado ? "MenuEmpleado.jsp" : "login.jsp");
 %>
 
 <!DOCTYPE html>
@@ -28,6 +37,7 @@
         <title>Ingresos</title>
     </head>
     <body id="bodyId">
+        
         <div class="container">
             <h1 class="mt-4">Gestión de Ingresos</h1>
 
@@ -41,8 +51,10 @@
 
             <!-- Botones para agregar ingreso y volver al menú -->
             <div class="d-flex justify-content-start mb-3">
+                <div class="d-flex align-items-center">
                 <button type="button" class="btn btn-info mr-2" id="btnAgregar" data-toggle="modal" data-target="#agregarIngresoModal">Agregar Ingreso</button>
-                <a href="MenuAdministrador.jsp" class="btn btn-outline-secondary">Volver al Menú Administrador</a>
+                <a href="<%= urlMenu %>" class="btn btn-outline-secondary mx-auto">Volver al Menú</a>
+                </div>
             </div>
 
         </div>

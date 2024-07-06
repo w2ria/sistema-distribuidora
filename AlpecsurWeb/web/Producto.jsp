@@ -4,6 +4,10 @@
     Author     : maria
 --%>
 
+<%@page import="Modelo.Administrador"%>
+<%@page import="Modelo.Administrador"%>
+<%@page import="Modelo.Empleado"%>
+<%@page import="Modelo.Usuario"%>
 <%@page import="Modelo.Marca"%>
 <%@page import="Modelo.Categoria"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -16,6 +20,24 @@
     List<Producto> listaProductos = (List<Producto>) request.getAttribute("ListaProductos");
     List<Categoria> listaCategorias = (List<Categoria>) request.getAttribute("listaCategorias");
     List<Marca> listaMarcas = (List<Marca>) request.getAttribute("listaMarcas");
+    Usuario us = (Usuario) session.getAttribute("usuario");
+    Empleado em = (Empleado) session.getAttribute("empleado");
+    Administrador ad = (Administrador) session.getAttribute("admin");
+
+    String tipoUsuario = "", nombreUsuario = "";
+    Boolean esAdmin = false, esEmpleado = false;
+    if (us != null) {
+        if (us.getUsuario().startsWith("A") || us.getUsuario().startsWith("a")) {
+            tipoUsuario = "admin";
+            nombreUsuario = ad != null ? ad.getNombre() : "";
+            esAdmin = true;
+        } else if (us.getUsuario().startsWith("E") || us.getUsuario().startsWith("e")) {
+            tipoUsuario = "empleado";
+            nombreUsuario = em != null ? em.getNombre() : "";
+            esEmpleado = true;
+        }
+    }
+    String urlMenu = esAdmin ? "MenuAdministrador.jsp" : (esEmpleado ? "MenuEmpleado.jsp" : "login.jsp");
 %>
 
 <!DOCTYPE html>
@@ -56,8 +78,10 @@
 
             <!-- Botones para agregar producto y volver al menú -->
             <div class="d-flex justify-content-start mb-3">
-                <button type="button" class="btn btn-info mr-2" id="btnAgregar" data-toggle="modal" data-target="#agregarProductoModal">Agregar Producto</button>
-                <a href="MenuAdministrador.jsp" class="btn btn-outline-secondary">Volver al Menú Administrador</a>
+                <div class="d-flex align-items-center">
+                    <button type="button" class="btn btn-info mr-2" id="btnAgregar" data-toggle="modal" data-target="#agregarProductoModal">Agregar Producto</button>
+                    <a href="<%= urlMenu%>" class="btn btn-outline-secondary mx-auto">Volver al Menú</a>
+                </div>
             </div>
 
 

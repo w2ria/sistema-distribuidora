@@ -4,9 +4,15 @@
     Author     : ferna
 --%>
 
+<%@page import="Modelo.Empleado"%>
+<%@page import="Modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Controlador.ControladorProveedor"%>
 <%@page import="Controlador.ControladorProducto"%>
+<%
+    Usuario us = (Usuario) session.getAttribute("usuario");
+    Empleado em = (Empleado) session.getAttribute("empleado");
+%>
 <!DOCTYPE html>
 <html lang="en<link rel="stylesheet" href="resource/css/styleDashboard.css">
       
@@ -59,13 +65,6 @@
                         </span>
                         <h3>Pedidos</h3>
                     </a>
-                    <a href="#">
-                        <span class="material-icons-sharp">
-                            category
-                        </span>
-                        <h3>Categorias</h3>
-                    </a>
-                    
                     <a href="logout.jsp">
                         <span class="material-icons-sharp">
                             logout
@@ -201,8 +200,8 @@
 
                     <div class="profile">
                         <div class="info">
-                            <p>Hey, <b>Aditya</b></p>
-                            <small class="text-muted">Admin</small>
+                            <p>Hey, <b><%=em.getNombre()%></b></p>
+                            <small class="text-muted">Empleado</small>
                         </div>
                         <div class="profile-photo">
                             <img src="images/1.JPG">
