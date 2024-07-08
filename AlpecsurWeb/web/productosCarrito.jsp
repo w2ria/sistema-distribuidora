@@ -32,7 +32,7 @@
         <header class="py-3">
             <div class="container d-flex align-items-center justify-content-between">
                 <a href="index.jsp">
-                    <img src="https://via.placeholder.com/150" alt="Logo" class="img-fluid" style="max-height: 60px;">
+                    <img src="resources/images/Recurso 1.png" alt="Logo" class="img-fluid" style="max-height: 60px;">
                 </a>
                 <div class="position-relative flex-grow-1 mx-3">
                     <input class="form-control me-2" type="search" id="searchInput" placeholder="Buscar Productos" aria-label="Buscar Productos">
@@ -55,8 +55,8 @@
         <!-- Barra de Navegación -->
         <nav class="py-2 borde">
             <div class="container d-flex justify-content-around">
+                <a href="index.jsp" class="btn btn-outline-dark">Inicio</a>
                 <a href="controlador?accion=productos" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
-                <a href="catalogo.jsp" class="btn btn-outline-dark"><i class="bi bi-book"></i> Catálogo</a>
                 <a href="nosotros.jsp" class="btn btn-outline-dark"><i class="bi bi-people"></i> Nosotros</a>
                 <a href="#" class="btn btn-outline-dark"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
                 <a href="contactanos.jsp" class="btn btn-outline-dark"><i class="bi bi-envelope"></i> Contacto</a>

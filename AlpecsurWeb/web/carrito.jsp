@@ -31,7 +31,7 @@
         <header class="py-3">
             <div class="container d-flex align-items-center justify-content-between">
                 <a href="index.jsp">
-                    <img src="https://via.placeholder.com/150" alt="Logo" class="img-fluid" style="max-height: 60px;">
+                    <img src="resources/images/Recurso 1.png" alt="Logo" class="img-fluid" style="max-height: 60px;">
                 </a>
                 <div class="position-relative flex-grow-1 mx-3">
                     <input class="form-control me-2" type="search" id="searchInput" placeholder="Buscar Productos" aria-label="Buscar Productos">

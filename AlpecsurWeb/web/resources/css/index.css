@@ -31,14 +31,27 @@ h2 {
 }
 
 .btn-outline-dark {
-    background-color: white;
+    background-color: transparent;
     color: black; 
     border-color: black;
 }
+
+.btn-outline-dark1 {
+    background: transparent;
+    color: white; 
+    border-color: black;
+}
+
 .btn-outline-dark:hover {
-    background-color: black; 
+    background-color: #BBD4F2; 
     color: white;
 }
+
+.btn-outline-dark1:hover {
+    background-color: #BBD4F2; 
+    color: white;
+}
+
 
 footer {
     background-color: black; 
@@ -464,7 +477,7 @@ footer a:hover {
 }
 
 .button:hover {
-    background-color: #005a87;
+    background-color: #A4BAD5;
 }
 
 .apply-coupon, .update-cart {

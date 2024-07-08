@@ -1,3 +1,4 @@
+
 <%@page import="Modelo.Cliente"%>
 <%@page import="Modelo.Usuario"%>
 <%@ page session="true" %>
@@ -11,9 +12,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Tienda Mayorista | AlpecSur Online</title>
+        
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-        <link rel="stylesheet" href="resources/css/index.css"/>
+        <link href="resources/css/estilos.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/responsive.css?v=1.2" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/responsive2.css?v=1.1" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/index.css?v=1.2" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="resources/css/busqueda.css"/>
     </head>
     <body>
@@ -21,7 +26,7 @@
         <header class="py-3">
             <div class="container d-flex align-items-center justify-content-between">
                 <a href="index.jsp">
-                    <img src="https://via.placeholder.com/150" alt="Logo" class="img-fluid" style="max-height: 60px;">
+                    <img src="resources/images/Recurso 1.png" alt="Logo" class="img-fluid" style="max-height: 60px;">
                 </a>
                 <div class="position-relative flex-grow-1 mx-3">
                     <input class="form-control me-2" type="search" id="searchInput" placeholder="Buscar Productos" aria-label="Buscar Productos">
@@ -44,215 +49,251 @@
         <!-- Barra de Navegación -->
         <nav class="py-2 borde">
             <div class="container d-flex justify-content-around">
+                <a href="index.jsp" class="btn btn-outline-dark">Inicio</a>
                 <a href="controlador?accion=productos" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
-                <a href="catalogo.jsp" class="btn btn-outline-dark"><i class="bi bi-book"></i> Catálogo</a>
                 <a href="nosotros.jsp" class="btn btn-outline-dark"><i class="bi bi-people"></i> Nosotros</a>
                 <a href="#" class="btn btn-outline-dark"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
                 <a href="contactanos.jsp" class="btn btn-outline-dark"><i class="bi bi-envelope"></i> Contacto</a>
             </div>
         </nav>
 
-        <!-- Carrusel de Imágenes -->
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="resources/images/carros.jpg" class="d-block w-100 hidden" alt="Imagen 1">
-                </div>
-                <div class="carousel-item">
-                    <img src="resources/images/carro2.jpg" class="d-block w-100 hidden" alt="Imagen 2">
-                </div>
-                <div class="carousel-item">
-                    <img src="resources/images/carro3.jpg" class="d-block w-100 hidden" alt="Imagen 3">
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Anterior</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Siguiente</span>
-            </button>
-        </div>
-
-        <!-- Nueva sección de Productos Más Vendidos -->
-        <div class="container mt-5">
-            <h2 class="text-center mb-4">PRODUCTOS MÁS VENDIDOS</h2>
-            <div class="row justify-content-center">
-                <div class="col-6 col-md-2 text-center mb-4">
-                    <img src="https://via.placeholder.com/150" alt="Nombre del Producto" class="img-fluid mb-2">
-                    <p>Nombre del Producto</p>
-                    <div class="input-group mb-3">
-                        <input type="number" class="form-control" value="0" min="0">
-                        <button class="btn btn-outline-dark">Agregar</button>
-                    </div>
-                </div>
-                <div class="col-6 col-md-2 text-center mb-4">
-                    <img src="https://via.placeholder.com/150" alt="Nombre del Producto" class="img-fluid mb-2">
-                    <p>Nombre del Producto</p>
-                    <div class="input-group mb-3">
-                        <input type="number" class="form-control" value="0" min="0">
-                        <button class="btn btn-outline-dark">Agregar</button>
-                    </div>
-                </div>
-                <div class="col-6 col-md-2 text-center mb-4">
-                    <img src="https://via.placeholder.com/150" alt="Nombre del Producto" class="img-fluid mb-2">
-                    <p>Nombre del Producto</p>
-                    <div class="input-group mb-3">
-                        <input type="number" class="form-control" value="0" min="0">
-                        <button class="btn btn-outline-dark">Agregar</button>
-                    </div>
-                </div>
-                <div class="col-6 col-md-2 text-center mb-4">
-                    <img src="https://via.placeholder.com/150" alt="Nombre del Producto" class="img-fluid mb-2">
-                    <p>Nombre del Producto</p>
-                    <div class="input-group mb-3">
-                        <input type="number" class="form-control" value="0" min="0">
-                        <button class="btn btn-outline-dark">Agregar</button>
-                    </div>
-                </div>
-                <div class="col-6 col-md-2 text-center mb-4">
-                    <img src="https://via.placeholder.com/150" alt="Nombre del Producto" class="img-fluid mb-2">
-                    <p>Nombre del Producto</p>
-                    <div class="input-group mb-3">
-                        <input type="number" class="form-control" value="0" min="0">
-                        <button class="btn btn-outline-dark">Agregar</button>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center mt-4">
-                <a href="#" class="btn btn-outline-dark">Ir a Tienda Online</a>
-            </div>
-        </div>
-
-        <div class="container mt-5">
-            <div class="text-center">
-                <h2 class="mb-4">Tienda Mayorista | AlpecSur Online</h2>
-                <p class="text-justify">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que también ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenían pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</p>
-                <div class="mt-5">
-                    <img src="#" alt="Imagen Banner" class="img-fluid w-100" style="height: 200px; object-fit: cover;">
-                </div>
-            </div>
-        </div>
-
-        <!-- Sección de Envíos -->
-        <div class="container mt-5">
-            <h2 class="text-center mb-4">NUESTRA DISTRIBUIDORA REALIZA ENVIOS A GRAN PARTE DEL PERÚ</h2>
-            <div class="row justify-content-center">
-                <div class="col-6 col-md-2 text-center mb-4">
-                    <img src="https://via.placeholder.com/150" alt="Imagen de Envío" class="img-fluid mb-2">
-                    <p>Distrito</p>
-                </div>
-                <div class="col-6 col-md-2 text-center mb-4">
-                    <img src="https://via.placeholder.com/150" alt="Imagen de Envío" class="img-fluid mb-2">
-                    <p>Distrito</p>
-                </div>
-                <div class="col-6 col-md-2 text-center mb-4">
-                    <img src="https://via.placeholder.com/150" alt="Imagen de Envío" class="img-fluid mb-2">
-                    <p>Distrito</p>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <p class="text-justify">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que también ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original.</p>
-                    <p class="text-justify">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que también ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original.</p>
-                </div>
-                <div class="col-md-6 text-center">
-                    <img src="https://via.placeholder.com/350x350" alt="Mapa del Perú" class="img-fluid mb-2">
-                    <div class="mt-2">
-                        <button class="btn btn-outline-dark">Ver mapa</button>
+        <div id="shopify-section-1547545324796" class="shopify-section section section_homepage section_image-with-text-overlay">
+            <div class="section_wrap flexible_block__small">
+                <div class="img_placeholder__wrap img_placeholder__small" style="background-image: url(resources/images/banner1.jpg);"></div>
+                <div class="section_txt align_center full_width">
+                    <div class="container">
+                        <div class="caption_text inverted">
+                            <h5>EN VENTA ESTE MES</h5>
+                            <h2 class="title_animation" data-in-effect="pulse">
+                                <span style="visibility: visible;">
+                                    <span class="word1" style="display: inline-block; transform: translate3d(0px, 0px, 0px);">
+                                        <span class="char1" style="display: inline-block; visibility: visible;">T</span>
+                                        <span class="char2" style="display: inline-block; visibility: visible;">U</span>
+                                        <span class="char3" style="display: inline-block; visibility: visible;">S</span>
+                                        <span class="char4" style="display: inline-block; visibility: visible;"></span>
+                                    </span>
+                                    <span class="word2" style="display: inline-block; transform: translate3d(0px, 0px, 0px);">
+                                        <span class="char1" style="display: inline-block; visibility: visible;">P</span>
+                                        <span class="char2" style="display: inline-block; visibility: visible;">R</span>
+                                        <span class="char3" style="display: inline-block; visibility: visible;">O</span>
+                                        <span class="char4" style="display: inline-block; visibility: visible;">D</span>
+                                        <span class="char5" style="display: inline-block; visibility: visible;">U</span>
+                                        <span class="char6" style="display: inline-block; visibility: visible;">C</span>
+                                        <span class="char7" style="display: inline-block; visibility: visible;">T</span>
+                                        <span class="char8" style="display: inline-block; visibility: visible;">O</span>
+                                        <span class="char9" style="display: inline-block; visibility: visible;">S</span>
+                                    </span>
+                                    <span class="word2" style="display: inline-block; transform: translate3d(0px, 0px, 0px);">
+                                        <span class="char1" style="display: inline-block; visibility: visible;">F</span>
+                                        <span class="char2" style="display: inline-block; visibility: visible;">A</span>
+                                        <span class="char3" style="display: inline-block; visibility: visible;">V</span>
+                                        <span class="char4" style="display: inline-block; visibility: visible;">O</span>
+                                        <span class="char5" style="display: inline-block; visibility: visible;">R</span>
+                                        <span class="char6" style="display: inline-block; visibility: visible;">I</span>
+                                        <span class="char7" style="display: inline-block; visibility: visible;">T</span>
+                                        <span class="char8" style="display: inline-block; visibility: visible;">O</span>
+                                        <span class="char9" style="display: inline-block; visibility: visible;">S</span>
+                                    </span>                                    
+                                </span>
+                                <ul class="texts" style="display: none;">
+                                    <li class="current">TUS PRODUCTOS FAVORITOS</li>
+                                </ul>
+                            </h2>
+                            <h4>Los encontraras aquí</h4>
+                            <a href="controlador?accion=MostrarTodo" class="btn btn-outline-dark1">Comprar Ahora</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Sección de Nuestros Artículos -->
-        <div class="container mt-5">
-            <h2 class="text-center mb-4">NUESTROS ARTÍCULOS</h2>
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-4 text-center mb-4">
-                    <img src="https://via.placeholder.com/300" alt="Artículo 1" class="img-fluid mb-2">
-                    <p class="fw-bold">10 Nov 2023</p>
-                    <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.</p>
-                    <button class="btn btn-outline-dark">Continuar Leyendo</button>
-                </div>
-                <div class="col-12 col-md-4 text-center mb-4">
-                    <img src="https://via.placeholder.com/300" alt="Artículo 2" class="img-fluid mb-2">
-                    <p class="fw-bold">20 Dic 2023</p>
-                    <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.</p>
-                    <button class="btn btn-outline-dark">Continuar Leyendo</button>
-                </div>
-                <div class="col-12 col-md-4 text-center mb-4">
-                    <img src="https://via.placeholder.com/300" alt="Artículo 3" class="img-fluid mb-2">
-                    <p class="fw-bold">15 Mar 2024</p>
-                    <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.</p>
-                    <button class="btn btn-outline-dark">Continuar Leyendo</button>
-                </div>
-            </div>
-        </div>
+        <div id="shopify-section-1547482206888" class="shopify-section section section_homepage section_text-columns">
+           <div class="container">
+               <div class="row">
+                   <div class="col-sm-4">
+                       <div class="text_columns__item">
+                           <div class="item_img">
+                               <img src="resources/images/caract1.jpg" alt=""/>
+                           </div>
+                           <div class="item_info text_center">
+                               <h3>Variedad y Calidad</h3>
+                               <p>Contamos con la mejor variedad de productos, de la más alta calidad.</p>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-sm-4">
+                       <div class="text_columns__item">
+                           <div class="item_img">
+                               <img src="resources/images/caract2.jpg" alt="">
+                           </div>
+                           <div class="item_info text_center">
+                               <h3>Distribución Eficiente</h3>
+                               <p>Contamos con una red de distribución bien organizada que nos permite ofrecer una cobertura amplia para las entregas eficientes.</p>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-sm-4">
+                       <div class="text_columns__item">
+                           <div class="item_img">
+                               <img src="resources/images/caract3.jpg" alt="">
+                           </div>
+                           <div class="item_info text_center">
+                               <h3>Sostenibilidad</h3>
+                               <p>Promovemos prácticas sostenibles en todas las operaciones, desde el abastecimiento de productos hasta el empaquetado y la distribución.</p>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
 
-        <!-- Modal de Compra Exitosa -->
-        <div class="modal fade" id="compraExitosaModal" tabindex="-1" aria-labelledby="compraExitosaModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="compraExitosaModalLabel">Compra Exitosa</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        ¡Tu compra ha sido realizada con éxito!
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer class="text-light py-5 mt-5">
+        <div id="shopify-section-1547545562625" class="shopify-section section section_homepage section_image-with-text">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-3 text-center">
-                        <a href="index.jsp">
-                            <img src="https://via.placeholder.com/150" alt="Logo" class="img-fluid mb-3">
-                        </a>
+                <div class="item_wrap image_left">
+                    <div class="item_img">
+                        <img src="resources/images/banner2.jpg" alt=""/>
                     </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-6">
-                                <p><a href="#">Acerca de</a></p>
-                                <p><a href="#">Mi Cuenta</a></p>
+                    <div class="item_txt">
+                        <h3>ENVÍOS A NIVEL NACIONAL</h3>
+                        <h4>REALIZA TU PEDIDO AHORA!</h4>
+                        <p>Aprovecha nuestra campaña de descuento para envíos a toda Lima Metropolitana.</p>
+                        <a class="btn btn-outline-dark" href="controlador?accion=MostrarTodo">Comprar Ahora</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="shopify-section-1547482926210" class="shopify-section section section_newsletter">
+            <div class="container">
+                <div class="index_newsletter_wrapper" style="background: url(resources/images/banner3.jpg);">
+                    <div class="item__newsletter">
+                        <h3>Newsletter</h3>
+                        <form method="post" action="/contact#contact_form" id="newsletter_form" accept-charset="UTF-8" class="contact-form">
+                            <input type="hidden" name="form_type" value="customer">
+                            <input type="hidden" name="utf8" value="">
+                            <p class="alert alert-success">¡Te has suscrito con éxito!</p>
+                            <p class="form_text">Registrate para recibir nuestras ofertas y actualizaciones de la tienda.</p>
+                            <input type="hidden" name="contact[tags]" value="Newsletter subscriber">
+                            <div class="form_wrapper">
+                                <input type="email" name="contact[email]" class="input-group__field newsletter__input" placeholder="Enter your email">
+                                <p class="alert-inline" style="display: none;"></p>
+                                <button class="btn btn-outline-dark1" type="submit">Subscribirse</button>
                             </div>
-                            <div class="col-6">
-                                <p><a href="#">Atención al Cliente</a></p>
-                                <p><a href="#">Políticas y Condiciones</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="shopify-section-footer" class="shopify-section">
+            <footer style="background: rgba(0,0,0,0);">
+                <div class="footer_row__1">
+                    <div class="container">
+                        <div class="row footer_main">
+                            <div class="col-sm-3 footer_block footer_block__2_1">
+                                <div class="footer_item footer_item__links">
+                                    <h3>Categories</h3>
+                                    <ul>
+                                        <li><a href="controlador?accion=FiltrarCategoria&categoria=Papas fritas">Papas fritas</a></li>
+                                        <li><a href="controlador?accion=FiltrarCategoria&categoria=Snacks mixtos">Snacks mixtos</a></li>
+                                        <li><a href="controlador?accion=FiltrarCategoria&categoria=Nachos">Nachos</a></li>
+                                        <li><a href="controlador?accion=FiltrarCategoria&categoria=Tostadas">Tostadas</a></li>
+                                        <li><a href="controlador?accion=FiltrarCategoria&categoria=Snacks de maiz">Snacks de maiz</a></li>
+                                        <li><a href="controlador?accion=FiltrarCategoria&categoria=Snacks de vegetales">Snacks de vegetales</a></li>
+                                        <li><a href="controlador?accion=FiltrarCategoria&categoria=Snacks de legumbres">Snacks de legumbres</a></li>
+                                        <li><a href="controlador?accion=FiltrarCategoria&categoria=Snacks de mani">Snacks de mani</a></li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="col-12">
-                                <p><a href="#">Infórmate</a></p>
+
+                            <div class="col-sm-3 footer_block">
+                                <div class="footer_item footer_item__links">
+                                    <h3>Home</h3>
+                                    <ul>
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="/collections/all">Catalog</a></li>
+                                        <li><a href="/blogs/blog">Blog</a></li>
+                                        <li><a href="/collections">Collections</a></li>
+                                        <li><a href="/pages/about-us">About Us</a></li>
+                                        <li><a href="/pages/contact-us">Contact Us</a></li>
+                                        <li><a href="/pages/faq">Pages</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3 footer_block footer_block__2_1">
+                                <div class="footer_item footer_item__links">
+                                    <h3>Information</h3>
+                                    <ul>
+                                        <li><a href="/pages/about-us">About Us</a></li>
+                                        <li><a href="/collections/all">Catalog</a></li>
+                                        <li><a href="/blogs/blog">Blog</a></li>
+                                        <li><a href="/collections">Collections</a></li>
+                                        <li><a href="/pages/contact-us">Contact Us</a></li>
+                                        <li><a href="/pages/privacy-policy">Privacy Policy</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3 footer_block">
+                                <div class="footer_item footer_item__links">
+                                    <h3>Follow us</h3>
+                                    <ul>
+                                        <li><a href="https://www.facebook.com/zemezlab/">Facebook</a></li>
+                                        <li><a href="https://twitter.com/zemezlab">Twitter</a></li>
+                                        <li><a href="https://www.linkedin.com/company/18088573/">Linkedin</a></li>
+                                        <li><a href="https://www.youtube.com/channel/UCPW43un8VFXHe9LxKpR_2Hg">Youtube</a></li>
+                                        <li><a href="https://www.instagram.com/zemezlab">Instagram</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 text-center">
-                        <h5>Síguenos</h5>
-                        <a href="https://www.facebook.com" target="_blank" class="text-warning mx-2">
-                            <i class="bi bi-facebook" style="font-size: 1.5rem;"></i>
-                        </a>
-                        <a href="https://www.instagram.com" target="_blank" class="text-warning mx-2">
-                            <i class="bi bi-instagram" style="font-size: 1.5rem;"></i>
-                        </a>
-                        <a href="https://www.twitter.com" target="_blank" class="text-warning mx-2">
-                            <i class="bi bi-twitter" style="font-size: 1.5rem;"></i>
-                        </a>
+                </div>
+                
+        <!-- Modal de Compra Exitosa -->
+                <div class="modal fade" id="compraExitosaModal" tabindex="-1" aria-labelledby="compraExitosaModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="compraExitosaModalLabel">Compra Exitosa</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                ¡Tu compra ha sido realizada con éxito!
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </footer>
+                
+                <div class="footer_row__2 bottom_inverted" style="background: #000000;">
+                    <div class="container">
+                        <div class="footer_wrap_1">
+                            <div class="footer_wrap_2 footer_left">
+                                ©Alpecsur. <a target="_blank" rel="nofollow" href="">Powered by UTP</a>
+                            </div>
+
+                            <div class="footer_wrap_2 footer_right">
+                                <ul class="footer_payments">
+                                    <li><i class="fa fa-cc-mastercard" aria-hidden="true"></i></li>
+                                    <li><i class="fa fa-cc-paypal" aria-hidden="true"></i></li>
+                                    <li><i class="fa fa-cc-visa" aria-hidden="true"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <style>
+                #shopify-section-footer footer { padding-top: 25px; }
+            </style>
+        </div>
+
 
         <!-- Bootstrap Icons -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
@@ -271,3 +312,4 @@
         </script>
     </body>
 </html>
+

@@ -715,3 +715,15 @@ main .recent-orders a{
     }
 
 }
+
+.chart-container {
+    display: inline-block;
+    width: 300px;
+    margin: 20px;
+    text-align: center;
+}
+
+canvas {
+    max-width: 100%;
+    max-height: 100%;
+}
