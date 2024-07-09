@@ -6,13 +6,18 @@
 
 <%@page import="Modelo.Administrador"%>
 <%@page import="Modelo.Usuario"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="Controlador.ControladorProveedor"%>
 <%@page import="Controlador.ControladorProducto"%>
+<%@page import="javax.servlet.*"%>
 <%@ page session="true" %>
 <%
     Usuario us = (Usuario) session.getAttribute("usuario");
     Administrador ad = (Administrador) session.getAttribute("admin");
+    
+    // Simula una llamada al servlet ContadorVisitas
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/ContadorVisitas");
+    dispatcher.include(request, response);
 %>
 <!DOCTYPE html>
 <html lang="en<link rel="stylesheet" href="resource/css/styleDashboard.css">
@@ -26,7 +31,7 @@
     </head>
 
     <body>
-      
+
         <div class="container">
             <!-- Sidebar Section -->
             <aside>
@@ -109,7 +114,7 @@
 
             <!-- Main Content -->
             <main>
-                <h1>Dashboard</h1>
+                <h2>Dashboard || Visitas a la web: <%= application.getAttribute("contadorVisitas") %></h2>
                 <!-- Analyses -->
                 <div class="analyse">
                     <div class="sales">
