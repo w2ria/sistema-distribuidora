@@ -20,10 +20,12 @@
         <title>Carrito | AlpecSur Online</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-        <link rel="stylesheet" href="resources/css/index.css"/>
+        <link href="resources/css/index.css?v=1.2" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="resources/css/stylePago.css" />
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="resources/css/busqueda.css" />
+        <link rel="stylesheet" href="resources/css/navegacion.css" />
+
         <link href="https://fonts.googleapis.com/css?family=Raleway|Rock+Salt|Source+Code+Pro:300,400,600" rel="stylesheet">
     </head>
     <body class="fondo">
@@ -52,13 +54,28 @@
         </header>
 
         <!-- Barra de Navegación -->
-        <nav class="py-2 borde">
-            <div class="container d-flex justify-content-around">
-                <a href="controlador?accion=productos" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
-                <a href="catalogo.jsp" class="btn btn-outline-dark"><i class="bi bi-book"></i> Catálogo</a>
-                <a href="nosotros.jsp" class="btn btn-outline-dark"><i class="bi bi-people"></i> Nosotros</a>
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
-                <a href="contactanos.jsp" class="btn btn-outline-dark"><i class="bi bi-envelope"></i> Contacto</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light py-2 borde">
+            <div class="container">
+                <a class="navbar-brand" href="index.jsp">Inicio</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="controlador?accion=productos"><i class="bi bi-box"></i> Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="nosotros.jsp"><i class="bi bi-people"></i> Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="#"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="contactanos.jsp"><i class="bi bi-envelope"></i> Contacto</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
 

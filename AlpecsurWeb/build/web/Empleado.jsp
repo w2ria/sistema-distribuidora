@@ -12,7 +12,7 @@
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="resources/css/styleTablaProducto.css">
+        <link rel="stylesheet" href="resources/css/styleAdministrador.css">
         <script src="https://kit.fontawesome.com/26a3cc7edf.js" crossorigin="anonymous"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -44,19 +44,19 @@
 
             <% if (mensaje != null) {%>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <%= mensaje %>
+                <%= mensaje%>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <% } else if (error != null) {%>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <%= error %>
+                <%= error%>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <% } %>
+            <% }%>
 
             <!-- Tabla de empleados -->
             <div class="d-flex">
@@ -65,38 +65,38 @@
                         <thead>
                             <tr style="background-color:#fff; font-weight:bold;">
                                 <td style="color:black;"><center>ID</center></td>
-                                <td style="color:black;"><center>NOMBRES</center></td>
-                                <td style="color:black;"><center>TIPO DOCUMENTO</center></td>
-                                <td style="color:black;"><center>N° DOCUMENTO</center></td>
-                                <td style="color:black;"><center>DIRECCIÓN</center></td>
-                                <td style="color:black;"><center>TELÉFONO</center></td>
-                                <td style="color:black;"><center>EMAIL</center></td>
-                                <td style="color:black;"><center>ACCIONES</center></td>
-                            </tr>
+                        <td style="color:black;"><center>NOMBRES</center></td>
+                        <td style="color:black;"><center>TIPO DOCUMENTO</center></td>
+                        <td style="color:black;"><center>N° DOCUMENTO</center></td>
+                        <td style="color:black;"><center>DIRECCIÓN</center></td>
+                        <td style="color:black;"><center>TELÉFONO</center></td>
+                        <td style="color:black;"><center>EMAIL</center></td>
+                        <td style="color:black;"><center>ACCIONES</center></td>
+                        </tr>
                         </thead>
                         <tbody>
                             <c:forEach var="empleado" items="${ListaEmpleados}">
                                 <tr>
                                     <td><center>${empleado.getIdEmpleado()}</center></td>
-                                    <td><center>${empleado.getNombre()}</center></td>
-                                    <td><center>${empleado.getTipoDocumento()}</center></td>
-                                    <td><center>${empleado.getNumDocumento()}</center></td>
-                                    <td><center>${empleado.getDireccion()}</center></td>
-                                    <td><center>${empleado.getTelefono()}</center></td>
-                                    <td><center>${empleado.getEmail()}</center></td>
-                                    <td>
-                                        <div style="display: flex;">
-                                            <a class="btn btn-warning editBtn" data-toggle="modal" data-target="#editModal" data-id="${empleado.getIdEmpleado()}"
-                                               data-nombre="${empleado.getNombre()}" data-tipo-documento="${empleado.getTipoDocumento()}"
-                                               data-num-documento="${empleado.getNumDocumento()}" data-direccion="${empleado.getDireccion()}"
-                                               data-telefono="${empleado.getTelefono()}" data-email="${empleado.getEmail()}"><i class="fas fa-edit"></i> Editar</a>
-                                            <a href="ControladorEmpleado?Op=Eliminar&idEmpleado=${empleado.getIdEmpleado()}" class="btn btn-danger" style="margin-left: 5px;" onclick="return confirm('¿Estás seguro de que deseas eliminar este empleado?');">
-                                                <i class="fas fa-trash-alt"></i> Eliminar
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </c:forEach>
+                            <td><center>${empleado.getNombre()}</center></td>
+                            <td><center>${empleado.getTipoDocumento()}</center></td>
+                            <td><center>${empleado.getNumDocumento()}</center></td>
+                            <td><center>${empleado.getDireccion()}</center></td>
+                            <td><center>${empleado.getTelefono()}</center></td>
+                            <td><center>${empleado.getEmail()}</center></td>
+                            <td>
+                                <div style="display: flex;">
+                                    <a class="btn btn-warning editBtn" data-toggle="modal" data-target="#editModal" data-id="${empleado.getIdEmpleado()}"
+                                       data-nombre="${empleado.getNombre()}" data-tipo-documento="${empleado.getTipoDocumento()}"
+                                       data-num-documento="${empleado.getNumDocumento()}" data-direccion="${empleado.getDireccion()}"
+                                       data-telefono="${empleado.getTelefono()}" data-email="${empleado.getEmail()}"><i class="fas fa-edit"></i> Editar</a>
+                                    <a href="ControladorEmpleado?Op=Eliminar&idEmpleado=${empleado.getIdEmpleado()}" class="btn btn-danger" style="margin-left: 5px;" onclick="return confirm('¿Estás seguro de que deseas eliminar este empleado?');">
+                                        <i class="fas fa-trash-alt"></i> Eliminar
+                                    </a>
+                                </div>
+                            </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>

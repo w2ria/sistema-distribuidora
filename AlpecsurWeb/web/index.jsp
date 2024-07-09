@@ -12,7 +12,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Tienda Mayorista | AlpecSur Online</title>
-        
+
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
         <link href="resources/css/estilos.css" rel="stylesheet" type="text/css"/>
@@ -20,6 +20,8 @@
         <link href="resources/css/responsive2.css?v=1.1" rel="stylesheet" type="text/css"/>
         <link href="resources/css/index.css?v=1.2" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="resources/css/busqueda.css"/>
+        <link rel="stylesheet" href="resources/css/navegacion.css"/>
+
     </head>
     <body>
         <!-- Header de Presentación -->
@@ -47,13 +49,28 @@
         </header>
 
         <!-- Barra de Navegación -->
-        <nav class="py-2 borde">
-            <div class="container d-flex justify-content-around">
-                <a href="index.jsp" class="btn btn-outline-dark">Inicio</a>
-                <a href="controlador?accion=productos" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
-                <a href="nosotros.jsp" class="btn btn-outline-dark"><i class="bi bi-people"></i> Nosotros</a>
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
-                <a href="contactanos.jsp" class="btn btn-outline-dark"><i class="bi bi-envelope"></i> Contacto</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light py-2 borde">
+            <div class="container">
+                <a class="navbar-brand" href="index.jsp">Inicio</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="controlador?accion=productos"><i class="bi bi-box"></i> Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="nosotros.jsp"><i class="bi bi-people"></i> Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="#"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="contactanos.jsp"><i class="bi bi-envelope"></i> Contacto</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -108,44 +125,44 @@
         </div>
 
         <div id="shopify-section-1547482206888" class="shopify-section section section_homepage section_text-columns">
-           <div class="container">
-               <div class="row">
-                   <div class="col-sm-4">
-                       <div class="text_columns__item">
-                           <div class="item_img">
-                               <img src="resources/images/caract1.jpg" alt=""/>
-                           </div>
-                           <div class="item_info text_center">
-                               <h3>Variedad y Calidad</h3>
-                               <p>Contamos con la mejor variedad de productos, de la más alta calidad.</p>
-                           </div>
-                       </div>
-                   </div>
-                   <div class="col-sm-4">
-                       <div class="text_columns__item">
-                           <div class="item_img">
-                               <img src="resources/images/caract2.jpg" alt="">
-                           </div>
-                           <div class="item_info text_center">
-                               <h3>Distribución Eficiente</h3>
-                               <p>Contamos con una red de distribución bien organizada que nos permite ofrecer una cobertura amplia para las entregas eficientes.</p>
-                           </div>
-                       </div>
-                   </div>
-                   <div class="col-sm-4">
-                       <div class="text_columns__item">
-                           <div class="item_img">
-                               <img src="resources/images/caract3.jpg" alt="">
-                           </div>
-                           <div class="item_info text_center">
-                               <h3>Sostenibilidad</h3>
-                               <p>Promovemos prácticas sostenibles en todas las operaciones, desde el abastecimiento de productos hasta el empaquetado y la distribución.</p>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-           </div>
-       </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="text_columns__item">
+                            <div class="item_img">
+                                <img src="resources/images/caract1.jpg" alt=""/>
+                            </div>
+                            <div class="item_info text_center">
+                                <h3>Variedad y Calidad</h3>
+                                <p>Contamos con la mejor variedad de productos, de la más alta calidad.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="text_columns__item">
+                            <div class="item_img">
+                                <img src="resources/images/caract2.jpg" alt="">
+                            </div>
+                            <div class="item_info text_center">
+                                <h3>Distribución Eficiente</h3>
+                                <p>Contamos con una red de distribución bien organizada que nos permite ofrecer una cobertura amplia para las entregas eficientes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="text_columns__item">
+                            <div class="item_img">
+                                <img src="resources/images/caract3.jpg" alt="">
+                            </div>
+                            <div class="item_info text_center">
+                                <h3>Sostenibilidad</h3>
+                                <p>Promovemos prácticas sostenibles en todas las operaciones, desde el abastecimiento de productos hasta el empaquetado y la distribución.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div id="shopify-section-1547545562625" class="shopify-section section section_homepage section_image-with-text">
             <div class="container">
@@ -185,7 +202,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div id="shopify-section-footer" class="shopify-section">
             <footer style="background: rgba(0,0,0,0);">
                 <div class="footer_row__1">
@@ -251,8 +268,8 @@
                         </div>
                     </div>
                 </div>
-                
-        <!-- Modal de Compra Exitosa -->
+
+                <!-- Modal de Compra Exitosa -->
                 <div class="modal fade" id="compraExitosaModal" tabindex="-1" aria-labelledby="compraExitosaModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -269,7 +286,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="footer_row__2 bottom_inverted" style="background: #000000;">
                     <div class="container">
                         <div class="footer_wrap_1">
@@ -290,7 +307,9 @@
             </footer>
 
             <style>
-                #shopify-section-footer footer { padding-top: 25px; }
+                #shopify-section-footer footer {
+                    padding-top: 25px;
+                }
             </style>
         </div>
 
@@ -310,24 +329,26 @@
                 }
             });
         </script>
-        
+
         <!-- Chat Bot -->
         <script>
-            window.addEventListener('mouseover', initLandbot, { once: true });
-            window.addEventListener('touchstart', initLandbot, { once: true });
+            window.addEventListener('mouseover', initLandbot, {once: true});
+            window.addEventListener('touchstart', initLandbot, {once: true});
             var myLandbot;
             function initLandbot() {
-              if (!myLandbot) {
-                var s = document.createElement('script');s.type = 'text/javascript';s.async = true;
-                s.addEventListener('load', function() {
-                  var myLandbot = new Landbot.Livechat({
-                    configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-2543729-VQHPO033CSVXL7PK/index.json',
-                  });
-                });
-                s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.js';
-                var x = document.getElementsByTagName('script')[0];
-                x.parentNode.insertBefore(s, x);
-              }
+                if (!myLandbot) {
+                    var s = document.createElement('script');
+                    s.type = 'text/javascript';
+                    s.async = true;
+                    s.addEventListener('load', function () {
+                        var myLandbot = new Landbot.Livechat({
+                            configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-2543729-VQHPO033CSVXL7PK/index.json',
+                        });
+                    });
+                    s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.js';
+                    var x = document.getElementsByTagName('script')[0];
+                    x.parentNode.insertBefore(s, x);
+                }
             }
         </script>
     </body>

@@ -24,6 +24,7 @@
         <link href="resources/css/nosotros.css?v=1.5" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="resources/css/index.css"/>
         <link rel="stylesheet" href="resources/css/busqueda.css"/>
+        <link rel="stylesheet" href="resources/css/navegacion.css"/>
     </head>
     <a href="resources/images/circle-border.svg"></a>
     <body>
@@ -52,13 +53,28 @@
         </header>
                 
         <!-- Barra de Navegación -->
-        <nav class="py-2 borde">
-            <div class="container d-flex justify-content-around">
-                <a href="index.jsp" class="btn btn-outline-dark">INICIO</a>
-                <a href="controlador?accion=productos" class="btn btn-outline-dark"><i class="bi bi-box"></i> PRODUCTOS</a>
-                <a href="nosotros.jsp" class="btn btn-outline-dark"><i class="bi bi-people"></i> NOSOTROS</a>
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-truck"></i> VENTAS MAYORISTAS</a>
-                <a href="contactanos.jsp" class="btn btn-outline-dark"><i class="bi bi-envelope"></i> CONTACTO</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light py-2 borde">
+            <div class="container">
+                <a class="navbar-brand" href="index.jsp">Inicio</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="controlador?accion=productos"><i class="bi bi-box"></i> Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="nosotros.jsp"><i class="bi bi-people"></i> Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="#"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="contactanos.jsp"><i class="bi bi-envelope"></i> Contacto</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
 

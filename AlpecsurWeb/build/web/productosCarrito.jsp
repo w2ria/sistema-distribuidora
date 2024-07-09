@@ -26,6 +26,7 @@
         <!-- Estilos Personalizados -->
         <link rel="stylesheet" href="resources/css/index.css"/>
         <link rel="stylesheet" href="resources/css/busqueda.css"/>
+        <link rel="stylesheet" href="resources/css/navegacion.css"/>
     </head>
     <body>
         <!-- Header de Presentación -->
@@ -53,134 +54,165 @@
         </header>
 
         <!-- Barra de Navegación -->
-        <nav class="py-2 borde">
-            <div class="container d-flex justify-content-around">
-                <a href="index.jsp" class="btn btn-outline-dark">Inicio</a>
-                <a href="controlador?accion=productos" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
-                <a href="nosotros.jsp" class="btn btn-outline-dark"><i class="bi bi-people"></i> Nosotros</a>
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
-                <a href="contactanos.jsp" class="btn btn-outline-dark"><i class="bi bi-envelope"></i> Contacto</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light py-2 borde">
+            <div class="container">
+                <a class="navbar-brand" href="index.jsp">Inicio</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="controlador?accion=productos"><i class="bi bi-box"></i> Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="nosotros.jsp"><i class="bi bi-people"></i> Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="#"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="contactanos.jsp"><i class="bi bi-envelope"></i> Contacto</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
-        <div class="container-carrito">
-            <div class="cont-carrito-main">
-                <div class="content-wrapper">
-                    <main class="main-content">
-                        <section class="product-categories-section">
-                            <div class="section-header">
-                                <h2>Filtrado de Producto</h2>
-                            </div>
-                            <ul class="product-categories">
-                                <li class="category-item">
-                                    <a href="controlador?accion=MostrarTodo">Mostrar Todo</a>
-                                </li>
-                                <li class="category-item">
-                                    <a href="#" data-bs-toggle="collapse" data-bs-target="#categoriaCollapse" aria-expanded="false" aria-controls="categoriaCollapse">Por Categoría <i class="bi bi-caret-down-fill"></i></a>
-                                    <ul id="categoriaCollapse" class="collapse">
-                                        <c:forEach var="categoria" items="${listaCategorias}">
-                                            <li><a href="controlador?accion=FiltrarCategoria&categoria=${categoria.getNombre()}">${categoria.getNombre()}</a></li>
-                                            </c:forEach>
-                                    </ul>
-                                </li>
-                                <li class="category-item">
-                                    <a href="#" data-bs-toggle="collapse" data-bs-target="#marcaCollapse" aria-expanded="false" aria-controls="marcaCollapse">Por Marca <i class="bi bi-caret-down-fill"></i></a>
-                                    <ul id="marcaCollapse" class="collapse">
-                                        <c:forEach var="marca" items="${listaMarcas}">
-                                            <li><a href="controlador?accion=FiltrarMarca&marca=${marca.getNombre()}">${marca.getNombre()}</a></li>
-                                            </c:forEach>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </section>
-                    </main>
+        <!--CARRITO DE PRODUCTOS-->
+        <div class="container mt-4">
+            <h1 class="text-center mb-4">Tienda</h1>
+            <div class="row mb-4 align-items-center">
+                <div class="col-md-2">
+                    <h2 class="mb-0">Filtro:</h2>
                 </div>
-                <aside class="shop-section">
-                    <div class="shop-header">
-                        <h1 class="shop-title">Tienda</h1>
+                <div class="col-md-10 d-flex justify-content-start">
+                    <div class="dropdown me-3">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" id="dropdownCategoria" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categoría
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownCategoria">
+                            <c:forEach var="categoria" items="${listaCategorias}">
+                                <li><a class="dropdown-item" href="controlador?accion=FiltrarCategoria&categoria=${categoria.getNombre()}">${categoria.getNombre()}</a></li>
+                                </c:forEach>
+                        </ul>
                     </div>
-                    <div class="products-wrapper">
-                        <c:forEach var="p" items="${productos}">
-                            <c:if test="${p.stock > 0}"> <!-- Excluye productos con stock cero -->
-                                <div class="product-item">
-                                    <div class="product-image" style="margin-bottom: 0;"></div>
-                                    <div class="product-top">
-                                        <a href="#" class="product-image-link">
-                                            <img src="resources/images/productos/${p.getImagen()}" alt="${p.getDescripcion()}" decoding="async" style="width:200px; height:220px;">
-                                        </a>
-                                    </div>
-                                    <div class="product-bottom">
-                                        <h3 class="product-title"><a href="#">${p.getNombre()}</a></h3>
-                                        <div class="price-wrapper">
-                                            <span class="price">S/${p.getPrecio()}</span>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <div class="quantity">
-                                                <input type="button" value="-" class="minus">
-                                                <label class="screen-reader-text" for="quantity_${p.getIdProducto()}"></label>
-                                                <input type="number" id="quantity_${p.getIdProducto()}" class="quantity-input" value="1" min="1" step="1" data-stock="${p.getStock()}">
-                                                <input type="button" value="+" class="plus">
-                                            </div>
-                                            <a href="#" class="button add-to-cart-button" onclick="agregarCarrito(${p.getIdProducto()}, ${p.getStock()})"><span>Agregar</span></a>
-                                        </div>
-                                        <div id="error_${p.getIdProducto()}" class="text-danger" style="display:none;">Máxima cantidad: ${p.getStock()}</div>
-                                    </div>
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" id="dropdownMarca" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Marca
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMarca">
+                            <c:forEach var="marca" items="${listaMarcas}">
+                                <li><a class="dropdown-item pl-2" href="controlador?accion=FiltrarMarca&marca=${marca.getNombre()}">${marca.getNombre()}</a></li>
+                                </c:forEach>
+                        </ul>
+                    </div>
+                    <a href="controlador?accion=MostrarTodo" class="btn btn-primary" style="margin-left: 15px">Mostrar Todo</a>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                <c:forEach var="p" items="${productos}">
+                    <c:if test="${p.stock > 0}">
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="image-container">
+                                    <img src="resources/images/productos/${p.getImagen()}" class="card-img-top product-image" alt="${p.getDescripcion()}" style="width: auto; height: 150px; margin: 10px 28%;">
                                 </div>
-                            </c:if>
-                        </c:forEach>
-                    </div>
-                </aside>
+                                <div class="card-body d-flex flex-column justify-content-between">
+                                    <div>
+                                        <h5 class="card-title text-center">${p.getNombre()}</h5>
+                                        <p class="card-text text-center">S/${p.getPrecio()}</p>
+                                    </div>
+                                    <div class="add-to-cart-container d-flex justify-content-center align-items-center mt-2">
+                                        <div class="d-flex align-items-center quantity">
+                                            <button class="btn btn-outline-secondary minus" type="button">-</button>
+                                            <input type="number" id="quantity_${p.getIdProducto()}" class="form-control text-center mx-2 quantity-input" value="1" min="1" step="1" data-stock="${p.getStock()}">
+                                            <button class="btn btn-outline-secondary plus" type="button">+</button>
+                                        </div>
+                                        <a href="#" class="btn btn-primary ms-2" onclick="agregarCarrito(${p.getIdProducto()}, ${p.getStock()})">Agregar</a>
+                                    </div>
+                                    <div id="error_${p.getIdProducto()}" class="text-danger mt-2 text-center" style="display:none;">Máxima cantidad: ${p.getStock()}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
+                </c:forEach>
             </div>
         </div>
+        <!--CARRITO DE PRODUCTOS-->
+
+
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
         <script>
-                                                $(document).ready(function () {
-                                                    $('.minus').click(function () {
-                                                        var input = $(this).siblings('.quantity-input');
-                                                        var stock = input.data('stock');
-                                                        var currentValue = parseInt(input.val());
-                                                        if (currentValue > 1) {
-                                                            input.val(currentValue - 1);
-                                                            $('#error_' + input.attr('id').split('_')[1]).hide();
-                                                        }
-                                                    });
+                                    $(document).ready(function () {
+                                        $('.minus').click(function () {
+                                            var input = $(this).siblings('.quantity-input');
+                                            var stock = input.data('stock');
+                                            var currentValue = parseInt(input.val());
+                                            if (currentValue > 1) {
+                                                input.val(currentValue - 1);
+                                                $('#error_' + input.attr('id').split('_')[1]).hide();
+                                            }
+                                        });
 
-                                                    $('.plus').click(function () {
-                                                        var input = $(this).siblings('.quantity-input');
-                                                        var stock = input.data('stock');
-                                                        var currentValue = parseInt(input.val());
-                                                        if (currentValue < stock) {
-                                                            input.val(currentValue + 1);
-                                                            $('#error_' + input.attr('id').split('_')[1]).hide();
-                                                        } else {
-                                                            $('#error_' + input.attr('id').split('_')[1]).show();
-                                                        }
-                                                    });
+                                        $('.plus').click(function () {
+                                            var input = $(this).siblings('.quantity-input');
+                                            var stock = input.data('stock');
+                                            var currentValue = parseInt(input.val());
+                                            if (currentValue < stock) {
+                                                input.val(currentValue + 1);
+                                                $('#error_' + input.attr('id').split('_')[1]).hide();
+                                            } else {
+                                                $('#error_' + input.attr('id').split('_')[1]).show();
+                                            }
+                                        });
 
-                                                    $('.quantity-input').on('input', function () {
-                                                        var stock = $(this).data('stock');
-                                                        var currentValue = parseInt($(this).val());
-                                                        if (currentValue > stock) {
-                                                            $(this).val(stock);
-                                                            $('#error_' + $(this).attr('id').split('_')[1]).show();
-                                                        } else {
-                                                            $('#error_' + $(this).attr('id').split('_')[1]).hide();
-                                                        }
-                                                    });
-                                                });
+                                        $('.quantity-input').on('input', function () {
+                                            var stock = $(this).data('stock');
+                                            var currentValue = parseInt($(this).val());
+                                            if (currentValue > stock) {
+                                                $(this).val(stock);
+                                                $('#error_' + $(this).attr('id').split('_')[1]).show();
+                                            } else {
+                                                $('#error_' + $(this).attr('id').split('_')[1]).hide();
+                                            }
+                                        });
+                                    });
 
-                                                function agregarCarrito(idProducto, stock) {
-                                                    var cantidad = $('#quantity_' + idProducto).val();
-                                                    if (parseInt(cantidad) > stock) {
-                                                        $('#error_' + idProducto).show();
-                                                        return;
-                                                    }
+                                    function agregarCarrito(idProducto, stock) {
+                                        var cantidad = $('#quantity_' + idProducto).val();
+                                        if (parseInt(cantidad) > stock) {
+                                            $('#error_' + idProducto).show();
+                                            return;
+                                        }
 
-                                                    window.location.href = 'controlador?accion=AgregarCarrito&idProducto=' + idProducto + '&cantidad=' + cantidad;
-                                                }
+                                        window.location.href = 'controlador?accion=AgregarCarrito&idProducto=' + idProducto + '&cantidad=' + cantidad;
+                                    }
         </script>
         <script src="resources/js/busqueda.js?<%= System.currentTimeMillis()%>"></script>
+
+        <!-- Chat Bot -->
+        <script>
+                                    window.addEventListener('mouseover', initLandbot, {once: true});
+                                    window.addEventListener('touchstart', initLandbot, {once: true});
+                                    var myLandbot;
+                                    function initLandbot() {
+                                        if (!myLandbot) {
+                                            var s = document.createElement('script');
+                                            s.type = 'text/javascript';
+                                            s.async = true;
+                                            s.addEventListener('load', function () {
+                                                var myLandbot = new Landbot.Livechat({
+                                                    configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-2543729-VQHPO033CSVXL7PK/index.json',
+                                                });
+                                            });
+                                            s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.js';
+                                            var x = document.getElementsByTagName('script')[0];
+                                            x.parentNode.insertBefore(s, x);
+                                        }
+                                    }
+        </script>
     </body>
 </html>

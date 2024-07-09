@@ -23,6 +23,7 @@
         <link href="resources/css/estilos.css?v=1.1" rel="stylesheet" type="text/css"/>
         <link href="resources/css/index.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="resources/css/busqueda.css"/>
+        <link rel="stylesheet" href="resources/css/navegacion.css"/>
         <!-- Google Maps API -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap"></script>
         <script>
@@ -70,13 +71,28 @@
         </header>
 
         <!-- Barra de Navegación -->
-        <nav class="py-2 borde">
-            <div class="container d-flex justify-content-around">
-                <a href="index.jsp" class="btn btn-outline-dark">Inicio</a>
-                <a href="controlador?accion=productos" class="btn btn-outline-dark"><i class="bi bi-box"></i> Productos</a>
-                <a href="nosotros.jsp" class="btn btn-outline-dark"><i class="bi bi-people"></i> Nosotros</a>
-                <a href="#" class="btn btn-outline-dark"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
-                <a href="contactanos.jsp" class="btn btn-outline-dark"><i class="bi bi-envelope"></i> Contacto</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light py-2 borde">
+            <div class="container">
+                <a class="navbar-brand" href="index.jsp">Inicio</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="controlador?accion=productos"><i class="bi bi-box"></i> Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="nosotros.jsp"><i class="bi bi-people"></i> Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="#"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2" href="contactanos.jsp"><i class="bi bi-envelope"></i> Contacto</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -276,6 +292,25 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="resources/js/busqueda.js?<%= System.currentTimeMillis()%>"></script>
      
+        <!-- Chat Bot -->
+        <script>
+            window.addEventListener('mouseover', initLandbot, { once: true });
+            window.addEventListener('touchstart', initLandbot, { once: true });
+            var myLandbot;
+            function initLandbot() {
+              if (!myLandbot) {
+                var s = document.createElement('script');s.type = 'text/javascript';s.async = true;
+                s.addEventListener('load', function() {
+                  var myLandbot = new Landbot.Livechat({
+                    configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-2543729-VQHPO033CSVXL7PK/index.json',
+                  });
+                });
+                s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.js';
+                var x = document.getElementsByTagName('script')[0];
+                x.parentNode.insertBefore(s, x);
+              }
+            }
+        </script>
     </body>
 </html>
 
