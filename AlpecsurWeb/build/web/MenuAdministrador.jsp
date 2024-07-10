@@ -6,32 +6,50 @@
 
 <%@page import="Modelo.Administrador"%>
 <%@page import="Modelo.Usuario"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="Controlador.ControladorProveedor"%>
 <%@page import="Controlador.ControladorProducto"%>
-<%@page import="javax.servlet.*"%>
+<%@page import="javax.servlet.RequestDispatcher"%>
+<%@page import="javax.servlet.http.HttpServletResponse"%>
+<%@page import="javax.servlet.http.HttpServletRequest"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page session="true" %>
+
+
 <%
     Usuario us = (Usuario) session.getAttribute("usuario");
     Administrador ad = (Administrador) session.getAttribute("admin");
-    
+    Boolean justLoggedIn = (Boolean) session.getAttribute("justLoggedIn");
+
+    if (us == null || ad == null) {
+        response.sendRedirect("login.jsp"); // Redirigir a la página de login si los atributos son null
+        return;
+    }
+
     // Simula una llamada al servlet ContadorVisitas
     RequestDispatcher dispatcher = request.getRequestDispatcher("/ContadorVisitas");
     dispatcher.include(request, response);
+    if (justLoggedIn != null && justLoggedIn) {
+        session.removeAttribute("justLoggedIn");
+    }
 %>
 <!DOCTYPE html>
-<html lang="en<link rel="stylesheet" href="resource/css/styleDashboard.css">
-
+<html lang="en<link rel=" stylesheet " href="resource/css/styleDashboard.css ">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-        <link rel="stylesheet" href="resources/css/styleAdministrador.css">
+        <meta charset="UTF-8 ">
+        <meta name="viewport " content="width=device-width, initial-scale=1.0 ">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp " rel="stylesheet ">
+        <link rel="stylesheet " href="resources/css/styleAdministrador.css ">
         <title>Menú Administrador</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js "></script>
+        <link href="resources/css/preloader.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body>
 
+            <%-- Mostrar el preloader solo si justLoggedIn es true --%>
+            <% if (justLoggedIn != null && justLoggedIn) { %>
+            <%@ include file="preloader.jsp" %>
+            <% }%>
         <div class="container">
             <!-- Sidebar Section -->
             <aside>
@@ -114,21 +132,21 @@
 
             <!-- Main Content -->
             <main>
-                <h2>Dashboard || Visitas a la web: <%= application.getAttribute("contadorVisitas") %></h2>
+                <h2>Dashboard || Visitas a la web: <%= application.getAttribute("contadorVisitas")%></h2>
                 <!-- Analyses -->
                 <div class="analyse">
                     <div class="sales">
                         <div class="status">
                             <div class="info">
                                 <h3>Total Ventas</h3>
-                                <h1>S/20,024</h1>
+                                <h1 id="total-ventas">0</h1>
                             </div>
                             <div class="progresss">
                                 <svg>
                                 <circle cx="38" cy="38" r="36"></circle>
                                 </svg>
                                 <div class="percentage">
-                                    <p>+81%</p>
+                                    <p id="porcentaje-ventas">+0%</p>
                                 </div>
                             </div>
                         </div>
@@ -137,14 +155,14 @@
                         <div class="status">
                             <div class="info">
                                 <h3>Total Ingresos</h3>
-                                <h1>24,981</h1>
+                                <h1 id="total-ingresos">0</h1>
                             </div>
                             <div class="progresss">
                                 <svg>
                                 <circle cx="38" cy="38" r="36"></circle>
                                 </svg>
                                 <div class="percentage">
-                                    <p>-48%</p>
+                                    <p id="porcentaje-ingresos">-0%</p>
                                 </div>
                             </div>
                         </div>
@@ -153,14 +171,14 @@
                         <div class="status">
                             <div class="info">
                                 <h3>Clientes Registrados</h3>
-                                <h1>14,147</h1>
+                                <h1 id="clientes-registrados">0</h1>
                             </div>
                             <div class="progresss">
                                 <svg>
                                 <circle cx="38" cy="38" r="36"></circle>
                                 </svg>
                                 <div class="percentage">
-                                    <p>+21%</p>
+                                    <p id="porcentaje-clientes">+0%</p>
                                 </div>
                             </div>
                         </div>
@@ -170,51 +188,49 @@
 
                 <!-- New Users Section -->
                 <div class="new-users">
-                    <h2>Productos Más Vendidos</h2>
-                    <div class="user-list">
-                        <div class="user">
-                            <img src="images/profile-2.jpg">
-                            <h2>Jack</h2>
-                            <p>54 Min Ago</p>
-                        </div>
-                        <div class="user">
-                            <img src="images/profile-3.jpg">
-                            <h2>Amir</h2>
-                            <p>3 Hours Ago</p>
-                        </div>
-                        <div class="user">
-                            <img src="images/profile-4.jpg">
-                            <h2>Ember</h2>
-                            <p>6 Hours Ago</p>
-                        </div>
-                        <div class="user">
-                            <img src="images/plus.png">
-                            <h2>More</h2>
-                            <p>New User</p>
-                        </div>
+                    <div class="chart-container">
+                        <canvas id="lineChart"></canvas>
                     </div>
                 </div>
                 <!-- End of New Users Section -->
-
-                <!-- Recent Orders Table -->
+                <!--
+                
                 <div class="recent-orders">
                     <h2>Pedidos Recientes</h2>
                     <table>
                         <thead>
                             <tr>
-                                <th>Product Name</th>
-                                <th>I'd Number</th>
-                                <th>Payment</th>
-                                <th>Status</th>
-                                <th>Details</th>
+                                <th>Fecha</th>
+                                <th>Cliente</th>
+                                <th>Producto</th>
+                                <th>Precio</th>
+                                <th>Estado</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                            <tr>
+                                <td>16-04-2024</td>
+                                <td>Juan Pérez</td>
+                                <td>Macbook Pro</td>
+                                <td>S/3000</td>
+                                <td class="warning">Pendiente</td>
+                                <td class="primary">Detalles</td>
+                            </tr>
+                            <tr>
+                                <td>17-04-2024</td>
+                                <td>Maria López</td>
+                                <td>iPhone 14</td>
+                                <td>S/4000</td>
+                                <td class="success">Completado</td>
+                                <td class="primary">Detalles</td>
+                            </tr>
+                            
+                        </tbody>
                     </table>
-                    <a href="#">Show All</a>
                 </div>
-                <!-- End of Recent Orders -->
-
+                -->
+                <!-- End of Recent Orders Table -->
             </main>
             <!-- End of Main Content -->
 
@@ -222,103 +238,168 @@
             <div class="right-section">
                 <div class="nav">
                     <button id="menu-btn">
-                        <span class="material-icons-sharp">
-                            menu
-                        </span>
+                        <span class="material-icons-sharp">menu</span>
                     </button>
                     <div class="dark-mode">
-                        <span class="material-icons-sharp active">
-                            light_mode
-                        </span>
-                        <span class="material-icons-sharp">
-                            dark_mode
-                        </span>
+                        <span class="material-icons-sharp active">light_mode</span>
+                        <span class="material-icons-sharp">dark_mode</span>
                     </div>
-
                     <div class="profile">
                         <div class="info">
-                            <p>Hey, <b><%=ad.getNombre()%></b></p>
+                            <p>Hey, <b><%= ad != null ? ad.getNombre() : "Invitado"%></b></p>
                             <small class="text-muted">Admin</small>
                         </div>
                         <div class="profile-photo">
-                            <img src="images/1.JPG">
+
                         </div>
                     </div>
-
                 </div>
-                <!-- End of Nav -->
-
                 <div class="user-profile">
                     <div class="logo">
-                        <img src="images/zz.jpeg">
-                        <h2>Aditya Kasaudhan</h2>
+
+                        <h2><%= ad != null ? ad.getNombre() : "Invitado"%></h2>
                         <p>Fullstack Java Developer</p>
                     </div>
                 </div>
-
                 <div class="reminders">
                     <div class="header">
                         <h2>Reminders</h2>
-                        <span class="material-icons-sharp">
-                            notifications_none
-                        </span>
+                        <span class="material-icons-sharp">notifications_none</span>
                     </div>
-
                     <div class="notification">
                         <div class="icon">
-                            <span class="material-icons-sharp">
-                                volume_up
-                            </span>
+                            <span class="material-icons-sharp">mail_outline</span>
                         </div>
                         <div class="content">
                             <div class="info">
-                                <h3>Timing</h3>
-                                <small class="text_muted">
-                                    08:00 AM - 12:00 PM
-                                </small>
+                                <h3>Check Mails</h3>
+                                <small class="text-muted">17/07/2023</small>
                             </div>
-                            <span class="material-icons-sharp">
-                                more_vert
-                            </span>
                         </div>
                     </div>
-
-                    <div class="notification deactive">
+                    <div class="notification">
                         <div class="icon">
-                            <span class="material-icons-sharp">
-                                edit
-                            </span>
+                            <span class="material-icons-sharp">inventory</span>
                         </div>
                         <div class="content">
                             <div class="info">
-                                <h3>Timing</h3>
-                                <small class="text_muted">
-                                    08:00 AM - 12:00 PM
-                                </small>
+                                <h3>Check Product Stocks</h3>
+                                <small class="text-muted">17/07/2023</small>
                             </div>
-                            <span class="material-icons-sharp">
-                                more_vert
-                            </span>
                         </div>
                     </div>
-
-                    <div class="notification add-reminder">
-                        <div>
-                            <span class="material-icons-sharp">
-                                add
-                            </span>
-                            <h3>Add Reminder</h3>
+                    <div class="notification">
+                        <div class="icon">
+                            <span class="material-icons-sharp">task</span>
+                        </div>
+                        <div class="content">
+                            <div class="info">
+                                <h3>New Updates</h3>
+                                <small class="text-muted">17/07/2023</small>
+                            </div>
                         </div>
                     </div>
-
+                    <div class="notification">
+                        <div class="icon">
+                            <span class="material-icons-sharp">priority_high</span>
+                        </div>
+                        <div class="content">
+                            <div class="info">
+                                <h3>System Maintenance</h3>
+                                <small class="text-muted">17/07/2023</small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-
-
+            <!-- End of Right Section -->
         </div>
+        <script src="resources/js/orders.js "></script>
+        <script src="resources/js/index.js "></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"
+                integrity="sha512-gmwBmiTVER57N3jYS3LinA9eb8aHrJua5iQD7yqYCKa5x6Jjc7VDVaEA0je0Lu0bP9j7tEjV3+1qUm6loO99Kw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="resources/js/preloader.js" type="text/javascript"></script>
+        <script>
+            const ctx = document.getElementById('lineChart').getContext('2d');
 
-        <script src="resources/js/orders.js"></script>
-        <script src="resources/js/index.js"></script>
+            const lineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [], // Estas etiquetas serán actualizadas con los datos reales
+                    datasets: [{
+                            label: 'Ventas Totales',
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            data: [], // Estos datos serán actualizados con los datos reales
+                            fill: true,
+                        }, {
+                            label: 'Ingresos Totales',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            data: [], // Estos datos serán actualizados con los datos reales
+                            fill: true,
+                        }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += context.raw;
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            function actualizarDashboard() {
+                fetch('DashboardData')
+                        .then(response => response.json())
+                        .then(data => {
+                            // Actualizamos los datos totales
+                            document.getElementById('total-ventas').textContent = data.totalVentas;
+                            document.getElementById('total-ingresos').textContent = data.totalIngresos;
+                            document.getElementById('clientes-registrados').textContent = data.clientesRegistrados;
+                            document.getElementById('porcentaje-ventas').textContent = data.porcentajeVentas + '%';
+                            document.getElementById('porcentaje-ingresos').textContent = data.porcentajeIngresos + '%';
+                            document.getElementById('porcentaje-clientes').textContent = data.porcentajeClientes + '%';
+
+                            // Actualizamos los datos para el gráfico
+                            const etiquetas = data.ventasEIngresosDiarios.map(entry => entry.fecha);
+                            const ventas = data.ventasEIngresosDiarios.map(entry => entry.ventas);
+                            const ingresos = data.ventasEIngresosDiarios.map(entry => entry.ingresos);
+
+                            lineChart.data.labels = etiquetas;
+                            lineChart.data.datasets[0].data = ventas;
+                            lineChart.data.datasets[1].data = ingresos;
+
+                            lineChart.update();
+                        })
+                        .catch(error => console.error('Error al actualizar el dashboard:', error));
+            }
+
+            // Actualizar el dashboard cada 5 segundos
+            setInterval(actualizarDashboard, 5000);
+
+            // Actualizar el dashboard al cargar la página
+            window.onload = actualizarDashboard;
+        </script>
+
     </body>
 </html>

@@ -35,6 +35,7 @@ public class LoginServlet extends HttpServlet {
 
             if (admin != null && admin.getNombre() != null) {
                 session.setAttribute("admin", admin);
+                session.setAttribute("justLoggedIn", true);
                 response.sendRedirect("MenuAdministrador.jsp");
             } else {
                 EmpleadoDAO empleadoDAO = new EmpleadoDAO();

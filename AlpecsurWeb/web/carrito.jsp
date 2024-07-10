@@ -12,6 +12,7 @@
         return;
     }
 %>
+<%@ include file="loader.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -67,9 +68,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link p-2" href="nosotros.jsp"><i class="bi bi-people"></i> Nosotros</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-2" href="#"><i class="bi bi-truck"></i> Ventas Mayoristas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link p-2" href="contactanos.jsp"><i class="bi bi-envelope"></i> Contacto</a>

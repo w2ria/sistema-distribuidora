@@ -68,6 +68,10 @@
         <servlet-name>ContadorVisitas</servlet-name>
         <servlet-class>Controlador.ContadorVisitas</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DashboardData</servlet-name>
+        <servlet-class>Controlador.DashboardData</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>controlador</servlet-name>
         <url-pattern>/controlador</url-pattern>
@@ -135,6 +139,10 @@
     <servlet-mapping>
         <servlet-name>ContadorVisitas</servlet-name>
         <url-pattern>/ContadorVisitas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashboardData</servlet-name>
+        <url-pattern>/DashboardData</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
