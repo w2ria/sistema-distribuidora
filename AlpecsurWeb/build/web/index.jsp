@@ -2,6 +2,7 @@
 <%@page import="Modelo.Cliente"%>
 <%@page import="Modelo.Usuario"%>
 <%@ page session="true" %>
+
 <%
     Usuario usuario = (Usuario) session.getAttribute("usuario");
     Cliente cliente = (Cliente) session.getAttribute("cliente");

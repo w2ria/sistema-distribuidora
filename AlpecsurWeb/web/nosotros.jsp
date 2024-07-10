@@ -1,6 +1,7 @@
 
 <%@page import="Modelo.Cliente"%>
 <%@page import="Modelo.Usuario"%>
+<%@include file="contador.jsp" %>%>
 <%@ page session="true" %>
 <%
     Usuario usuario = (Usuario) session.getAttribute("usuario");
